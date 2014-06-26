@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Test Game</title>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+	</head>
+
+	<body>
+		<div id="stats">
+			<p>Level: <span id="level"></span><br>
+				HP: <span id="current_hp"></span>/<span id="max_hp"></span><br>
+				MP: <span id="current_mp"></span>/<span id="max_mp"></span>
+			</p>
+			<hr>
+			<p>Experience: <span id="experience"></span><br>
+				Gold: <span id="gold"></span>
+			</p>
+			<hr>
+			<p>Strength: <span id="strength"></span><br>
+				Agility: <span id="agility"></span><br>
+				Attack Power: <span id="attack_power"></span><br>
+				Defense Power: <span id="defense_power"></span>
+			</p>
+			<hr>
+			<p>Weapon: <span id="weapon"></span><br>
+				Armor: <span id="armor"></span><br>
+				Shield: <span id="shield"></span>
+			</p>
+			<hr>
+			<p><span id="output"></span></p>
+		</div>
+		<canvas id="game" height="480" width="800"></canvas>
+		<canvas id="game_menu" height="200" width="300"></canvas>
+		<div id="test">
+			<input type="button" id="b_music_intro" value="Intro Music"><br>
+			<input type="button" id="b_music_overworld" value="Overworld Music"><br>
+			<input type="button" id="add_exp" value="+5 EXP"><br>
+			<input type="button" id="equip_club" value="Equip Club"><br>
+			<input type="button" id="equip_shield" value="Equip Leather Shield"><br>
+			<input type="button" id="equip_both" value="Equip Both"><br>
+			<input type="button" id="equip_none" value="Remove Equipment"><br>
+			<input type="text" id="map_name"><br>
+			<input type="button" id="move_to_map" value="Go To Map"><br>
+			<hr>
+			<p><span id="output2"></span></p>
+		</div>
+		<audio id="music_intro" src="assets/music/dw1intro.mp3" preload="auto"></audio>
+		<audio id="music_overworld" src="assets/music/dw1overworld.mp3" preload="auto"></audio>
+		<audio id="music_tantagel" src="assets/music/dw1tantagel.mp3" preload="auto"></audio>
+
+		<script src="scripts/init.js"></script>
+		<script src="scripts/menu.js"></script>
+		<script src="scripts/npcs.js"></script>
+		<script src="scripts/player.js"></script>
+		<script src="scripts/maps.js"></script>
+		<script src="scripts/map_functions.js"></script>
+		<script src="scripts/audio.js"></script>
+		<script src="scripts/items.js"></script>
+		<script src="scripts/spells.js"></script>
+		<script src="scripts/enemies.js"></script>
+		<script src="scripts/game.js"></script>
+	</body>
+</html>

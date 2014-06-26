@@ -1,0 +1,43 @@
+@font-face {
+	font-family: dw_font;
+	src: url("assets/dw-font.ttf");
+}
+
+body {
+	width: 800px;
+	margin: 0;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+canvas {
+	border: 1px solid black;
+	font-family: dw_font;
+}
+
+#game_menu {
+	border: 10px solid white;
+	border-radius: 10px;
+	background-color: black;
+	position: absolute;
+	top: 20px;
+	left: 260px;
+	visibility: hidden;
+}
+
+#stats {
+	position: absolute;
+	left: 0;
+	top: 0;
+	border: 1px solid black;
+	width: 180px;
+}
+
+#test {
+	position: absolute;
+	right: 0;
+	top: 0;
+	border: 1px solid black;
+	padding: 8px;
+	width: 180px;
+}
