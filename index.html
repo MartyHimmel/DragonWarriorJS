@@ -7,7 +7,8 @@
 
 	<body>
 		<div id="stats">
-			<p>Level: <span id="level"></span><br>
+			<p>Name: <span id="character_name"></span><br>
+				Level: <span id="level"></span><br>
 				HP: <span id="current_hp"></span>/<span id="max_hp"></span><br>
 				MP: <span id="current_mp"></span>/<span id="max_mp"></span>
 			</p>
@@ -32,9 +33,11 @@
 		<canvas id="game" height="480" width="800"></canvas>
 		<canvas id="game_menu" height="200" width="300"></canvas>
 		<div id="test">
-			<input type="button" id="b_music_intro" value="Intro Music"><br>
-			<input type="button" id="b_music_overworld" value="Overworld Music"><br>
-			<input type="button" id="add_exp" value="+5 EXP"><br>
+			<p><strong>Commands</strong></p>
+			<p><span id="commands">
+			</span></p>
+			<hr>
+			<input type="button" id="add_exp" value="Add EXP"><br>
 			<input type="button" id="equip_club" value="Equip Club"><br>
 			<input type="button" id="equip_shield" value="Equip Leather Shield"><br>
 			<input type="button" id="equip_both" value="Equip Both"><br>
@@ -44,9 +47,6 @@
 			<hr>
 			<p><span id="output2"></span></p>
 		</div>
-		<audio id="music_intro" src="assets/music/dw1intro.mp3" preload="auto"></audio>
-		<audio id="music_overworld" src="assets/music/dw1overworld.mp3" preload="auto"></audio>
-		<audio id="music_tantagel" src="assets/music/dw1tantagel.mp3" preload="auto"></audio>
 
 		<script src="scripts/init.js"></script>
 		<script src="scripts/menu.js"></script>
@@ -58,6 +58,7 @@
 		<script src="scripts/items.js"></script>
 		<script src="scripts/spells.js"></script>
 		<script src="scripts/enemies.js"></script>
+		<script src="scripts/combat.js"></script>
 		<script src="scripts/game.js"></script>
 	</body>
 </html>

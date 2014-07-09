@@ -1,22 +1,18 @@
 var npc = {
 	"character_state": "",
 
-	// image file
-	image: function() {
-		var img = new Image();
-		img.src = "assets/sprites/characters.png";
-		return img;
-	},
-
 	// Call frame from characters.png - starts with frame 0
 	character_frame: function(frame_number, pos_x, pos_y) {
+		var img = new Image();
+		img.src = "assets/sprites/characters.png";
+
 		var image_x = (frame_number % 16) * tile_width;
 		var image_y = Math.floor(frame_number / 16) * tile_height;
 
 		pos_x = pos_x * 32;
 		pos_y = pos_y * 32;
 
-		context.drawImage(this.image(), image_x, image_y, tile_width, tile_height, pos_x, pos_y, tile_width, tile_height);
+		context.drawImage(img, image_x, image_y, tile_width, tile_height, pos_x, pos_y, tile_width, tile_height);
 	},
 
 	animate_character: function(frame1, frame2, x, y) {

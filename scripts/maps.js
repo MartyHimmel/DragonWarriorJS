@@ -1,6 +1,7 @@
 var maps = {
 	/* Map template
 		"Map Name": {
+			"type": "world", "town" (no combat), or "dungeon"
 			"pos_x": player.offset_x starting point
 			"pos_y": player.offset_y starting point
 			"char_x": player.x starting point
@@ -12,10 +13,15 @@ var maps = {
 			[
 				array of tile numbers - actual map data
 			]
+			"npcs":
+			[
+				array of npcs - ["character type", "direction facing", x, y]
+			]
 		}
 	*/
 
 	"World": {
+		"type": "world",
 		"pos_x": 34,
 		"pos_y": 41,
 		"char_x": 12,
@@ -160,6 +166,7 @@ var maps = {
 	},
 
 	"Tantagel1F": {
+		"type": "town",
 		"pos_x": 9,
 		"pos_y": 29,
 		"char_x": 12,
@@ -221,6 +228,7 @@ var maps = {
 	},
 
 	"Tantagel2F": {
+		"type": "town",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 16,
@@ -257,6 +265,7 @@ var maps = {
 	},
 
 	"TantagelB1": {
+		"type": "town",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 7,
@@ -288,6 +297,7 @@ var maps = {
 	},
 
 	"Brecconary": {
+		"type": "town",
 		"pos_x": 0,
 		"pos_y": 15,
 		"char_x": 12,
@@ -348,6 +358,7 @@ var maps = {
 	},
 
 	"Kol": {
+		"type": "town",
 		"pos_x": 19,
 		"pos_y": 23,
 		"char_x": 12,
@@ -402,6 +413,7 @@ var maps = {
 	},
 
 	"Garinham": {
+		"type": "town",
 		"pos_x": 0,
 		"pos_y": 15,
 		"char_x": 12,
@@ -452,6 +464,7 @@ var maps = {
 	},
 
 	"Rimuldar": {
+		"type": "town",
 		"pos_x": 29,
 		"pos_y": 15,
 		"char_x": 13,
@@ -512,6 +525,7 @@ var maps = {
 	},
 
 	"Cantlin": {
+		"type": "town",
 		"pos_x": 13,
 		"pos_y": 0,
 		"char_x": 12,
@@ -572,6 +586,7 @@ var maps = {
 	},
 
 	"Hauksness": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 9,
 		"char_x": 12,
@@ -622,6 +637,7 @@ var maps = {
 	},
 
 	"ErdricksCaveB1": {
+		"type": "town",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 6,
@@ -653,6 +669,7 @@ var maps = {
 	},
 
 	"ErdricksCaveB2": {
+		"type": "town",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 14,
@@ -684,6 +701,7 @@ var maps = {
 	},
 
 	"SwampCave": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 9,
@@ -732,6 +750,7 @@ var maps = {
 	},
 
 	"GarinhamsGraveB1": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 6,
 		"char_x": 8,
@@ -770,6 +789,7 @@ var maps = {
 	},
 
 	"GarinhamsGraveB2": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 16,
@@ -801,6 +821,7 @@ var maps = {
 	},
 
 	"GarinhamsGraveB3": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 20,
@@ -839,6 +860,7 @@ var maps = {
 	},
 
 	"GarinhamsGraveB4": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 7,
@@ -870,6 +892,7 @@ var maps = {
 	},
 
 	"MountainCaveB1": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 1,
 		"char_x": 6,
@@ -902,6 +925,7 @@ var maps = {
 	},
 
 	"MountainCaveB2": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 6,
@@ -934,6 +958,7 @@ var maps = {
 	},
 
 	"CharlockCastle1F": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 11,
 		"char_x": 12,
@@ -976,6 +1001,7 @@ var maps = {
 	},
 
 	"CharlockCastleB1": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1014,6 +1040,7 @@ var maps = {
 	},
 
 	"CharlockCastleB2": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1045,6 +1072,7 @@ var maps = {
 	},
 
 	"CharlockCastleB3": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1076,6 +1104,7 @@ var maps = {
 	},
 
 	"CharlockCastleB4": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1107,6 +1136,7 @@ var maps = {
 	},
 
 	"CharlockCastleB5": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1138,6 +1168,7 @@ var maps = {
 	},
 
 	"CharlockCastleB6": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1169,6 +1200,7 @@ var maps = {
 	},
 
 	"CharlockCastleB7": {
+		"type": "dungeon",
 		"pos_x": 0,
 		"pos_y": 17,
 		"char_x": 11,
@@ -1217,6 +1249,7 @@ var maps = {
 	},
 
 	"NorthShrine": {
+		"type": "town",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 11,
@@ -1248,6 +1281,7 @@ var maps = {
      },
 
      "SouthShrine": {
+		"type": "town",
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 8,

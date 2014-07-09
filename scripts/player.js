@@ -1,4 +1,6 @@
 var player = {
+	"name": "",
+
 	// map collision tiles
 	"collide_tiles": [1, 2, 5, 9, 10, 11, 17, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
 
@@ -22,8 +24,8 @@ var player = {
 	"offset_x": "",
 	"offset_y": "",
 
-	// movement speed, divide number of ticks by this -> higher number = slower speed
-	"movement": 6,
+	// movement speed - ms per step (1000 / movement = number of tiles moved per second)
+	"movement": 150,
 	"key_input": false,
 	"steps": 0,
 	"visibility": "",
@@ -35,20 +37,18 @@ var player = {
 
 	"current_hp": 15,
 	"current_mp": 0,
+	"status": "",
 
 	"experience": 0,
 	"gold": 0,
 
-	image: function() {
+	character_frame: function(frame_number, pos_x, pos_y) {
 		var img = new Image();
 		img.src = "assets/sprites/characters.png";
-		return img;
-	},
 
-	character_frame: function(frame_number, pos_x, pos_y) {
 		var image_x = (frame_number % 16) * tile_width;
 		var image_y = Math.floor(frame_number / 16) * tile_height;
-		context.drawImage(this.image(), image_x, image_y, tile_width, tile_height, pos_x, pos_y, tile_width, tile_height);
+		context.drawImage(img, image_x, image_y, tile_width, tile_height, pos_x, pos_y, tile_width, tile_height);
 	},
 
 	animate_player: function(frame1, frame2) {
@@ -143,7 +143,7 @@ var player = {
 				this.character_state = "up";
 				this.draw_player("up");
 				if (this.collide_up() === false) {
-					if (ticks % this.movement === 0) {
+					if (delta_time - time > this.movement) {
 						if (this.offset_y > 0 && this.y === 6 * tile_height) {
 							this.offset_y -= 1;
 							this.steps++;
@@ -151,6 +151,10 @@ var player = {
 							this.y -= tile_height;
 							this.steps++;
 						}
+						if (combat.random_encounter() === true) {
+							change_state("combat");
+						}
+						time = Date.now();
 					}
 				}
 				break;
@@ -158,7 +162,7 @@ var player = {
 				this.character_state = "down";
 				this.draw_player("down");
 				if (this.collide_down() === false) {
-					if (ticks % this.movement === 0) {
+					if (delta_time - time > this.movement) {
 						if (this.offset_y < map.boundary_bottom && this.y === 6 * tile_height) {
 							this.offset_y += 1;
 							this.steps++;
@@ -166,6 +170,10 @@ var player = {
 							this.y += tile_height;
 							this.steps++;
 						}
+						if (combat.random_encounter() === true) {
+							change_state("combat");
+						}
+						time = Date.now();
 					}
 				}
 				break;
@@ -173,7 +181,7 @@ var player = {
 				this.character_state = "left";
 				this.draw_player("left");
 				if (this.collide_left() === false) {
-					if (ticks % this.movement === 0) {
+					if (delta_time - time > this.movement) {
 						if (this.offset_x > 0 && this.x === 12 * tile_width) {
 							this.offset_x -= 1;
 							this.steps++;
@@ -181,6 +189,10 @@ var player = {
 							this.x -= tile_width;
 							this.steps++;
 						}
+						if (combat.random_encounter() === true) {
+							change_state("combat");
+						}
+						time = Date.now();
 					}
 				}
 				break;
@@ -188,7 +200,7 @@ var player = {
 				this.character_state = "right";
 				this.draw_player("right");
 				if (this.collide_right() === false) {
-					if (ticks % this.movement === 0) {
+					if (delta_time - time > this.movement) {
 						if (this.offset_x < map.boundary_right && this.x === 12 * tile_width) {
 							this.offset_x += 1;
 							this.steps++;
@@ -196,6 +208,10 @@ var player = {
 							this.x += tile_width;
 							this.steps++;
 						}
+						if (combat.random_encounter() === true) {
+							change_state("combat");
+						}
+						time = Date.now();
 					}
 				}
 				break;
@@ -249,12 +265,12 @@ var player = {
 		else if (this.experience < 47) return 3;
 		else if (this.experience < 110) return 4;
 		else if (this.experience < 220) return 5;
-		else if (this.experience < 3250) return 6;
+		else if (this.experience < 450) return 6;
 		else if (this.experience < 800) return 7;
 		else if (this.experience < 1300) return 8;
 		else if (this.experience < 2000) return 9;
 		else if (this.experience < 2900) return 10;
-		else if (this.experience < 32000) return 11;
+		else if (this.experience < 4000) return 11;
 		else if (this.experience < 5500) return 12;
 		else if (this.experience < 7500) return 13;
 		else if (this.experience < 10000) return 14;
@@ -266,17 +282,14 @@ var player = {
 		else if (this.experience < 30000) return 20;
 		else if (this.experience < 34000) return 21;
 		else if (this.experience < 38000) return 22;
-		else if (this.experience < 322000) return 23;
-		else if (this.experience < 326000) return 24;
+		else if (this.experience < 42000) return 23;
+		else if (this.experience < 46000) return 24;
 		else if (this.experience < 50000) return 25;
 		else if (this.experience < 54000) return 26;
 		else if (this.experience < 58000) return 27;
 		else if (this.experience < 62000) return 28;
 		else if (this.experience < 65535) return 29;
-		else {
-			this.experience = 65535;
-			return 30;
-		}
+		else if (this.experience >= 65535) return 30;
 	},
 
 	max_hp: function() {
@@ -443,8 +456,11 @@ var player = {
 		return this.current_mp - amount;
 	},
 
-	gain_experience: function(exp) {
-		return this.experience += exp;
+	add_experience: function(amount) {
+		this.experience += amount;
+		if (this.experience >= 65535) {
+			this.experience = 65535;
+		}
 	},
 
 	add_gold: function(amount) {

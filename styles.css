@@ -41,3 +41,8 @@ canvas {
 	padding: 8px;
 	width: 180px;
 }
+
+#commands input[type="button"] {
+	width: 70px;
+	margin-right: 5px;
+}
