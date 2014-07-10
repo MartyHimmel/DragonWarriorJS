@@ -17,6 +17,7 @@ The "assets" folder contains:
 The "scripts" folder contains all the game objects. Here is a brief description
 of each file:
 * audio.js - audio object, plays music and sound
+* combat.js - combat related functions (player attack, enemy attack, run, etc.)
 * enemies.js - enemy object, contains all enemy parameters (stats, attacks, etc.)
 * game.js - game loop, check input, draw assets, outputs test data
 * init.js - global functions and variables
