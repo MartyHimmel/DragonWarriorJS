@@ -25,7 +25,6 @@ of each file:
     and item data
 * map_functions.js - map object, map interaction functions
 * maps.js - maps object, contains data for each map (world, towns, dungeons)
-* menu.js - menu object, main or in game menu interaction functions
 * npcs.js - npc object, functions for in game NPCs
 * player.js - player object, properties and functions for the player
 * spells.js - spells object, functions for character spells
