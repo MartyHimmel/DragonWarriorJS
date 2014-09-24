@@ -1,5 +1,5 @@
 var enemy = {
-	"0": {
+	0: {
 		"name": "Slime",
 		"strength": 5,
 		"agility": 3,
@@ -15,7 +15,7 @@ var enemy = {
 		"width": 32,
 		"height": 32
 	},
-	"1": {
+	1: {
 		"name": "Red Slime",
 		"strength": 7,
 		"agility": 3,
@@ -31,7 +31,7 @@ var enemy = {
 		"width": 32,
 		"height": 32
 	},
-	"2": {
+	2: {
 		"name": "Drakee",
 		"strength": 9,
 		"agility": 6,
@@ -47,7 +47,7 @@ var enemy = {
 		"width": 48,
 		"height": 48
 	},
-	"3": {
+	3: {
 		"name": "Ghost",
 		"strength": 11,
 		"agility": 8,
@@ -63,7 +63,7 @@ var enemy = {
 		"width": 48,
 		"height": 56
 	},
-	"4": {
+	4: {
 		"name": "Magician",
 		"strength": 11,
 		"agility": 12,
@@ -79,7 +79,7 @@ var enemy = {
 		"width": 48,
 		"height": 48
 	},
-	"5": {
+	5: {
 		"name": "Magidrakee",
 		"strength": 14,
 		"agility": 14,
@@ -95,7 +95,7 @@ var enemy = {
 		"width": 40,
 		"height": 48
 	},
-	"6": {
+	6: {
 		"name": "Scorpion",
 		"strength": 18,
 		"agility": 16,
@@ -111,7 +111,7 @@ var enemy = {
 		"width": 48,
 		"height": 48
 	},
-	"7": {
+	7: {
 		"name": "Druin",
 		"strength": 20,
 		"agility": 18,
@@ -127,7 +127,7 @@ var enemy = {
 		"width": 48,
 		"height": 32
 	},
-	"8": {
+	8: {
 		"name": "Poltergeist",
 		"strength": 18,
 		"agility": 20,
@@ -143,7 +143,7 @@ var enemy = {
 		"width": 40,
 		"height": 56
 	},
-	"9": {
+	9: {
 		"name": "Droll",
 		"strength": 24,
 		"agility": 24,
@@ -159,7 +159,7 @@ var enemy = {
 		"width": 48,
 		"height": 48
 	},
-	"10": {
+	10: {
 		"name": "Drakeema",
 		"strength": 22,
 		"agility": 26,
@@ -175,7 +175,7 @@ var enemy = {
 		"width": 32,
 		"height": 48
 	},
-	"11": {
+	11: {
 		"name": "Skeleton",
 		"strength": 28,
 		"agility": 22,
@@ -191,7 +191,7 @@ var enemy = {
 		"width": 48,
 		"height": 56
 	},
-	"12": {
+	12: {
 		"name": "Warlock",
 		"strength": 28,
 		"agility": 22,
@@ -207,7 +207,7 @@ var enemy = {
 		"width": 40,
 		"height": 48
 	},
-	"13": {
+	13: {
 		"name": "Metal Scorpion",
 		"strength": 36,
 		"agility": 42,
@@ -223,7 +223,7 @@ var enemy = {
 		"width": 56,
 		"height": 48
 	},
-	"14": {
+	14: {
 		"name": "Wolf",
 		"strength": 40,
 		"agility": 30,
@@ -239,7 +239,7 @@ var enemy = {
 		"width": 48,
 		"height": 48
 	},
-	"15": {
+	15: {
 		"name": "Wraith",
 		"strength": 44,
 		"agility": 34,
@@ -255,7 +255,7 @@ var enemy = {
 		"width": 40,
 		"height": 56
 	},
-	"16": {
+	16: {
 		"name": "Metal Slime",
 		"strength": 10,
 		"agility": 255,
@@ -271,7 +271,7 @@ var enemy = {
 		"width": 32,
 		"height": 24
 	},
-	"17": {
+	17: {
 		"name": "Specter",
 		"strength": 40,
 		"agility": 38,
@@ -287,7 +287,7 @@ var enemy = {
 		"width": 32,
 		"height": 56
 	},
-	"18": {
+	18: {
 		"name": "Wolflord",
 		"strength": 50,
 		"agility": 36,
@@ -303,7 +303,7 @@ var enemy = {
 		"width": 56,
 		"height": 48
 	},
-	"19": {
+	19: {
 		"name": "Druinlord",
 		"strength": 47,
 		"agility": 40,
@@ -319,7 +319,7 @@ var enemy = {
 		"width": 48,
 		"height": 32
 	},
-	"20": {
+	20: {
 		"name": "Drollmagi",
 		"strength": 52,
 		"agility": 50,
@@ -335,7 +335,7 @@ var enemy = {
 		"width": 40,
 		"height": 48
 	},
-	"21": {
+	21: {
 		"name": "Wyvern",
 		"strength": 56,
 		"agility": 48,
@@ -351,7 +351,7 @@ var enemy = {
 		"width": 48,
 		"height": 56
 	},
-	"22": {
+	22: {
 		"name": "Rogue Scorpion",
 		"strength": 60,
 		"agility": 90,
@@ -367,7 +367,7 @@ var enemy = {
 		"width": 46,
 		"height": 40
 	},
-	"23": {
+	23: {
 		"name": "Wraith Knight",
 		"strength": 68,
 		"agility": 56,
@@ -399,7 +399,7 @@ var enemy = {
 		"width": 56,
 		"height": 56
 	},
-	"25": {
+	25: {
 		"name": "Goldman",
 		"strength": 48,
 		"agility": 40,
@@ -415,7 +415,7 @@ var enemy = {
 		"width": 48,
 		"height": 56
 	},
-	"26": {
+	26: {
 		"name": "Knight",
 		"strength": 76,
 		"agility": 78,
@@ -431,7 +431,7 @@ var enemy = {
 		"width": 48,
 		"height": 56
 	},
-	"27": {
+	27: {
 		"name": "Magiwyvern",
 		"strength": 78,
 		"agility": 68,
@@ -447,7 +447,7 @@ var enemy = {
 		"width": 40,
 		"height": 56
 	},
-	"28": {
+	28: {
 		"name": "Demon Knight",
 		"strength": 79,
 		"agility": 64,
@@ -463,7 +463,7 @@ var enemy = {
 		"width": 40,
 		"height": 56
 	},
-	"29": {
+	29: {
 		"name": "Werewolf",
 		"strength": 86,
 		"agility": 70,
@@ -479,7 +479,7 @@ var enemy = {
 		"width": 46,
 		"height": 48
 	},
-	"30": {
+	30: {
 		"name": "Green Dragon",
 		"strength": 88,
 		"agility": 74,
@@ -495,7 +495,7 @@ var enemy = {
 		"width": 48,
 		"height": 48
 	},
-	"31": {
+	31: {
 		"name": "Starwyvern",
 		"strength": 86,
 		"agility": 80,
@@ -527,7 +527,7 @@ var enemy = {
 		"width": 48,
 		"height": 48
 	},
-	"33": {
+	33: {
 		"name": "Axe Knight",
 		"strength": 94,
 		"agility": 82,
@@ -543,7 +543,7 @@ var enemy = {
 		"width": 56,
 		"height": 64
 	},
-	"34": {
+	34: {
 		"name": "Blue Dragon",
 		"strength": 98,
 		"agility": 84,
@@ -559,7 +559,7 @@ var enemy = {
 		"width": 64,
 		"height": 48
 	},
-	"35": {
+	35: {
 		"name": "Stoneman",
 		"strength": 100,
 		"agility": 40,
@@ -575,7 +575,7 @@ var enemy = {
 		"width": 50,
 		"height": 56
 	},
-	"36": {
+	36: {
 		"name": "Armored Knight",
 		"strength": 105,
 		"agility": 86,
@@ -591,7 +591,7 @@ var enemy = {
 		"width": 64,
 		"height": 64
 	},
-	"37": {
+	37: {
 		"name": "Red Dragon",
 		"strength": 120,
 		"agility": 90,
@@ -607,7 +607,7 @@ var enemy = {
 		"width": 64,
 		"height": 48
 	},
-	"38": {
+	38: {
 		"name": "Dragonlord", // first form
 		"strength": 90,
 		"agility": 75,
@@ -623,7 +623,7 @@ var enemy = {
 		"width": 32,
 		"height": 40
 	},
-	"39": {
+	39: {
 		"name": "Dragonlord", // second form
 		"strength": 140,
 		"agility": 200,

@@ -2,6 +2,7 @@ var maps = {
 	/* Map template
 		"Map Name": {
 			"type": "world", "town" (no combat), or "dungeon"
+			"zone": zone number for enemy set, dungeon type only
 			"pos_x": player.offset_x starting point
 			"pos_y": player.offset_y starting point
 			"char_x": player.x starting point
@@ -587,6 +588,7 @@ var maps = {
 
 	"Hauksness": {
 		"type": "dungeon",
+		"zone": 13,
 		"pos_x": 0,
 		"pos_y": 9,
 		"char_x": 12,
@@ -702,6 +704,7 @@ var maps = {
 
 	"SwampCave": {
 		"type": "dungeon",
+		"zone": 19,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 9,
@@ -751,6 +754,7 @@ var maps = {
 
 	"GarinhamsGraveB1": {
 		"type": "dungeon",
+		"zone": 14,
 		"pos_x": 0,
 		"pos_y": 6,
 		"char_x": 8,
@@ -790,6 +794,7 @@ var maps = {
 
 	"GarinhamsGraveB2": {
 		"type": "dungeon",
+		"zone": 7,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 16,
@@ -822,6 +827,7 @@ var maps = {
 
 	"GarinhamsGraveB3": {
 		"type": "dungeon",
+		"zone": 15,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 20,
@@ -861,6 +867,7 @@ var maps = {
 
 	"GarinhamsGraveB4": {
 		"type": "dungeon",
+		"zone": 15,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 7,
@@ -893,6 +900,7 @@ var maps = {
 
 	"MountainCaveB1": {
 		"type": "dungeon",
+		"zone": 19,
 		"pos_x": 0,
 		"pos_y": 1,
 		"char_x": 6,
@@ -926,6 +934,7 @@ var maps = {
 
 	"MountainCaveB2": {
 		"type": "dungeon",
+		"zone": 14,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 6,
@@ -959,6 +968,7 @@ var maps = {
 
 	"CharlockCastle1F": {
 		"type": "dungeon",
+		"zone": 16,
 		"pos_x": 0,
 		"pos_y": 11,
 		"char_x": 12,
@@ -1002,6 +1012,7 @@ var maps = {
 
 	"CharlockCastleB1": {
 		"type": "dungeon",
+		"zone": 16,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1041,6 +1052,7 @@ var maps = {
 
 	"CharlockCastleB2": {
 		"type": "dungeon",
+		"zone": 17,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1073,6 +1085,7 @@ var maps = {
 
 	"CharlockCastleB3": {
 		"type": "dungeon",
+		"zone": 17,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1105,6 +1118,7 @@ var maps = {
 
 	"CharlockCastleB4": {
 		"type": "dungeon",
+		"zone": 17,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1137,6 +1151,7 @@ var maps = {
 
 	"CharlockCastleB5": {
 		"type": "dungeon",
+		"zone": 18,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1169,6 +1184,7 @@ var maps = {
 
 	"CharlockCastleB6": {
 		"type": "dungeon",
+		"zone": 18,
 		"pos_x": 0,
 		"pos_y": 0,
 		"char_x": 12,
@@ -1201,6 +1217,7 @@ var maps = {
 
 	"CharlockCastleB7": {
 		"type": "dungeon",
+		"zone": 18,
 		"pos_x": 0,
 		"pos_y": 17,
 		"char_x": 11,

@@ -1,8 +1,3 @@
-@font-face {
-	font-family: dw_font;
-	src: url("assets/dw-font.ttf");
-}
-
 body {
 	width: 800px;
 	margin: 0;
@@ -12,17 +7,6 @@ body {
 
 canvas {
 	border: 1px solid black;
-	font-family: dw_font;
-}
-
-#game_menu {
-	border: 10px solid white;
-	border-radius: 10px;
-	background-color: black;
-	position: absolute;
-	top: 20px;
-	left: 260px;
-	visibility: hidden;
 }
 
 #stats {
@@ -43,6 +27,27 @@ canvas {
 }
 
 #commands input[type="button"] {
-	width: 70px;
+	width: 80px;
 	margin-right: 5px;
+}
+
+#spell {
+	width: 80px;
+	margin-right: 5px;
+	outline: none;
+}
+
+#item {
+	width: 80px;
+	outline: none;
+}
+
+#dialog {
+	width: 796px;
+	height: 104px;
+	border: 1px solid black;
+	outline: none;
+	resize: none;
+	overflow: hidden;
+	font-size: 18px;
 }
