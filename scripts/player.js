@@ -23,7 +23,6 @@ var player = {
 	// Map position
 	"offset_x": 0,
 	"offset_y": 0,
-	"current_zone": 0,
 
 	// Tile number at player's location - see map_functions.js for tile definitions
 	"current_tile": 0,
@@ -162,7 +161,7 @@ var player = {
 	
 	move: function(direction) {
 		this.set_current_tile();
-		this.set_zone();
+		map.set_zone();
 		switch(direction) {
 			case "up":
 				this.character_state = "up";
@@ -246,15 +245,6 @@ var player = {
 	set_current_tile: function() {
 		this.current_tile = maps[map.current_map].layout[(player.offset_x + (player.x / tile_width)) +
 				((player.offset_y + (player.y / tile_height)) * maps[map.current_map].width)] - 1;
-	},
-
-	set_zone: function() {
-		if (map.current_map === "World") {
-			this.current_zone = 5;
-		}
-		if (maps[map.current_map].type === "dungeon") {
-			this.current_zone = maps[map.current_map].zone;
-		}
 	},
 
 	collide_right: function() {

@@ -6,6 +6,7 @@ var map = {
 	"current_map": "",
 	"boundary_right": "",
 	"boundary_bottom": "",
+	"current_zone": 0,
 	"background_music": "",
 
 	// 0 roof bricks
@@ -86,6 +87,28 @@ var map = {
 			}
 		}
 		this.y = 0;
+	},
+
+	set_zone: function() {
+		if (this.current_map === "World") {
+			// 16 tile square, break world into 8 x 8 grid
+			var x_coord = Math.floor(((player.x / tile_width) + (player.offset_x)) / 16);
+			var y_coord = Math.floor(((player.y / tile_width) + (player.offset_y)) / 16);
+			var zone_map = [
+				3,	3,	2,	2,	3,	5,	4,	5,
+				3,	2,	1,	2,	3,	3,	4,	5,
+				4,	1,	0,	0,	1,	3,	4,	5,
+				5,	1,	1,	12,	9,	6,	6,	6,
+				5,	5,	4,	12,	12,	7,	7,	7,
+				10,	9,	8,	12,	12,	12,	8,	7,
+				10,	10,	11,	12,	13,	13,	9,	8,
+				11,	11,	12,	13,	13,	12,	9,	9,
+			];
+			this.current_zone = zone_map[x_coord + (y_coord * 8)];
+		}
+		if (maps[this.current_map].type === "dungeon") {
+			this.current_zone = maps[this.current_map].zone;
+		}
 	},
 
 	check_location: function() {

@@ -87,7 +87,7 @@ function display_output() {
 		"steps = " + player.steps + "<br>" +
 		"current tile = " + player.current_tile + "<br>" +
 		"combat random = " + combat.random_num + "<br>" +
-		"current zone = " + player.current_zone + "<br>" +
+		"current zone = " + map.current_zone + "<br>" +
 		"player turn = " + combat.player_turn + "<br>";
 
 	getId('output2').innerHTML = "Current Map = " + map.current_map + "<br>" +

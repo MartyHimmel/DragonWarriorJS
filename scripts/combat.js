@@ -41,7 +41,7 @@ var combat = {
 	random_enemy: function() {
 		var rand = random_number(0, 4);
 		var enemy_list = [];
-		switch (player.current_zone) {
+		switch (map.current_zone) {
 			case 0:		enemy_list = [0, 1, 0, 1, 0];		break;
 			case 1:		enemy_list = [1, 0, 1, 2, 1];		break;
 			case 2:		enemy_list = [0, 3, 2, 3, 1];		break;
@@ -227,7 +227,7 @@ var combat = {
 	},
 
 	player_died: function() {
-
+		add_text("Thou art dead.");
 	},
 
 	victory: function() {
