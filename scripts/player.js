@@ -39,6 +39,7 @@ var player = {
 	"armor": "None",
 	"shield": "None",
 	"inventory": [],
+	spells: [],
 
 	// Stats
 	"level": 1,
@@ -158,7 +159,7 @@ var player = {
 
 	// Movement and collision
 	// -------------------------------------------------------------------
-	
+
 	move: function(direction) {
 		this.set_current_tile();
 		map.set_zone();
@@ -302,185 +303,43 @@ var player = {
 	},
 
 	set_level: function() {
-		if (this.experience < 7) this.level = 1;
-		else if (this.experience < 23) this.level = 2;
-		else if (this.experience < 47) this.level = 3;
-		else if (this.experience < 110) this.level = 4;
-		else if (this.experience < 220) this.level = 5;
-		else if (this.experience < 450) this.level = 6;
-		else if (this.experience < 800) this.level = 7;
-		else if (this.experience < 1300) this.level = 8;
-		else if (this.experience < 2000) this.level = 9;
-		else if (this.experience < 2900) this.level = 10;
-		else if (this.experience < 4000) this.level = 11;
-		else if (this.experience < 5500) this.level = 12;
-		else if (this.experience < 7500) this.level = 13;
-		else if (this.experience < 10000) this.level = 14;
-		else if (this.experience < 13000) this.level = 15;
-		else if (this.experience < 16000) this.level = 16;
-		else if (this.experience < 19000) this.level = 17;
-		else if (this.experience < 22000) this.level = 18;
-		else if (this.experience < 26000) this.level = 19;
-		else if (this.experience < 30000) this.level = 20;
-		else if (this.experience < 34000) this.level = 21;
-		else if (this.experience < 38000) this.level = 22;
-		else if (this.experience < 42000) this.level = 23;
-		else if (this.experience < 46000) this.level = 24;
-		else if (this.experience < 50000) this.level = 25;
-		else if (this.experience < 54000) this.level = 26;
-		else if (this.experience < 58000) this.level = 27;
-		else if (this.experience < 62000) this.level = 28;
-		else if (this.experience < 65535) this.level = 29;
-		else if (this.experience >= 65535) this.level = 30;
+		var i, level;
+		this.spells = [];
+		for (i=0; i<config.levels.length; i++) {
+			level = config.levels[i];
+			if (this.experience < level.requiredExp) {
+				break;
+			}
+			if (typeof level.spellsLearned !== 'undefined' && Object.prototype.toString.call(level.spellsLearned) === '[object Array]') {
+				this.spells = this.spells.concat(level.spellsLearned);
+			}
+		}
+		this.level = i;
 	},
 
 	set_max_hp: function() {
-		switch (this.level) {
-			case 1: this.max_hp = 15; break;
-			case 2: this.max_hp = 22; break;
-			case 3: this.max_hp = 24; break;
-			case 4: this.max_hp = 31; break;
-			case 5: this.max_hp = 35; break;
-			case 6: this.max_hp = 38; break;
-			case 7: this.max_hp = 40; break;
-			case 8: this.max_hp = 46; break;
-			case 9: this.max_hp = 50; break;
-			case 10: this.max_hp = 54; break;
-			case 11: this.max_hp = 62; break;
-			case 12: this.max_hp = 63; break;
-			case 13: this.max_hp = 70; break;
-			case 14: this.max_hp = 78; break;
-			case 15: this.max_hp = 86; break;
-			case 16: this.max_hp = 92; break;
-			case 17: this.max_hp = 100; break;
-			case 18: this.max_hp = 115; break;
-			case 19: this.max_hp = 130; break;
-			case 20: this.max_hp = 138; break;
-			case 21: this.max_hp = 149; break;
-			case 22: this.max_hp = 158; break;
-			case 23: this.max_hp = 165; break;
-			case 24: this.max_hp = 170; break;
-			case 25: this.max_hp = 174; break;
-			case 26: this.max_hp = 180; break;
-			case 27: this.max_hp = 189; break;
-			case 28: this.max_hp = 195; break;
-			case 29: this.max_hp = 200; break;
-			case 30: this.max_hp = 210; break;
-		}
+		this.max_hp = config.levels[this.level - 1].maxHp;
 	},
-	
+
 	set_max_mp: function() {
-		switch (this.level) {
-			case 1: this.max_mp = 0; break;
-			case 2: this.max_mp = 0; break;
-			case 3: this.max_mp = 5; break;
-			case 4: this.max_mp = 16; break;
-			case 5: this.max_mp = 20; break;
-			case 6: this.max_mp = 24; break;
-			case 7: this.max_mp = 26; break;
-			case 8: this.max_mp = 29; break;
-			case 9: this.max_mp = 36; break;
-			case 10: this.max_mp = 40; break;
-			case 11: this.max_mp = 50; break;
-			case 12: this.max_mp = 58; break;
-			case 13: this.max_mp = 64; break;
-			case 14: this.max_mp = 70; break;
-			case 15: this.max_mp = 72; break;
-			case 16: this.max_mp = 95; break;
-			case 17: this.max_mp = 100; break;
-			case 18: this.max_mp = 108; break;
-			case 19: this.max_mp = 115; break;
-			case 20: this.max_mp = 128; break;
-			case 21: this.max_mp = 135; break;
-			case 22: this.max_mp = 146; break;
-			case 23: this.max_mp = 153; break;
-			case 24: this.max_mp = 161; break;
-			case 25: this.max_mp = 161; break;
-			case 26: this.max_mp = 168; break;
-			case 27: this.max_mp = 175; break;
-			case 28: this.max_mp = 180; break;
-			case 29: this.max_mp = 190; break;
-			case 30: this.max_mp = 200; break;
-		}
+		this.max_mp = config.levels[this.level - 1].maxMp;
 	},
-	
+
 	set_strength: function() {
-		switch (this.level) {
-			case 1: this.strength = 4; break;
-			case 2: this.strength = 5; break;
-			case 3: this.strength = 7; break;
-			case 4: this.strength = 7; break;
-			case 5: this.strength = 12; break;
-			case 6: this.strength = 16; break;
-			case 7: this.strength = 18; break;
-			case 8: this.strength = 22; break;
-			case 9: this.strength = 30; break;
-			case 10: this.strength = 35; break;
-			case 11: this.strength = 40; break;
-			case 12: this.strength = 48; break;
-			case 13: this.strength = 52; break;
-			case 14: this.strength = 60; break;
-			case 15: this.strength = 68; break;
-			case 16: this.strength = 72; break;
-			case 17: this.strength = 72; break;
-			case 18: this.strength = 85; break;
-			case 19: this.strength = 87; break;
-			case 20: this.strength = 92; break;
-			case 21: this.strength = 95; break;
-			case 22: this.strength = 97; break;
-			case 23: this.strength = 99; break;
-			case 24: this.strength = 103; break;
-			case 25: this.strength = 113; break;
-			case 26: this.strength = 117; break;
-			case 27: this.strength = 125; break;
-			case 28: this.strength = 130; break;
-			case 29: this.strength = 135; break;
-			case 30: this.strength = 140; break;
-		}
+		this.strength = config.levels[this.level - 1].strength;
 	},
 
 	set_agility: function() {
-		switch (this.level) {
-			case 1: this.agility = 4; break;
-			case 2: this.agility = 4; break;
-			case 3: this.agility = 6; break;
-			case 4: this.agility = 8; break;
-			case 5: this.agility = 10; break;
-			case 6: this.agility = 10; break;
-			case 7: this.agility = 17; break;
-			case 8: this.agility = 20; break;
-			case 9: this.agility = 22; break;
-			case 10: this.agility = 31; break;
-			case 11: this.agility = 35; break;
-			case 12: this.agility = 40; break;
-			case 13: this.agility = 48; break;
-			case 14: this.agility = 55; break;
-			case 15: this.agility = 64; break;
-			case 16: this.agility = 70; break;
-			case 17: this.agility = 78; break;
-			case 18: this.agility = 84; break;
-			case 19: this.agility = 86; break;
-			case 20: this.agility = 88; break;
-			case 21: this.agility = 90; break;
-			case 22: this.agility = 90; break;
-			case 23: this.agility = 94; break;
-			case 24: this.agility = 98; break;
-			case 25: this.agility = 100; break;
-			case 26: this.agility = 105; break;
-			case 27: this.agility = 107; break;
-			case 28: this.agility = 115; break;
-			case 29: this.agility = 120; break;
-			case 30: this.agility = 130; break;
-		}
+		this.agility = config.levels[this.level - 1].agility;
 	},
-	
+
 	set_attack_power: function() {
-		this.attack_power = this.strength + weapon_list[this.weapon].attack;
+		this.attack_power = this.strength + config.weapons[this.weapon].attack;
 	},
 
 	set_defense_power: function() {
-		this.defense_power = Math.floor(this.agility / 2) + armor_list[this.armor].defense +
-			shield_list[this.shield].defense;
+		this.defense_power = Math.floor(this.agility / 2) + config.armors[this.armor].defense +
+			config.shields[this.shield].defense;
 	},
 
 	set_spells: function() {
@@ -522,7 +381,7 @@ var player = {
 	},
 
 	remove_item: function(item) {
-		
+
 	},
 
 	// Non-static stat changes (combat or shop related)
