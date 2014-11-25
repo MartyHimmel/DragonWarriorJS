@@ -39,8 +39,8 @@ var combat = {
 	},
 
 	random_enemy: function() {
-		var rand = random_number(0, 4);
-		var enemy_list = [];
+		var rand = random_number(0, 4),
+		    enemy_list = [];
 		switch (map.current_zone) {
 			case 0:		enemy_list = [0, 1, 0, 1, 0];		break;
 			case 1:		enemy_list = [1, 0, 1, 2, 1];		break;
@@ -114,12 +114,12 @@ var combat = {
 	// -------------------------------------------------------------------
 
 	initiative: function() {
-		var enemy_agility = enemy[this.enemy_id].agility;
-		var enemy_strength = enemy[this.enemy_id].strength;
-		var rand1 = random_number(0, 255);
-		var rand2 = random_number(0, 255);
-		var rand3 = random_number(1, 100);
-		
+		var enemy_agility = enemy[this.enemy_id].agility,
+		    enemy_strength = enemy[this.enemy_id].strength,
+		    rand1 = random_number(0, 255),
+		    rand2 = random_number(0, 255),
+		    rand3 = random_number(1, 100);
+
 		if (player.strength > (2 * enemy_strength)) {
 			if (rand3 <= 25) {
 				add_text("The " + enemy[this.enemy_id].name + " is running away.");
@@ -134,16 +134,16 @@ var combat = {
 				player.name + " was ready.");
 			this.player_turn = false;
 		} else {
-			add_text("Command?");
+			add_text(text.combat["player_prompt"]);
 		}
 
 		this.initiative_round = false;
 	},
 
 	player_attack: function() {
-		var hit = false;
-		var damage = 0;
-		
+		var hit = false,
+		    damage = 0;
+
 		if (this.player_turn === true) {
 			add_text(player.name + " attacks!");
 			if (random_number(1, 64) > enemy[this.enemy_id].dodge) {
@@ -152,7 +152,7 @@ var combat = {
 
 			if (hit) {
 				if (random_number(1, 32) === 1 && enemy[this.enemy_id] !== (38 || 39)) {
-					add_text("Excellent move!");
+					add_text(text.combat["player_hit_critical"]);
 					damage = Math.floor(random_number(player.attack_power / 2, player.attack_power));
 					if (damage < 0) damage = 0;
 					add_text("The " + enemy[this.enemy_id].name + "'s Hit Points " +
@@ -179,7 +179,7 @@ var combat = {
 					}
 				}
 			} else {
-				add_text("It is dodging!");
+				add_text(text.combat["enemy_dodge"]);
 				this.player_turn = false;
 			}
 		}
@@ -190,7 +190,7 @@ var combat = {
 	},
 
 	cast_spell: function() {
-		
+
 	},
 
 	player_run: function() {
@@ -216,7 +216,7 @@ var combat = {
 
 			if ((player.agility * rand1) <
 				(enemy_agility * rand2 * modifier)) {
-				add_text("But was blocked in front.");
+				add_text(text.combat["player_run_blocked"]);
 			} else {
 				this.player_turn = true;
 				setTimeout(function() {
@@ -227,7 +227,7 @@ var combat = {
 	},
 
 	player_died: function() {
-		add_text("Thou art dead.");
+		add_text(text.combat["player_dead"]);
 	},
 
 	victory: function() {

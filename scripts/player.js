@@ -39,7 +39,7 @@ var player = {
 	"armor": "None",
 	"shield": "None",
 	"inventory": [],
-	spells: [],
+	spells: {},
 
 	// Stats
 	"level": 1,
@@ -303,15 +303,18 @@ var player = {
 	},
 
 	set_level: function() {
-		var i, level;
-		this.spells = [];
+		var i, j, level, spellId;
+		this.spells = {};
 		for (i=0; i<config.levels.length; i++) {
 			level = config.levels[i];
 			if (this.experience < level.requiredExp) {
 				break;
 			}
-			if (typeof level.spellsLearned !== 'undefined' && Object.prototype.toString.call(level.spellsLearned) === '[object Array]') {
-				this.spells = this.spells.concat(level.spellsLearned);
+			if (typeof level.spellsLearned !== 'undefined' && level.spellsLearned instanceof Array) {
+				for (j=0; j<level.spellsLearned.length; j++) {
+					spellId = level.spellsLearned[j];
+					this.spells[spellId] = config.spells[spellId];
+				}
 			}
 		}
 		this.level = i;
@@ -343,34 +346,13 @@ var player = {
 	},
 
 	set_spells: function() {
-		if (game_state === "combat") {
-			if (player.level >= 3 && getId('spell').options.length < 1)
-				add_option("Heal", "Heal", 'spell');
-			if (player.level >= 4 && getId('spell').options.length < 2)
-				add_option("Hurt", "Hurt", 'spell');
-			if (player.level >= 7 && getId('spell').options.length < 3)
-				add_option("Sleep", "Sleep", 'spell');
-			if (player.level >= 10 && getId('spell').options.length < 4)
-				add_option("Stopspell", "Stopspell", 'spell');
-			if (player.level >= 17 && getId('spell').options.length < 5)
-				add_option("Healmore", "Healmore", 'spell');
-			if (player.level >= 19 && getId('spell').options.length < 6)
-				add_option("Hurtmore", "Hurtmore", 'spell');
-		}
-		if (game_state === "exploration") {
-			if (player.level >= 3 && getId('spell').options.length < 1)
-				add_option("Heal", "Heal", 'spell');
-			if (player.level >= 9 && getId('spell').options.length < 2)
-				add_option("Radiant", "Radiant", 'spell');
-			if (player.level >= 12 && getId('spell').options.length < 3)
-				add_option("Outside", "Outside", 'spell');
-			if (player.level >= 13 && getId('spell').options.length < 4)
-				add_option("Return", "Return", 'spell');
-			if (player.level >= 15 && getId('spell').options.length < 5)
-				add_option("Repel", "Repel", 'spell');
-			if (player.level >= 17 && getId('spell').options.length < 6)
-				add_option("Healmore", "Healmore", 'spell');
-		}
+		var self = this;
+		Object.keys(this.spells).forEach(function (spellId) {
+			var spell = self.spells[spellId];
+			if ((game_state === "combat" && spell.showInCombat) || (game_state === "exploration" && spell.showInExplore)) {
+				add_option(text.spells[spellId], text.spells[spellId], "spell");
+			}
+		});
 	},
 
 	// Item management

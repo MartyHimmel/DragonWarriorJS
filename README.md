@@ -18,14 +18,12 @@ The "scripts" folder contains all the game objects. Here is a brief description
 of each file:
 * audio.js - audio object, plays music and sound
 * combat.js - combat related functions (player attack, enemy attack, run, etc.)
+* config.js - all configurable values
 * enemies.js - enemy object, contains all enemy parameters (stats, attacks, etc.)
 * game.js - game loop, check input, draw assets, outputs test data
 * init.js - global functions and variables
-* items.js - weapon_list, armor_list, shield_list, and item objects - equipment
-    and item data
 * map_functions.js - map object, map interaction functions
 * maps.js - maps object, contains data for each map (world, towns, dungeons)
 * npcs.js - npc object, functions for in game NPCs
 * player.js - player object, properties and functions for the player
-* spells.js - spells object, functions for character spells
-
+* text.js - all in-game displayed text

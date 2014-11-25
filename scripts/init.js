@@ -18,9 +18,13 @@ function getId(id) {
 
 function add_option(name, value, list_id) {
 	var option_to_add = document.createElement('option');
+	option_to_add.id = name;
 	option_to_add.text = name;
 	option_to_add.value = value;
-	getId(list_id).add(option_to_add);
+
+	if (getId(list_id).namedItem(name) === null) {
+		getId(list_id).add(option_to_add);
+	}
 }
 
 // Initialize game state
