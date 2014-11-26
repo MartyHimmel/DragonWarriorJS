@@ -1,4 +1,5 @@
 var combat = {
+	"enemy_ptr": null,
 	"enemy_id": 0, // current enemy player is fighting
 	"enemy_current_hp": 0, // randomized at start of battle
 	"gold_reward": 0, // randomized at start of battle
@@ -69,22 +70,23 @@ var combat = {
 	load_enemy: function(id) {
 		this.enemy_id = id;
 		this.initiative_round = true;
+		this.enemy_ptr = config.enemies[this.enemy_id];
 
 		// check if enemy HP is a range or set number
-		if (enemy[this.enemy_id].hp instanceof Array) {
-			this.enemy_current_hp = random_number(enemy[this.enemy_id].hp[0], enemy[this.enemy_id].hp[1]);
+		if (this.enemy_ptr.hp instanceof Array) {
+			this.enemy_current_hp = random_number(this.enemy_ptr.hp[0], this.enemy_ptr.hp[1]);
 		} else {
-			this.enemy_current_hp = enemy[this.enemy_id].hp;
+			this.enemy_current_hp = this.enemy_ptr.hp;
 		}
 
 		// check if enemy gold dropped is a range or set number
-		if (enemy[this.enemy_id].gold instanceof Array) {
-			this.gold_reward = random_number(enemy[this.enemy_id].gold[0], enemy[this.enemy_id].gold[1]);
+		if (this.enemy_ptr.gold instanceof Array) {
+			this.gold_reward = random_number(this.enemy_ptr.gold[0], this.enemy_ptr.gold[1]);
 		} else {
-			this.gold_reward = enemy[this.enemy_id].gold;
+			this.gold_reward = this.enemy_ptr.gold;
 		}
 
-		add_text(enemy[this.enemy_id].name + " draws near!");
+		add_text(this.enemy_ptr.name + " draws near!");
 	},
 
 	// Draw functions
@@ -100,10 +102,10 @@ var combat = {
 		var img = new Image();
 		img.src = "assets/sprites/monsters.png";
 
-		var tile_x = enemy[this.enemy_id].x;
-		var tile_y = enemy[this.enemy_id].y;
-		var tile_width = enemy[this.enemy_id].width;
-		var tile_height = enemy[this.enemy_id].height;
+		var tile_x = this.enemy_ptr.x,
+		    tile_y = this.enemy_ptr.y,
+		    tile_width = this.enemy_ptr.width,
+		    tile_height = this.enemy_ptr.height;
 		var pos_x = (canvas.width / 2) - tile_width;
 		var pos_y = (canvas.height / 2) - tile_height;
 		context.drawImage(img, tile_x, tile_y, tile_width, tile_height,
@@ -114,15 +116,15 @@ var combat = {
 	// -------------------------------------------------------------------
 
 	initiative: function() {
-		var enemy_agility = enemy[this.enemy_id].agility,
-		    enemy_strength = enemy[this.enemy_id].strength,
+		var enemy_agility = this.enemy_ptr.agility,
+		    enemy_strength = this.enemy_ptr.strength,
 		    rand1 = random_number(0, 255),
 		    rand2 = random_number(0, 255),
 		    rand3 = random_number(1, 100);
 
 		if (player.strength > (2 * enemy_strength)) {
 			if (rand3 <= 25) {
-				add_text("The " + enemy[this.enemy_id].name + " is running away.");
+				add_text("The " + this.enemy_ptr.name + " is running away.");
 				setTimeout(function() {
 					change_state("exploration");
 				}, 500);
@@ -130,11 +132,11 @@ var combat = {
 		}
 
 		if ((player.agility * rand1) < (enemy_agility * rand2 * 0.25)) {
-			add_text("The " + enemy[this.enemy_id].name + " attacked before " +
+			add_text("The " + this.enemy_ptr.name + " attacked before " +
 				player.name + " was ready.");
 			this.player_turn = false;
 		} else {
-			add_text(text.combat["player_prompt"]);
+			add_text(text.combat.player["prompt"]);
 		}
 
 		this.initiative_round = false;
@@ -146,16 +148,16 @@ var combat = {
 
 		if (this.player_turn === true) {
 			add_text(player.name + " attacks!");
-			if (random_number(1, 64) > enemy[this.enemy_id].dodge) {
+			if (random_number(1, 64) > this.enemy_ptr.dodge) {
 				hit = true;
 			}
 
 			if (hit) {
-				if (random_number(1, 32) === 1 && enemy[this.enemy_id] !== (38 || 39)) {
-					add_text(text.combat["player_hit_critical"]);
+				if (random_number(1, 32) === 1 && this.enemy_ptr !== (38 || 39)) {
+					add_text(text.combat.player["hit_critical"]);
 					damage = Math.floor(random_number(player.attack_power / 2, player.attack_power));
 					if (damage < 0) damage = 0;
-					add_text("The " + enemy[this.enemy_id].name + "'s Hit Points " +
+					add_text("The " + this.enemy_ptr.name + "'s Hit Points " +
 						"have been reduced by " + damage + ".");
 					this.enemy_current_hp -= damage;
 					if (this.enemy_current_hp <= 0) {
@@ -165,10 +167,10 @@ var combat = {
 						this.player_turn = false;
 					}
 				} else {
-					damage = Math.floor(random_number((player.attack_power - enemy[this.enemy_id].agility) / 4,
-						(player.attack_power - enemy[this.enemy_id].agility) / 2));
+					damage = Math.floor(random_number((player.attack_power - this.enemy_ptr.agility) / 4,
+						(player.attack_power - this.enemy_ptr.agility) / 2));
 					if (damage < 0) damage = 0;
-					add_text("The " + enemy[this.enemy_id].name + "'s Hit Points " +
+					add_text("The " + this.enemy_ptr.name + "'s Hit Points " +
 						"have been reduced by " + damage + ".");
 					this.enemy_current_hp -= damage;
 					if (this.enemy_current_hp <= 0) {
@@ -179,7 +181,7 @@ var combat = {
 					}
 				}
 			} else {
-				add_text(text.combat["enemy_dodge"]);
+				add_text(text.combat.enemy["dodge"]);
 				this.player_turn = false;
 			}
 		}
@@ -195,10 +197,10 @@ var combat = {
 
 	player_run: function() {
 		if (this.player_turn === true) {
-			var modifier = 0;
-			var rand1 = random_number(0, 255);
-			var rand2 = random_number(0, 255);
-			var enemy_agility = enemy[this.enemy_id].agility;
+			var modifier = 0,
+			    rand1 = random_number(0, 255),
+			    rand2 = random_number(0, 255),
+			    enemy_agility = this.enemy_ptr.agility;
 			if (this.enemy_id >= 0 && this.enemy_id <= 20) modifier = 0.25;
 			else if (this.enemy_id >= 20 && this.enemy_id <= 29) modifier = 0.375;
 			else if (this.enemy_id >= 30 && this.enemy_id <= 34) modifier = 0.5;
@@ -216,7 +218,7 @@ var combat = {
 
 			if ((player.agility * rand1) <
 				(enemy_agility * rand2 * modifier)) {
-				add_text(text.combat["player_run_blocked"]);
+				add_text(text.combat.player["run_blocked"]);
 			} else {
 				this.player_turn = true;
 				setTimeout(function() {
@@ -227,15 +229,15 @@ var combat = {
 	},
 
 	player_died: function() {
-		add_text(text.combat["player_dead"]);
+		add_text(text.combat.player["dead"]);
 	},
 
 	victory: function() {
 		var current_level = player.level;
 		add_text("Thou hast done well in");
-		add_text("defeating the " + enemy[this.enemy_id].name + ".");
-		add_text("Thy Experience increases by " + enemy[this.enemy_id].experience + ".");
-		player.add_experience(enemy[this.enemy_id].experience);
+		add_text("defeating the " + this.enemy_ptr.name + ".");
+		add_text("Thy Experience increases by " + this.enemy_ptr.experience + ".");
+		player.add_experience(this.enemy_ptr.experience);
 		add_text("Thy Gold increase by " + this.gold_reward + ".");
 		player.add_gold(this.gold_reward);
 		player.load_player();
@@ -253,12 +255,12 @@ var combat = {
 	},
 
 	enemy_attack: function() {
-		var hit = false;
-		var damage = 0;
-		var enemy_strength = enemy[this.enemy_id].strength;
+		var hit = false,
+		    damage = 0,
+		    enemy_strength = this.enemy_ptr.strength;
 
 		if (this.player_turn === false) {
-			add_text(enemy[this.enemy_id].name + " attacks!");
+			add_text(this.enemy_ptr.name + " attacks!");
 			if (player.defense_power >= enemy_strength) {
 				damage = Math.floor(random_number(0, ((enemy_strength + 4) / 6)));
 				add_text("Thy Hit Points decreased by " + damage + ".");

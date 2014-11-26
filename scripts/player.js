@@ -35,9 +35,9 @@ var player = {
 	"radiant_step_counter": 0,
 
 	// Equipment
-	"weapon": "None",
-	"armor": "None",
-	"shield": "None",
+	"weapon": "none",
+	"armor": "none",
+	"shield": "none",
 	"inventory": [],
 	spells: {},
 
@@ -321,11 +321,11 @@ var player = {
 	},
 
 	set_max_hp: function() {
-		this.max_hp = config.levels[this.level - 1].maxHp;
+		this.max_hp = config.levels[this.level - 1]["max_hp"];
 	},
 
 	set_max_mp: function() {
-		this.max_mp = config.levels[this.level - 1].maxMp;
+		this.max_mp = config.levels[this.level - 1]["max_mp"];
 	},
 
 	set_strength: function() {
@@ -349,7 +349,7 @@ var player = {
 		var self = this;
 		Object.keys(this.spells).forEach(function (spellId) {
 			var spell = self.spells[spellId];
-			if ((game_state === "combat" && spell.showInCombat) || (game_state === "exploration" && spell.showInExplore)) {
+			if ((game_state === "combat" && spell["show_in_combat"]) || (game_state === "exploration" && spell["show_in_explore"])) {
 				add_option(text.spells[spellId], text.spells[spellId], "spell");
 			}
 		});

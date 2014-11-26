@@ -76,9 +76,9 @@ function display_output() {
 	getId('gold').innerHTML = player.gold;
 	getId('attack_power').innerHTML = player.attack_power;
 	getId('defense_power').innerHTML = player.defense_power;
-	getId('weapon').innerHTML = player.weapon;
-	getId('armor').innerHTML = player.armor;
-	getId('shield').innerHTML = player.shield;
+	getId('weapon').innerHTML = text.weapons[player.weapon];
+	getId('armor').innerHTML = text.armors[player.armor];
+	getId('shield').innerHTML = text.shields[player.shield];
 
 	getId('output').innerHTML = "player.x / 32 = " + player.x / tile_width + "<br>" +
 		"player.y / 32 = " + player.y / tile_height + "<br>" +
@@ -115,20 +115,20 @@ getId('add_exp').onclick = function() {
 	player.add_experience(500);
 };
 getId('equip_club').onclick = function() {
-	player.weapon = "Club";
-	player.shield = "None";
+	player.weapon = "club";
+	player.shield = "none";
 };
 getId('equip_shield').onclick = function() {
-	player.weapon = "None";
-	player.shield = "Leather Shield";
+	player.weapon = "none";
+	player.shield = "leather_shield";
 };
 getId('equip_both').onclick = function() {
-	player.weapon = "Club";
-	player.shield = "Leather Shield";
+	player.weapon = "club";
+	player.shield = "leather_shield";
 };
 getId('equip_none').onclick = function() {
-	player.weapon = "None";
-	player.shield = "None";
+	player.weapon = "none";
+	player.shield = "none";
 };
 getId('move_to_map').onclick = function() {
 	map.load_map(getId('map_name').value);

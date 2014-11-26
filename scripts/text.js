@@ -1,4 +1,30 @@
 var text = {
+    weapons: {
+        "none": "None",
+        "bamboo_pole": "Bamboo Pole",
+        "club": "Club",
+        "copper_sword": "Copper Sword",
+        "hand_axe": "Hand Axe",
+        "broad_sword": "Broad Sword",
+        "flame_sword": "Flame Sword",
+        "erdricks_sword": "Erdrick's Sword"
+    },
+    armors: {
+        "none": "None",
+        "clothes": "Clothes",
+        "leather_armor": "Leather Armor",
+        "chain_mail": "Chain Mail",
+        "half_plate": "Half Plate",
+        "full_plate": "Full Plate",
+        "magic_armor": "Magic Armor",
+        "erdricks_armor": "Erdrick's Armor"
+    },
+    shields: {
+        "none": "None",
+        "leather_shield": "Leather Shield",
+        "iron_shield": "Iron Shield",
+        "silver_shield": "Silver Shield"
+    },
     spells: {
         "heal": "Heal",
         "hurt": "Hurt",
@@ -11,29 +37,118 @@ var text = {
         "healmore": "Healmore",
         "hurtmore": "Hurtmore"
     },
+    enemies: {
+        "slime": "Slime",
+        "red_slime": "Red Slime",
+        "drakee": "Drakee",
+        "ghost": "Ghost",
+        "magician": "Magician",
+        "magidrakee": "Magidrakee",
+        "scorpion": "Scorpion",
+        "druin": "Druin",
+        "poltergeist": "Poltergeist",
+        "droll": "Droll",
+        "drakeema": "Drakeema",
+        "skeleton": "Skeleton",
+        "warlock": "Warlock",
+        "metal_scorpion": "Metal Scorpion",
+        "wolf": "Wolf",
+        "wraith": "Wraith",
+        "metal_slime": "Metal Slime",
+        "specter": "Specter",
+        "wolflord": "Wolflord",
+        "druinlord": "Druinlord",
+        "drollmagi": "Drollmagi",
+        "wyvern": "Wyvern",
+        "rogue_scorpion": "Rogue Scorpion",
+        "wraith_knight": "Wraith Knight",
+        "golem": "Golem",
+        "goldman": "Goldman",
+        "knight": "Knight",
+        "magiwyvern": "Magiwyvern",
+        "demon_knight": "Demon Knight",
+        "werewolf": "Werewolf",
+        "green_dragon": "Green Dragon",
+        "starwyvern": "Starwyvern",
+        "wizard": "Wizard",
+        "axe_knight": "Axe Knight",
+        "blue_dragon": "Blue Dragon",
+        "stoneman": "Stoneman",
+        "armored_knight": "Armored Knight",
+        "red_dragon": "Red Dragon",
+        "dragonlord_first_form": "Dragonlord",
+        "dragonlord_second_form": "Dragonlord"
+    },
     combat: {
-        "player_prompt": "Command?",
-        "player_attack": "<player name> attacks!",
-        "player_hit_critical": "Excellent move!",
-        "player_hit": "The <enemy>'s Hit{F0} have been reduced by <number>.",
-        "player_miss": "The attack failed and there was no loss of Hit Points!",
-        "player_blocked": "But that spell hath been blocked.",
-        "player_cast_sleep": "Thou hast put the <enemy> to sleep.",
-        "player_run_blocked": "But was blocked in front.",
-        "player_dead": "Thou art dead.",
-        "enemy_awoke": "<enemy> hath woken up.",
-        "enemy_near": "A <enemy> draws near!",
-        "enemy_run": "The <enemy> is running away.",
-        "enemy_strike_first": "The <enemy> attacked before <player name> was ready.",
-        "enemy_attack": "The <enemy> attacks!",
-        "enemy_hit": "Thy Hit{EF} decreased by <number>.",
-        "enemy_miss": "A miss! No damage hath been scored!",
-        "enemy_dodge": "It is dodging!"
+        player: {
+            "prompt": "Command?",
+            "attack": "<player name> attacks!",
+            "hit_critical": "Excellent move!",
+            "hit": "The <enemy>'s Hit{F0} have been reduced by <number>.",
+            "miss": "The attack failed and there was no loss of Hit Points!",
+            "run": "<player name> started to run away.",
+            "run_blocked": "But was blocked in front.",
+            "cast": "<player name> chanted the spell of <spell name>.",
+            "cast_sleep": "Thou hast put the <enemy> to sleep.",
+            "cast_blocked": "<player name>'s spell is blocked.",
+            //"cast_blocked": "But that spell hath been blocked.",
+            "asleep": "Thou art asleep.",
+            "asleep_still": "Thou art still asleep.",
+            "awoke": "<player name> awakes.",
+            "dead": "Thou art dead."
+        },
+        enemy: {
+            "attack": "The <enemy> attacks!",
+            "hit": "Thy Hit{EF} decreased by <number>.",
+            "miss": "A miss! No damage hath been scored!",
+            "near": "A <enemy> draws near!",
+            "run": "The <enemy> is running away.",
+            "strike_first": "The <enemy> attacked before <player name> was ready.",
+            "dodge": "It is dodging!",
+            "asleep": "The <enemy> is asleep.",
+            "awoke": "<enemy> hath woken up.",
+            "cast": "<enemy> chants the spell of <spell>.",
+            "cast_blocked": "The <enemy>'s spell hath been blocked.",
+            "fire": "The <enemy> is breathing fire.",
+            "recovered": "The <enemy> hath recovered."
+        },
+        victory: {
+            "defeated": "Thou hast done well in defeating the <enemy>.",
+            "gain_exp": "Thy Experience\nincreases by <number>.",
+            "gain_gold": "Thy GOLD\nincreases by <number>.",
+            "next_level": "Courage and wit have served thee well.\nThou hast been promoted to the next level.",
+            "new_spell": "Thou hast learned a new spell."
+        }
     },
     menu: {
         "stairs_none": "There are no stairs here.",
         "talk_none": "There is no one there.",
-        "door_none": "There is no door here.",
-        "door_no_key": "Thou hast not a key to use."
+        door: {
+            "none": "There is no door here.",
+            "no_key": "Thou hast not a key to use."
+        },
+        take: {
+            "too_many_items": "If thou would take the <item>, thou must now discard some other item.",
+            "want_item": "Dost thou wish to have the <item>?",
+            "give_up_item": "Thou hast given up thy <item>.",
+            "drop_which": "What shall thou drop?",
+            "drop_item": "Thou hast dropped thy <item>.",
+            "got_item": "And obtained the <item>.",
+            "drop_blocked": "That is much too important to throw away."
+        },
+        use: {
+            "none": "Nothing of use has yet been given to thee.",
+            "generic": "<player name> held the <item> tightly.",
+            "herb": "<player name> used the Herb.",
+            "wings": "<player name> threw The Wings of the Wyvern up into the sky.",
+            "wings_blocked": "The Wings of the Wyvern cannot be used here.",
+            "scale": "<player name> donned the scale of the dragon.",
+            "scale_twice": "Thou art already wearing the scale of the dragon.",
+            "flute": "<player name> blew the Fairies' Flute.",
+            "ring": "<player name> put on the Fighter's Ring.",
+            "ring_twice": "<player name> adjusted the position of the Fighter's Ring.",
+            "harp": "<player name> played a sweet melody on the harp.",
+            "rainbow_drop": "<player name> held the Rainbow Drop toward the sky.\nBut no rainbow appeared here."
+        }
     }
 };
