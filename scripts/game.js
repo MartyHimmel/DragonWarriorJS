@@ -1,6 +1,6 @@
 // Start the game!
 player.name = prompt("What is thy name?");
-if (player.name === "") player.name = "Yuji Horii";
+if (player.name === "") { player.name = "Yuji Horii"; }
 change_state("exploration");
 map.load_map("World");
 player.load_player();
@@ -11,7 +11,7 @@ main();
 // The main game loop
 function main() {
 	requestAnimationFrame(main);
-	if (game_state === "exploration") draw();
+	if (game_state === "exploration") { draw(); }
 	update();
 	display_output();
 }
@@ -123,7 +123,7 @@ getId('equip_shield').onclick = function() {
 	player.shield = "leather_shield";
 };
 getId('equip_both').onclick = function() {
-	player.weapon = "club";
+	player.weapon = "erdricks_sword";
 	player.shield = "leather_shield";
 };
 getId('equip_none').onclick = function() {

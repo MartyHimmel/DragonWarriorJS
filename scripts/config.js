@@ -1,86 +1,86 @@
 var config = {
     levels: [
-        { "max_hp": 15,  "max_mp": 0,   strength: 4,   agility: 4,   requiredExp: 0 },
-        { "max_hp": 22,  "max_mp": 0,   strength: 5,   agility: 4,   requiredExp: 7 },
-        { "max_hp": 24,  "max_mp": 5,   strength: 7,   agility: 6,   requiredExp: 23,    spellsLearned: ["heal"] },
-        { "max_hp": 31,  "max_mp": 16,  strength: 7,   agility: 8,   requiredExp: 47,    spellsLearned: ["hurt"] },
-        { "max_hp": 35,  "max_mp": 20,  strength: 12,  agility: 10,  requiredExp: 110 },
-        { "max_hp": 38,  "max_mp": 24,  strength: 16,  agility: 10,  requiredExp: 220 },
-        { "max_hp": 40,  "max_mp": 26,  strength: 18,  agility: 17,  requiredExp: 450,   spellsLearned: ["sleep"] },
-        { "max_hp": 46,  "max_mp": 29,  strength: 22,  agility: 20,  requiredExp: 800 },
-        { "max_hp": 50,  "max_mp": 36,  strength: 30,  agility: 22,  requiredExp: 1300,  spellsLearned: ["radiant"] },
-        { "max_hp": 54,  "max_mp": 40,  strength: 35,  agility: 31,  requiredExp: 2000,  spellsLearned: ["stopspell"] },
-        { "max_hp": 62,  "max_mp": 50,  strength: 40,  agility: 35,  requiredExp: 2900 },
-        { "max_hp": 63,  "max_mp": 58,  strength: 48,  agility: 40,  requiredExp: 4000,  spellsLearned: ["outside"] },
-        { "max_hp": 70,  "max_mp": 64,  strength: 52,  agility: 48,  requiredExp: 5500,  spellsLearned: ["return"] },
-        { "max_hp": 78,  "max_mp": 70,  strength: 60,  agility: 55,  requiredExp: 7500 },
-        { "max_hp": 86,  "max_mp": 72,  strength: 68,  agility: 64,  requiredExp: 10000, spellsLearned: ["repel"] },
-        { "max_hp": 92,  "max_mp": 95,  strength: 72,  agility: 70,  requiredExp: 13000 },
-        { "max_hp": 100, "max_mp": 100, strength: 72,  agility: 78,  requiredExp: 16000, spellsLearned: ["healmore"] },
-        { "max_hp": 115, "max_mp": 108, strength: 85,  agility: 84,  requiredExp: 19000 },
-        { "max_hp": 130, "max_mp": 115, strength: 87,  agility: 86,  requiredExp: 22000, spellsLearned: ["hurtmore"] },
-        { "max_hp": 138, "max_mp": 128, strength: 92,  agility: 88,  requiredExp: 26000 },
-        { "max_hp": 149, "max_mp": 135, strength: 95,  agility: 90,  requiredExp: 30000 },
-        { "max_hp": 158, "max_mp": 146, strength: 97,  agility: 90,  requiredExp: 34000 },
-        { "max_hp": 165, "max_mp": 153, strength: 99,  agility: 94,  requiredExp: 38000 },
-        { "max_hp": 170, "max_mp": 161, strength: 103, agility: 98,  requiredExp: 42000 },
-        { "max_hp": 174, "max_mp": 161, strength: 113, agility: 100, requiredExp: 46000 },
-        { "max_hp": 180, "max_mp": 168, strength: 117, agility: 105, requiredExp: 50000 },
-        { "max_hp": 189, "max_mp": 175, strength: 125, agility: 107, requiredExp: 54000 },
-        { "max_hp": 195, "max_mp": 180, strength: 130, agility: 115, requiredExp: 58000 },
-        { "max_hp": 200, "max_mp": 190, strength: 135, agility: 120, requiredExp: 62000 },
-        { "max_hp": 210, "max_mp": 200, strength: 140, agility: 130, requiredExp: 65535 }
+        { max_hp: 15,  max_mp: 0,   strength: 4,   agility: 4,   required_exp: 0 },
+        { max_hp: 22,  max_mp: 0,   strength: 5,   agility: 4,   required_exp: 7 },
+        { max_hp: 24,  max_mp: 5,   strength: 7,   agility: 6,   required_exp: 23,    spells_learned: ["heal"] },
+        { max_hp: 31,  max_mp: 16,  strength: 7,   agility: 8,   required_exp: 47,    spells_learned: ["hurt"] },
+        { max_hp: 35,  max_mp: 20,  strength: 12,  agility: 10,  required_exp: 110 },
+        { max_hp: 38,  max_mp: 24,  strength: 16,  agility: 10,  required_exp: 220 },
+        { max_hp: 40,  max_mp: 26,  strength: 18,  agility: 17,  required_exp: 450,   spells_learned: ["sleep"] },
+        { max_hp: 46,  max_mp: 29,  strength: 22,  agility: 20,  required_exp: 800 },
+        { max_hp: 50,  max_mp: 36,  strength: 30,  agility: 22,  required_exp: 1300,  spells_learned: ["radiant"] },
+        { max_hp: 54,  max_mp: 40,  strength: 35,  agility: 31,  required_exp: 2000,  spells_learned: ["stopspell"] },
+        { max_hp: 62,  max_mp: 50,  strength: 40,  agility: 35,  required_exp: 2900 },
+        { max_hp: 63,  max_mp: 58,  strength: 48,  agility: 40,  required_exp: 4000,  spells_learned: ["outside"] },
+        { max_hp: 70,  max_mp: 64,  strength: 52,  agility: 48,  required_exp: 5500,  spells_learned: ["return"] },
+        { max_hp: 78,  max_mp: 70,  strength: 60,  agility: 55,  required_exp: 7500 },
+        { max_hp: 86,  max_mp: 72,  strength: 68,  agility: 64,  required_exp: 10000, spells_learned: ["repel"] },
+        { max_hp: 92,  max_mp: 95,  strength: 72,  agility: 70,  required_exp: 13000 },
+        { max_hp: 100, max_mp: 100, strength: 72,  agility: 78,  required_exp: 16000, spells_learned: ["healmore"] },
+        { max_hp: 115, max_mp: 108, strength: 85,  agility: 84,  required_exp: 19000 },
+        { max_hp: 130, max_mp: 115, strength: 87,  agility: 86,  required_exp: 22000, spells_learned: ["hurtmore"] },
+        { max_hp: 138, max_mp: 128, strength: 92,  agility: 88,  required_exp: 26000 },
+        { max_hp: 149, max_mp: 135, strength: 95,  agility: 90,  required_exp: 30000 },
+        { max_hp: 158, max_mp: 146, strength: 97,  agility: 90,  required_exp: 34000 },
+        { max_hp: 165, max_mp: 153, strength: 99,  agility: 94,  required_exp: 38000 },
+        { max_hp: 170, max_mp: 161, strength: 103, agility: 98,  required_exp: 42000 },
+        { max_hp: 174, max_mp: 161, strength: 113, agility: 100, required_exp: 46000 },
+        { max_hp: 180, max_mp: 168, strength: 117, agility: 105, required_exp: 50000 },
+        { max_hp: 189, max_mp: 175, strength: 125, agility: 107, required_exp: 54000 },
+        { max_hp: 195, max_mp: 180, strength: 130, agility: 115, required_exp: 58000 },
+        { max_hp: 200, max_mp: 190, strength: 135, agility: 120, required_exp: 62000 },
+        { max_hp: 210, max_mp: 200, strength: 140, agility: 130, required_exp: 65535 }
     ],
     weapons: {
-        "none":           { attack: 0,  price: 0 },
-        "bamboo_pole":    { attack: 2,  price: 10 },
-        "club":           { attack: 4,  price: 60 },
-        "copper_sword":   { attack: 10, price: 180 },
-        "hand_axe":       { attack: 15, price: 560 },
-        "broad_sword":    { attack: 20, price: 1500 },
-        "flame_sword":    { attack: 28, price: 9800 },
-        "erdricks_sword": { attack: 40, price: 0 }
+        none:           { attack: 0,  price: 0 },
+        bamboo_pole:    { attack: 2,  price: 10 },
+        club:           { attack: 4,  price: 60 },
+        copper_sword:   { attack: 10, price: 180 },
+        hand_axe:       { attack: 15, price: 560 },
+        broad_sword:    { attack: 20, price: 1500 },
+        flame_sword:    { attack: 28, price: 9800 },
+        erdricks_sword: { attack: 40, price: 0 }
     },
     armors: {
-        "none":           { defense: 0,  price: 0 },
-        "clothes":        { defense: 2,  price: 20 },
-        "leather_armor":  { defense: 4,  price: 70 },
-        "chain_mail":     { defense: 10, price: 300 },
-        "half_plate":     { defense: 16, price: 1000 },
-        "full_plate":     { defense: 24, price: 3000 },
-        "magic_armor":    { defense: 24, price: 7700 },
-        "erdricks_armor": { defense: 28, price: 0 }
+        none:           { defense: 0,  price: 0 },
+        clothes:        { defense: 2,  price: 20 },
+        leather_armor:  { defense: 4,  price: 70 },
+        chain_mail:     { defense: 10, price: 300 },
+        half_plate:     { defense: 16, price: 1000 },
+        full_plate:     { defense: 24, price: 3000 },
+        magic_armor:    { defense: 24, price: 7700 },
+        erdricks_armor: { defense: 28, price: 0 }
     },
     shields: {
-        "none":           { defense: 0,  price: 0 },
-        "leather_shield": { defense: 4,  price: 90 },
-        "iron_shield":    { defense: 10, price: 800 },
-        "silver_shield":  { defense: 20, price: 14800 }
+        none:           { defense: 0,  price: 0 },
+        leather_shield: { defense: 4,  price: 90 },
+        iron_shield:    { defense: 10, price: 800 },
+        silver_shield:  { defense: 20, price: 14800 }
     },
     items: {
     },
     spells: {
         "heal": {
-            "show_in_combat": true,
-            "show_in_explore": true,
+            show_in_combat: true,
+            show_in_explore: true,
             cost: 4,
             effect: function() { player.add_hp(random_number(10, 17)); }
         },
         "hurt": {
-            "show_in_combat": true,
-            "show_in_explore": false,
+            show_in_combat: true,
+            show_in_explore: false,
             cost: 2,
             effect: function() { combat.enemy_current_hp -= random_number(5, 12); }
         },
         "sleep": {
-            "show_in_combat": true,
-            "show_in_explore": false,
+            show_in_combat: true,
+            show_in_explore: false,
             cost: 2,
             effect: function() { combat.enemy_status = "sleep"; }
         },
         "radiant": {
-            "show_in_combat": false,
-            "show_in_explore": true,
+            show_in_combat: false,
+            show_in_explore: true,
             cost: 3,
             effect: function() {
                 player.visibility = 3;
@@ -89,38 +89,38 @@ var config = {
             }
         },
         "stopspell": {
-            "show_in_combat": true,
-            "show_in_explore": false,
+            show_in_combat: true,
+            show_in_explore: false,
             cost: 2,
             effect: function() { combat.enemy_status = "stopspell"; }
         },
         "outside": {
-            "show_in_combat": false,
-            "show_in_explore": true,
+            show_in_combat: false,
+            show_in_explore: true,
             cost: 6,
             effect: function() { }
         },
         "return": {
-            "show_in_combat": false,
-            "show_in_explore": true,
+            show_in_combat: false,
+            show_in_explore: true,
             cost: 8,
             effect: function() { }
         },
         "repel": {
-            "show_in_combat": false,
-            "show_in_explore": true,
+            show_in_combat: false,
+            show_in_explore: true,
             cost: 2,
             effect: function() { }
         },
         "healmore": {
-            "show_in_combat": true,
-            "show_in_explore": true,
+            show_in_combat: true,
+            show_in_explore: true,
             cost: 10,
             effect: function() { player.add_hp(random_number(85, 100)); }
         },
         "hurtmore": {
-            "show_in_combat": true,
-            "show_in_explore": false,
+            show_in_combat: true,
+            show_in_explore: false,
             cost: 5,
             effect: function() { combat.enemy_current_hp -= random_number(58, 65); }
         }

@@ -1,5 +1,5 @@
 var combat = {
-	"enemy_ptr": null,
+	enemy_ptr: null,
 	"enemy_id": 0, // current enemy player is fighting
 	"enemy_current_hp": 0, // randomized at start of battle
 	"gold_reward": 0, // randomized at start of battle
@@ -86,7 +86,7 @@ var combat = {
 			this.gold_reward = this.enemy_ptr.gold;
 		}
 
-		add_text(this.enemy_ptr.name + " draws near!");
+		add_text(text.format(text.combat.enemy.near, { enemy: this.enemy_ptr.name }));
 	},
 
 	// Draw functions
@@ -105,9 +105,10 @@ var combat = {
 		var tile_x = this.enemy_ptr.x,
 		    tile_y = this.enemy_ptr.y,
 		    tile_width = this.enemy_ptr.width,
-		    tile_height = this.enemy_ptr.height;
-		var pos_x = (canvas.width / 2) - tile_width;
-		var pos_y = (canvas.height / 2) - tile_height;
+		    tile_height = this.enemy_ptr.height,
+		    pos_x = (canvas.width / 2) - tile_width,
+		    pos_y = (canvas.height / 2) - tile_height;
+
 		context.drawImage(img, tile_x, tile_y, tile_width, tile_height,
 			pos_x, pos_y, tile_width * 2, tile_height *2);
 	},
@@ -124,7 +125,7 @@ var combat = {
 
 		if (player.strength > (2 * enemy_strength)) {
 			if (rand3 <= 25) {
-				add_text("The " + this.enemy_ptr.name + " is running away.");
+				add_text(text.format(text.combat.enemy.run, { enemy: this.enemy_ptr.name }));
 				setTimeout(function() {
 					change_state("exploration");
 				}, 500);
@@ -132,11 +133,10 @@ var combat = {
 		}
 
 		if ((player.agility * rand1) < (enemy_agility * rand2 * 0.25)) {
-			add_text("The " + this.enemy_ptr.name + " attacked before " +
-				player.name + " was ready.");
+			add_text(text.format(text.combat.enemy.strike_first, { enemy: this.enemy_ptr.name, player_name: player.name }));
 			this.player_turn = false;
 		} else {
-			add_text(text.combat.player["prompt"]);
+			add_text(text.combat.prompt);
 		}
 
 		this.initiative_round = false;
@@ -147,41 +147,32 @@ var combat = {
 		    damage = 0;
 
 		if (this.player_turn === true) {
-			add_text(player.name + " attacks!");
+			add_text(text.format(text.combat.player.attack, { player_name: player.name }));
 			if (random_number(1, 64) > this.enemy_ptr.dodge) {
 				hit = true;
 			}
 
 			if (hit) {
 				if (random_number(1, 32) === 1 && this.enemy_ptr !== (38 || 39)) {
-					add_text(text.combat.player["hit_critical"]);
+					add_text(text.combat.player.hit_critical);
 					damage = Math.floor(random_number(player.attack_power / 2, player.attack_power));
-					if (damage < 0) damage = 0;
-					add_text("The " + this.enemy_ptr.name + "'s Hit Points " +
-						"have been reduced by " + damage + ".");
-					this.enemy_current_hp -= damage;
-					if (this.enemy_current_hp <= 0) {
-						this.player_turn = true;
-						this.victory();
-					} else {
-						this.player_turn = false;
-					}
 				} else {
 					damage = Math.floor(random_number((player.attack_power - this.enemy_ptr.agility) / 4,
 						(player.attack_power - this.enemy_ptr.agility) / 2));
-					if (damage < 0) damage = 0;
-					add_text("The " + this.enemy_ptr.name + "'s Hit Points " +
-						"have been reduced by " + damage + ".");
-					this.enemy_current_hp -= damage;
-					if (this.enemy_current_hp <= 0) {
-						this.player_turn = true;
-						this.victory();
-					} else {
-						this.player_turn = false;
-					}
+				}
+
+				if (damage < 0) { damage = 0; }
+				add_text(text.format(text.combat.player.hit, { enemy: this.enemy_ptr.name,number: damage}));
+				this.enemy_current_hp -= damage;
+
+				if (this.enemy_current_hp <= 0) {
+					this.player_turn = true;
+					this.victory();
+				} else {
+					this.player_turn = false;
 				}
 			} else {
-				add_text(text.combat.enemy["dodge"]);
+				add_text(text.combat.enemy.dodge);
 				this.player_turn = false;
 			}
 		}
@@ -201,12 +192,18 @@ var combat = {
 			    rand1 = random_number(0, 255),
 			    rand2 = random_number(0, 255),
 			    enemy_agility = this.enemy_ptr.agility;
-			if (this.enemy_id >= 0 && this.enemy_id <= 20) modifier = 0.25;
-			else if (this.enemy_id >= 20 && this.enemy_id <= 29) modifier = 0.375;
-			else if (this.enemy_id >= 30 && this.enemy_id <= 34) modifier = 0.5;
-			else modifier = 1;
 
-			add_text(player.name + " started to run away.");
+			if (this.enemy_id >= 0 && this.enemy_id <= 20) {
+				modifier = 0.25;
+			} else if (this.enemy_id >= 20 && this.enemy_id <= 29) {
+				modifier = 0.375;
+			} else if (this.enemy_id >= 30 && this.enemy_id <= 34) {
+				modifier = 0.5;
+			} else {
+				modifier = 1;
+			}
+
+			add_text(text.format(text.combat.player.run, { player_name: player.name }));
 			this.player_turn = false;
 
 			if (this.enemy_status === "sleep") {
@@ -218,7 +215,7 @@ var combat = {
 
 			if ((player.agility * rand1) <
 				(enemy_agility * rand2 * modifier)) {
-				add_text(text.combat.player["run_blocked"]);
+				add_text(text.combat.player.run_blocked);
 			} else {
 				this.player_turn = true;
 				setTimeout(function() {
@@ -229,29 +226,35 @@ var combat = {
 	},
 
 	player_died: function() {
-		add_text(text.combat.player["dead"]);
+		add_text(text.dead);
 	},
 
 	victory: function() {
 		var current_level = player.level;
-		add_text("Thou hast done well in");
-		add_text("defeating the " + this.enemy_ptr.name + ".");
-		add_text("Thy Experience increases by " + this.enemy_ptr.experience + ".");
+
+		add_text(text.format(text.combat.victory.defeated, { enemy: this.enemy_ptr.name }));
+
+		add_text(text.format(text.combat.victory.gain_exp, { number: this.enemy_ptr.experience }));
 		player.add_experience(this.enemy_ptr.experience);
-		add_text("Thy Gold increase by " + this.gold_reward + ".");
+
+		add_text(text.format(text.combat.victory.gain_gold, { number: this.gold_reward }));
 		player.add_gold(this.gold_reward);
+
 		player.load_player();
-		if (player.level === current_level + 1) {
+		if (player.level === (current_level + 1)) {
 			this.player_level_up();
 		}
+
 		setTimeout(function() {
 			change_state("exploration");
 		}, 1000);
 	},
 
 	player_level_up: function() {
-		add_text("Courage and wit have served thee well.");
-		add_text("Thou hast been promoted to the next level.");
+		add_text(text.combat.victory.next_level);
+		if (typeof config.levels[player.level - 1].spells_learned !== 'undefined') {
+			add_text(text.combat.victory.new_spell);
+		}
 	},
 
 	enemy_attack: function() {
@@ -260,18 +263,19 @@ var combat = {
 		    enemy_strength = this.enemy_ptr.strength;
 
 		if (this.player_turn === false) {
-			add_text(this.enemy_ptr.name + " attacks!");
+			add_text(text.format(text.combat.enemy.attack, { enemy: this.enemy_ptr.name }));
+
 			if (player.defense_power >= enemy_strength) {
 				damage = Math.floor(random_number(0, ((enemy_strength + 4) / 6)));
-				add_text("Thy Hit Points decreased by " + damage + ".");
-				player.lose_hp(damage);
 			} else {
 				damage = Math.floor(random_number(((enemy_strength - (player.defense_power / 2)) / 4),
 					((enemy_strength - (player.defense_power / 2)) / 2)));
-				add_text("Thy Hit Points decreased by " + damage + ".");
-				player.lose_hp(damage);
 			}
+
+			add_text(text.format(text.combat.enemy.hit, { number: damage }));
+			player.lose_hp(damage);
 		}
+
 		this.player_turn = true;
 	}
 };

@@ -70,16 +70,19 @@ var player = {
 	},
 
 	animate_player: function(frame1, frame2) {
-		if ((Date.now() % 1000) < 500) this.character_frame(frame1, this.x, this.y);
-		else this.character_frame(frame2, this.x, this.y);
+		if ((Date.now() % 1000) < 500) {
+			this.character_frame(frame1, this.x, this.y);
+		} else {
+			this.character_frame(frame2, this.x, this.y);
+		}
 	},
 
 	draw_player: function(direction) {
-		if (this.character_state === "up") direction = "up";
-		if (this.character_state === "down") direction = "down";
-		if (this.character_state === "") direction = "down";
-		if (this.character_state === "left") direction = "left";
-		if (this.character_state === "right") direction = "right";
+		if (this.character_state === "up") { direction = "up"; }
+		if (this.character_state === "down") { direction = "down"; }
+		if (this.character_state === "") { direction = "down"; }
+		if (this.character_state === "left") { direction = "left"; }
+		if (this.character_state === "right") { direction = "right"; }
 		switch (direction) {
 			case "up" :
 				if (this.carrying_princess === true) {
@@ -307,12 +310,12 @@ var player = {
 		this.spells = {};
 		for (i=0; i<config.levels.length; i++) {
 			level = config.levels[i];
-			if (this.experience < level.requiredExp) {
+			if (this.experience < level.required_exp) {
 				break;
 			}
-			if (typeof level.spellsLearned !== 'undefined' && level.spellsLearned instanceof Array) {
-				for (j=0; j<level.spellsLearned.length; j++) {
-					spellId = level.spellsLearned[j];
+			if (typeof level.spells_learned !== 'undefined' && level.spells_learned instanceof Array) {
+				for (j=0; j<level.spells_learned.length; j++) {
+					spellId = level.spells_learned[j];
 					this.spells[spellId] = config.spells[spellId];
 				}
 			}
@@ -321,11 +324,11 @@ var player = {
 	},
 
 	set_max_hp: function() {
-		this.max_hp = config.levels[this.level - 1]["max_hp"];
+		this.max_hp = config.levels[this.level - 1].max_hp;
 	},
 
 	set_max_mp: function() {
-		this.max_mp = config.levels[this.level - 1]["max_mp"];
+		this.max_mp = config.levels[this.level - 1].max_mp;
 	},
 
 	set_strength: function() {
@@ -349,7 +352,7 @@ var player = {
 		var self = this;
 		Object.keys(this.spells).forEach(function (spellId) {
 			var spell = self.spells[spellId];
-			if ((game_state === "combat" && spell["show_in_combat"]) || (game_state === "exploration" && spell["show_in_explore"])) {
+			if ((game_state === "combat" && spell.show_in_combat) || (game_state === "exploration" && spell.show_in_explore)) {
 				add_option(text.spells[spellId], text.spells[spellId], "spell");
 			}
 		});
