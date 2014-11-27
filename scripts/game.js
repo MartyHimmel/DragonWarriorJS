@@ -56,7 +56,7 @@ function update() {
 		}
 
 		if (88 in keysDown) { // Player presses 'x'
-			combat.enemy_id = "";
+			combat.enemy_ptr = null;
 			change_state("exploration");
 		}
 	}

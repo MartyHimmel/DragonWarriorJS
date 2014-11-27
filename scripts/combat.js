@@ -1,6 +1,6 @@
 var combat = {
-	enemy_ptr: null,
-	"enemy_id": 0, // current enemy player is fighting
+	enemy_ptr: null, // current enemy player is fighting
+	enemy_name: "",
 	"enemy_current_hp": 0, // randomized at start of battle
 	"gold_reward": 0, // randomized at start of battle
 	"enemy_status": "",
@@ -42,35 +42,37 @@ var combat = {
 	random_enemy: function() {
 		var rand = random_number(0, 4),
 		    enemy_list = [];
+
 		switch (map.current_zone) {
-			case 0:		enemy_list = [0, 1, 0, 1, 0];		break;
-			case 1:		enemy_list = [1, 0, 1, 2, 1];		break;
-			case 2:		enemy_list = [0, 3, 2, 3, 1];		break;
-			case 3:		enemy_list = [1, 1, 2, 3, 4];		break;
-			case 4:		enemy_list = [3, 4, 5, 5, 6];		break;
-			case 5:		enemy_list = [3, 4, 5, 6, 11];		break;
-			case 6:		enemy_list = [5, 6, 11, 12, 14];	break;
-			case 7:		enemy_list = [11, 12, 13, 14, 14];	break;
-			case 8:		enemy_list = [13, 15, 18, 18, 25];	break;
-			case 9:		enemy_list = [15, 21, 18, 21, 25];	break;
-			case 10:	enemy_list = [21, 22, 23, 26, 28];	break;
-			case 11:	enemy_list = [23, 26, 27, 28, 16];	break;
-			case 12:	enemy_list = [26, 27, 28, 29, 31];	break;
-			case 13:	enemy_list = [29, 30, 31, 31, 32];	break;
-			case 14:	enemy_list = [8, 9, 10, 11, 12];	break;
-			case 15:	enemy_list = [17, 18, 19, 20, 23];	break;
-			case 16:	enemy_list = [29, 30, 31, 32, 33];	break;
-			case 17:	enemy_list = [32, 33, 34, 34, 35];	break;
-			case 18:	enemy_list = [32, 35, 36, 36, 37];	break;
-			case 19:	enemy_list = [3, 4, 6, 7, 7];		break;
+			case 0:	 enemy_list = [0, 1, 0, 1, 0];      break;
+			case 1:	 enemy_list = [1, 0, 1, 2, 1];      break;
+			case 2:	 enemy_list = [0, 3, 2, 3, 1];      break;
+			case 3:	 enemy_list = [1, 1, 2, 3, 4];      break;
+			case 4:	 enemy_list = [3, 4, 5, 5, 6];      break;
+			case 5:	 enemy_list = [3, 4, 5, 6, 11];     break;
+			case 6:	 enemy_list = [5, 6, 11, 12, 14];   break;
+			case 7:	 enemy_list = [11, 12, 13, 14, 14]; break;
+			case 8:	 enemy_list = [13, 15, 18, 18, 25]; break;
+			case 9:	 enemy_list = [15, 21, 18, 21, 25]; break;
+			case 10: enemy_list = [21, 22, 23, 26, 28]; break;
+			case 11: enemy_list = [23, 26, 27, 28, 16]; break;
+			case 12: enemy_list = [26, 27, 28, 29, 31]; break;
+			case 13: enemy_list = [29, 30, 31, 31, 32]; break;
+			case 14: enemy_list = [8, 9, 10, 11, 12];   break;
+			case 15: enemy_list = [17, 18, 19, 20, 23]; break;
+			case 16: enemy_list = [29, 30, 31, 32, 33]; break;
+			case 17: enemy_list = [32, 33, 34, 34, 35]; break;
+			case 18: enemy_list = [32, 35, 36, 36, 37]; break;
+			case 19: enemy_list = [3, 4, 6, 7, 7];      break;
 		}
+
 		this.load_enemy(enemy_list[rand]);
 	},
 
 	load_enemy: function(id) {
-		this.enemy_id = id;
 		this.initiative_round = true;
-		this.enemy_ptr = config.enemies[this.enemy_id];
+		this.enemy_ptr = config.enemies[id];
+		this.enemy_name = text.enemies[this.enemy_ptr.name];
 
 		// check if enemy HP is a range or set number
 		if (this.enemy_ptr.hp instanceof Array) {
@@ -86,7 +88,7 @@ var combat = {
 			this.gold_reward = this.enemy_ptr.gold;
 		}
 
-		add_text(text.format(text.combat.enemy.near, { enemy: this.enemy_ptr.name }));
+		add_text(text.format(text.combat.enemy.near, { enemy: this.enemy_name }));
 	},
 
 	// Draw functions
@@ -125,7 +127,7 @@ var combat = {
 
 		if (player.strength > (2 * enemy_strength)) {
 			if (rand3 <= 25) {
-				add_text(text.format(text.combat.enemy.run, { enemy: this.enemy_ptr.name }));
+				add_text(text.format(text.combat.enemy.run, { enemy: this.enemy_name }));
 				setTimeout(function() {
 					change_state("exploration");
 				}, 500);
@@ -133,7 +135,7 @@ var combat = {
 		}
 
 		if ((player.agility * rand1) < (enemy_agility * rand2 * 0.25)) {
-			add_text(text.format(text.combat.enemy.strike_first, { enemy: this.enemy_ptr.name, player_name: player.name }));
+			add_text(text.format(text.combat.enemy.strike_first, { enemy: this.enemy_name, player_name: player.name }));
 			this.player_turn = false;
 		} else {
 			add_text(text.combat.prompt);
@@ -162,7 +164,7 @@ var combat = {
 				}
 
 				if (damage < 0) { damage = 0; }
-				add_text(text.format(text.combat.player.hit, { enemy: this.enemy_ptr.name,number: damage}));
+				add_text(text.format(text.combat.player.hit, { enemy: this.enemy_name, number: damage}));
 				this.enemy_current_hp -= damage;
 
 				if (this.enemy_current_hp <= 0) {
@@ -191,13 +193,14 @@ var combat = {
 			var modifier = 0,
 			    rand1 = random_number(0, 255),
 			    rand2 = random_number(0, 255),
-			    enemy_agility = this.enemy_ptr.agility;
+			    enemy_agility = this.enemy_ptr.agility,
+			    enemy_id = this.enemy_ptr.id;
 
-			if (this.enemy_id >= 0 && this.enemy_id <= 20) {
+			if (enemy_id >= 0 && enemy_id <= 20) {
 				modifier = 0.25;
-			} else if (this.enemy_id >= 20 && this.enemy_id <= 29) {
+			} else if (enemy_id >= 20 && enemy_id <= 29) {
 				modifier = 0.375;
-			} else if (this.enemy_id >= 30 && this.enemy_id <= 34) {
+			} else if (enemy_id >= 30 && enemy_id <= 34) {
 				modifier = 0.5;
 			} else {
 				modifier = 1;
@@ -232,7 +235,7 @@ var combat = {
 	victory: function() {
 		var current_level = player.level;
 
-		add_text(text.format(text.combat.victory.defeated, { enemy: this.enemy_ptr.name }));
+		add_text(text.format(text.combat.victory.defeated, { enemy: this.enemy_name }));
 
 		add_text(text.format(text.combat.victory.gain_exp, { number: this.enemy_ptr.experience }));
 		player.add_experience(this.enemy_ptr.experience);
@@ -263,7 +266,7 @@ var combat = {
 		    enemy_strength = this.enemy_ptr.strength;
 
 		if (this.player_turn === false) {
-			add_text(text.format(text.combat.enemy.attack, { enemy: this.enemy_ptr.name }));
+			add_text(text.format(text.combat.enemy.attack, { enemy: this.enemy_name }));
 
 			if (player.defense_power >= enemy_strength) {
 				damage = Math.floor(random_number(0, ((enemy_strength + 4) / 6)));
