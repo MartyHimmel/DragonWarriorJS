@@ -1,14 +1,14 @@
 var combat = {
 	enemy_ptr: null, // current enemy player is fighting
 	enemy_name: "",
-	enemy_max_hp: 0,
-	enemy_current_hp: 0, // randomized at start of battle
+	enemy_max_hp: 0, // randomized at start of battle
+	enemy_current_hp: 0,
 	enemy_spell_blocked: false,
 	gold_reward: 0, // randomized at start of battle
 	enemy_status: "",
 	player_turn: true,
-	"random_num": 0,
-	"initiative_round": true,
+	random_num: 0,
+	initiative_round: true,
 
 	// Check for random encounters at each step in player.move()
 	random_encounter: function() {
@@ -268,7 +268,9 @@ var combat = {
 			special,
 			used_special = false,
 		    damage = 0,
-		    enemy_strength = this.enemy_ptr.strength;
+		    enemy_strength = this.enemy_ptr.strength,
+		    breath_min_dmg,
+		    breath_max_dmg;
 
 		if (this.player_turn === false) {
 			//Special move (spell, breathe fire)
@@ -281,13 +283,22 @@ var combat = {
 				for (i=0; i< this.enemy_ptr.special.length; i++) {
 					if (random_number(1, 4) <= this.enemy_ptr.special_probability[i]) {
 						special = this.enemy_ptr.special[i];
-						if (special === "breathe_fire") {
+						if (special === "breathe_fire" || special === "breathe_fire2") {
 							add_text(text.format(text.combat.enemy.fire, { enemy: this.enemy_name }));
-							//TODO: damage from fire
 
-						} else if (special === "breathe_fire2") {
-							add_text(text.format(text.combat.enemy.fire, { enemy: this.enemy_name }));
-							//TODO: damage from Dragon Lord
+							//Erdricks armor reduces damage by 1/3
+							if (special === "breathe_fire2") {
+								//used by Dragon Lord in final form only
+								breath_min_dmg = player.has_erdricks_armor ? 42 : 65;
+								breath_max_dmg = player.has_erdricks_armor ? 48 : 72;
+							} else {
+								breath_min_dmg = player.has_erdricks_armor ? 10 : 16;
+								breath_max_dmg = player.has_erdricks_armor ? 14 : 23;
+							}
+
+							damage = Math.floor(random_number(breath_min_dmg, breath_max_dmg));
+							add_text(text.format(text.combat.enemy.hit, { number: damage }));
+							player.lose_hp(damage);
 
 						} else {
 							if ((special === "heal" || special === "healmore") && (this.enemy_current_hp > (this.enemy_current_hp / 4))) {

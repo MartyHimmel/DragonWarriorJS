@@ -127,7 +127,6 @@ var config = {
         }
     },
     enemies: [
-        //Data from http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/69121
         {
             id: 0,
             name: "slime",
@@ -136,10 +135,10 @@ var config = {
             hp: 3,
             experience: 1,
             gold: 1,
-            sleep_resist: 0,      //out of 16
-            stopspell_resist: 15, //out of 16
-            hurt_resist: 0,       //out of 16
-            dodge: 1,             //out of 64
+            sleep_resist: 0,
+            stopspell_resist: 15,
+            hurt_resist: 0,
+            dodge: 1,
             x: 248,
             y: 248,
             width: 32,

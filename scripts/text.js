@@ -1,4 +1,3 @@
-//Text dump from http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/54647
 var text = {
     format: function (formatString, params) {
         function escapeRegExp(string) {
@@ -119,6 +118,7 @@ var text = {
             "run_blocked": "But was blocked in front.",
             "cast": "<player_name> chanted the spell of <spell name>.",
             "cast_sleep": "Thou hast put the <enemy> to sleep.",
+            "cast_blocked": "The spell will not work.",
             "asleep": "Thou art asleep.",
             "asleep_still": "Thou art still asleep.",
             "awoke": "<player_name> awakes."
@@ -126,7 +126,7 @@ var text = {
         enemy: {
             "near": "A <enemy> draws near!",
             "attack": "The <enemy> attacks!",
-            "hit": "Thy Hit Points decreased by <number>.",
+            "hit": "Thy Hits decreased by <number>.",
             "miss": "A miss! No damage hath been scored!",
             "run": "The <enemy> is running away.",
             "strike_first": "The <enemy> attacked before <player_name> was ready.",
@@ -197,7 +197,6 @@ var text = {
         //unsorted
         /*
 That cannot be used in battle.
-The spell will not work.
 <player_name> cannot yet use the spell.
 Thy MP is too low.
 But nothing happened.

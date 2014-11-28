@@ -1,56 +1,56 @@
 var player = {
-	"name": "",
+	name: "",
 
 	// Map collision tiles
-	"collide_tiles": [1, 2, 5, 9, 10, 11, 17, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+	collide_tiles: [1, 2, 5, 9, 10, 11, 17, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
 
 	// Last direction the character was facing
-	"character_state": "",
+	character_state: "",
 
 	// Flags
-	"rescued_princess": false,
-	"carrying_princess": false,
-	"created_rainbow_bridge": false,
-	"green_dragon_is_alive": true,
-	"golem_is_alive": true,
-	"has_erdricks_armor": false,
-	"has_erdricks_token": false,
+	rescued_princess: false,
+	carrying_princess: false,
+	created_rainbow_bridge: false,
+	green_dragon_is_alive: true,
+	golem_is_alive: true,
+	has_erdricks_armor: false,
+	has_erdricks_token: false,
 
 	// Screen position
-	"x": 0,
-	"y": 0,
+	x: 0,
+	y: 0,
 
 	// Map position
-	"offset_x": 0,
-	"offset_y": 0,
+	offset_x: 0,
+	offset_y: 0,
 
 	// Tile number at player's location - see map_functions.js for tile definitions
-	"current_tile": 0,
+	current_tile: 0,
 
 	// movement speed - ms per step (1000 / movement = number of tiles moved per second)
-	"movement": 150,
-	"steps": 0,
-	"visibility": 0,
-	"radiant_in_effect": false,
-	"radiant_step_counter": 0,
+	movement: 150,
+	steps: 0,
+	visibility: 0,
+	radiant_in_effect: false,
+	radiant_step_counter: 0,
 
 	// Equipment
-	"weapon": "none",
-	"armor": "none",
-	"shield": "none",
-	"inventory": [],
+	weapon: "none",
+	armor: "none",
+	shield: "none",
+	inventory: [],
 	spells: {},
 
 	// Stats
-	"level": 1,
-	"max_hp": 0,
-	"current_hp": 15,
-	"max_mp": 0,
-	"current_mp": 0,
-	"strength": 0,
-	"agility": 0,
-	"attack_power": 0,
-	"defense_power": 0,
+	level: 1,
+	max_hp: 0,
+	current_hp: 15,
+	max_mp: 0,
+	current_mp: 0,
+	strength: 0,
+	agility: 0,
+	attack_power: 0,
+	defense_power: 0,
 
 	status: "",
 	spell_blocked: false,
@@ -65,8 +65,9 @@ var player = {
 		var img = new Image();
 		img.src = "assets/sprites/characters.png";
 
-		var image_x = (frame_number % 16) * tile_width;
-		var image_y = Math.floor(frame_number / 16) * tile_height;
+		var image_x = (frame_number % 16) * tile_width,
+		    image_y = Math.floor(frame_number / 16) * tile_height;
+
 		context.drawImage(img, image_x, image_y, tile_width, tile_height, pos_x, pos_y, tile_width, tile_height);
 	},
 
@@ -311,9 +312,11 @@ var player = {
 		this.spells = {};
 		for (i=0; i<config.levels.length; i++) {
 			level = config.levels[i];
+
 			if (this.experience < level.required_exp) {
 				break;
 			}
+
 			if (typeof level.spells_learned !== 'undefined' && level.spells_learned instanceof Array) {
 				for (j=0; j<level.spells_learned.length; j++) {
 					spellId = level.spells_learned[j];

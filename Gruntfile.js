@@ -20,7 +20,18 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['scripts/*.js'],
+                src: [
+                    'scripts/config.js',
+                    'scripts/text.js',
+                    'scripts/init.js',
+                    'scripts/npcs.js',
+                    'scripts/player.js',
+                    'scripts/maps.js',
+                    'scripts/map_functions.js',
+                    'scripts/audio.js',
+                    'scripts/combat.js',
+                    'scripts/game.js'
+                ],
                 dest: 'dist/<%= pkg.name %>.js'
             }
         },
@@ -29,7 +40,8 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 // the banner is inserted at the top of the output
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("mm-dd-yyyy") %> */\n'
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("mm-dd-yyyy") %> */\n',
+                mangle: false
             },
             dist: {
                 files: {
