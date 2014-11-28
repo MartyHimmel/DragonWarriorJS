@@ -59,6 +59,24 @@ var config = {
         silver_shield:  { defense: 20, price: 14800 }
     },
     items: {
+        herb: { price: 24 },
+        torch: { price: 8 },
+        magic_key: { price: [53, 83] },
+        dragon_scale: { price: 20 },
+        fairy_water: { price: 38 },
+        wyvern_wings: { price: 70 },
+        cursed_belt: { price: 0 },
+        cursed_necklace: { price: 0, sale_price: 1250 },
+        fairy_flute: { price: 0 },
+        silver_harp: { price: 0 },
+        stones_of_sunlight: { price: 0 },
+        staff_of_rain: { price: 0 },
+        rainbow_drop: { price: 0 },
+        erdricks_tablet: { price: 0 },
+        erdricks_token: { price: 0 },
+        ball_of_light: { price: 0 },
+        fighters_ring: { price: 0 },
+        gwaelins_love: { price: 0 }
     },
     spells: {
         "heal": {

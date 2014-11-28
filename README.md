@@ -27,7 +27,7 @@ of each file:
 * player.js - player object, properties and functions for the player
 * text.js - all in-game displayed text
 
-==Sources==
+##References
 * English text dump by [Blueberry Buttface](http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/54647)
 * Enemy stats by [x_loto](http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/69121)
 * Most formulas by [Ryan8bit](http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/61640)
