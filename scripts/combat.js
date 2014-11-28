@@ -259,7 +259,7 @@ var combat = {
 	player_level_up: function() {
 		add_text(text.combat.victory.next_level);
 		if (typeof config.levels[player.level - 1].spells_learned !== 'undefined') {
-			add_text(text.combat.victory.new_spell);
+			add_text(text.combat.victory.gain_spell);
 		}
 	},
 

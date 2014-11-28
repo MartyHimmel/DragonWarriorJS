@@ -65,7 +65,7 @@ var config = {
         dragon_scale: { price: 20 },
         fairy_water: { price: 38 },
         wyvern_wings: { price: 70 },
-        cursed_belt: { price: 0 },
+        cursed_belt: { price: 0, sale_price: 180 },
         cursed_necklace: { price: 0, sale_price: 1250 },
         fairy_flute: { price: 0 },
         silver_harp: { price: 0 },
@@ -75,29 +75,29 @@ var config = {
         erdricks_tablet: { price: 0 },
         erdricks_token: { price: 0 },
         ball_of_light: { price: 0 },
-        fighters_ring: { price: 0 },
+        fighters_ring: { price: 0, sale_price: 15 },
         gwaelins_love: { price: 0 }
     },
     spells: {
-        "heal": {
+        heal: {
             show_in_combat: true,
             show_in_explore: true,
             cost: 4,
             effect: function() { player.add_hp(random_number(10, 17)); }
         },
-        "hurt": {
+        hurt: {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
             effect: function() { combat.enemy_current_hp -= random_number(5, 12); }
         },
-        "sleep": {
+        sleep: {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
             effect: function() { combat.enemy_status = "sleep"; }
         },
-        "radiant": {
+        radiant: {
             show_in_combat: false,
             show_in_explore: true,
             cost: 3,
@@ -107,13 +107,13 @@ var config = {
                 player.radiant_step_counter = 200;
             }
         },
-        "stopspell": {
+        stopspell: {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
             effect: function() { combat.enemy_status = "stopspell"; }
         },
-        "outside": {
+        outside: {
             show_in_combat: false,
             show_in_explore: true,
             cost: 6,
@@ -125,19 +125,19 @@ var config = {
             cost: 8,
             effect: function() { }
         },
-        "repel": {
+        repel: {
             show_in_combat: false,
             show_in_explore: true,
             cost: 2,
             effect: function() { }
         },
-        "healmore": {
+        healmore: {
             show_in_combat: true,
             show_in_explore: true,
             cost: 10,
             effect: function() { player.add_hp(random_number(85, 100)); }
         },
-        "hurtmore": {
+        hurtmore: {
             show_in_combat: true,
             show_in_explore: false,
             cost: 5,
