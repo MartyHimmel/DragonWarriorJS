@@ -1,10 +1,12 @@
 var combat = {
 	enemy_ptr: null, // current enemy player is fighting
 	enemy_name: "",
-	"enemy_current_hp": 0, // randomized at start of battle
-	"gold_reward": 0, // randomized at start of battle
-	"enemy_status": "",
-	"player_turn": true,
+	enemy_max_hp: 0,
+	enemy_current_hp: 0, // randomized at start of battle
+	enemy_spell_blocked: false,
+	gold_reward: 0, // randomized at start of battle
+	enemy_status: "",
+	player_turn: true,
 	"random_num": 0,
 	"initiative_round": true,
 
@@ -80,6 +82,7 @@ var combat = {
 		} else {
 			this.enemy_current_hp = this.enemy_ptr.hp;
 		}
+		this.enemy_max_hp = this.enemy_current_hp;
 
 		// check if enemy gold dropped is a range or set number
 		if (this.enemy_ptr.gold instanceof Array) {
@@ -261,22 +264,66 @@ var combat = {
 	},
 
 	enemy_attack: function() {
-		var hit = false,
+		var i,
+			special,
+			used_special = false,
 		    damage = 0,
 		    enemy_strength = this.enemy_ptr.strength;
 
 		if (this.player_turn === false) {
-			add_text(text.format(text.combat.enemy.attack, { enemy: this.enemy_name }));
+			//Special move (spell, breathe fire)
+			if (typeof this.enemy_ptr.special !== 'undefined' &&
+				typeof this.enemy_ptr.special_probability !== 'undefined' &&
+				this.enemy_ptr.special instanceof Array &&
+				this.enemy_ptr.special_probability instanceof Array &&
+				this.enemy_ptr.special.length === this.enemy_ptr.special_probability.length) {
 
-			if (player.defense_power >= enemy_strength) {
-				damage = Math.floor(random_number(0, ((enemy_strength + 4) / 6)));
-			} else {
-				damage = Math.floor(random_number(((enemy_strength - (player.defense_power / 2)) / 4),
-					((enemy_strength - (player.defense_power / 2)) / 2)));
+				for (i=0; i< this.enemy_ptr.special.length; i++) {
+					if (random_number(1, 4) <= this.enemy_ptr.special_probability[i]) {
+						special = this.enemy_ptr.special[i];
+						if (special === "breathe_fire") {
+							add_text(text.format(text.combat.enemy.fire, { enemy: this.enemy_name }));
+							//TODO: damage from fire
+
+						} else if (special === "breathe_fire2") {
+							add_text(text.format(text.combat.enemy.fire, { enemy: this.enemy_name }));
+							//TODO: damage from Dragon Lord
+
+						} else {
+							if ((special === "heal" || special === "healmore") && (this.enemy_current_hp > (this.enemy_current_hp / 4))) {
+								//will only be used if the monster's HP is less than one-fourth of Max. HP
+								continue;
+							} else if (special === "sleep" && player.status === "sleep") {
+								//will not be used if you are already asleep
+								continue;
+							} else if (special === "stopspell" && player.spell_blocked === true) {
+								//will not be used if your spell has already been blocked
+								continue;
+							}
+
+							add_text(text.format(text.combat.enemy.cast, { enemy: this.enemy_name, spell: text.spells[special] }));
+							//TODO: actually cast the spell
+						}
+
+						used_special = true;
+					}
+				}
 			}
 
-			add_text(text.format(text.combat.enemy.hit, { number: damage }));
-			player.lose_hp(damage);
+			//Regular attack
+			if (!used_special) {
+				add_text(text.format(text.combat.enemy.attack, { enemy: this.enemy_name }));
+
+				if (player.defense_power >= enemy_strength) {
+					damage = Math.floor(random_number(0, ((enemy_strength + 4) / 6)));
+				} else {
+					damage = Math.floor(random_number(((enemy_strength - (player.defense_power / 2)) / 4),
+						((enemy_strength - (player.defense_power / 2)) / 2)));
+				}
+
+				add_text(text.format(text.combat.enemy.hit, { number: damage }));
+				player.lose_hp(damage);
+			}
 		}
 
 		this.player_turn = true;

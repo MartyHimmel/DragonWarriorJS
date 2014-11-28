@@ -19,6 +19,9 @@ var text = {
             if (typeof params.number !== 'undefined') {
                 formatString = replaceAll(formatString, "<number>", params.number);
             }
+            if (typeof params.spell !== 'undefined') {
+                formatString = replaceAll(formatString, "<spell>", params.spell);
+            }
         }
 
         return formatString;

@@ -52,10 +52,11 @@ var player = {
 	"attack_power": 0,
 	"defense_power": 0,
 
-	"status": "",
+	status: "",
+	spell_blocked: false,
 
-	"experience": 0,
-	"gold": 0,
+	experience: 0,
+	gold: 0,
 
 	// Draw player and animations
 	// -------------------------------------------------------------------
