@@ -158,9 +158,9 @@ var text = {
         },
         victory: {
             defeated: "Thou hast done well in defeating the <enemy>.",
-            gain_exp: "Thy Experience\nincreases by <number>.",
-            gain_gold: "Thy GOLD\nincreases by <number>.",
-            next_level: "Courage and wit have served thee well.\nThou hast been promoted to the next level.",
+            gain_exp: "Thy Experience increases by <number>.",
+            gain_gold: "Thy GOLD increases by <number>.",
+            next_level: "Courage and wit have served thee well. Thou hast been promoted to the next level.",
             gain_strength: "Thy power increases by <number>.",
             gain_agility: "Thy Response Speed increases by <number>.",
             gain_hp: "Thy Maximum Hit <points?> increase by <number>.",
@@ -177,7 +177,7 @@ var text = {
         take: {
             none: "There is nothing to take here, <player_name>.",
             gold: "Of GOLD thou hast gained <number>",
-            item: "Fortune smiles upon thee, <player_name>.\nThou hast found the <item>.",
+            item: "Fortune smiles upon thee, <player_name>. Thou hast found the <item>.",
             empty: "Unfortunately, it is empty.",
             too_many_items: "If thou would take the <item>, thou must now discard some other item.",
             want_item: "Dost thou wish to have the <item>?",
@@ -200,7 +200,7 @@ var text = {
             ring: "<player_name> put on the Fighter's Ring.",
             ring_twice: "<player_name> adjusted the position of the Fighter's Ring.",
             harp: "<player_name> played a sweet melody on the harp.",
-            rainbow_drop: "<player_name> held the Rainbow Drop toward the sky.\nBut no rainbow appeared here.",
+            rainbow_drop: "<player_name> held the Rainbow Drop toward the sky. But no rainbow appeared here.",
             torch_blocked: "A torch can be used only in dark places.",
             no_effect: "But nothing happened.",
             use_blocked: "That cannot be used in battle.",
@@ -223,13 +223,13 @@ var text = {
     },
     script: {
         tantegel_throne_guard1: [
-            "East of this castle is a town where armor, weapons, and many other items may \nbe purchased.",
+            "East of this castle is a town where armor, weapons, and many other items may be purchased.",
             "Return to the Inn for a rest if thou art wounded in battle, <player_name>.",
             "Sleep heals all."
         ],
         tantegel_throne_guard2: [
-            "If thou hast collected all the Treasure Chests,\na key will be found.",
-            "Once used, the key will disappear, but the door will be open and thou may pass \nthrough."
+            "If thou hast collected all the Treasure Chests, a key will be found.",
+            "Once used, the key will disappear, but the door will be open and thou may pass through."
         ]
         /*king_initial:
         "Descendant of Erdrick, listen now to my words."

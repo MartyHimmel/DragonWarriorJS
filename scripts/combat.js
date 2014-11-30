@@ -1,6 +1,6 @@
 var combat = {
 	enemy_ptr: null, // current enemy player is fighting
-	enemy_name: "",
+	enemy_id: "",
 	enemy_max_hp: 0, // randomized at start of battle
 	enemy_current_hp: 0,
 	enemy_spell_blocked: false,
@@ -74,7 +74,7 @@ var combat = {
 	load_enemy: function(id) {
 		this.initiative_round = true;
 		this.enemy_ptr = config.enemies[id];
-		this.enemy_name = text.enemies[this.enemy_ptr.name];
+		this.enemy_id = text.enemies[this.enemy_ptr.id];
 
 		// check if enemy HP is a range or set number
 		if (this.enemy_ptr.hp instanceof Array) {
@@ -91,7 +91,7 @@ var combat = {
 			this.gold_reward = this.enemy_ptr.gold;
 		}
 
-		add_text(text.format(text.combat.enemy.near, { enemy: this.enemy_name }));
+		add_text(text.format(text.combat.enemy.near, { enemy: this.enemy_id }));
 	},
 
 	// Draw functions
@@ -115,7 +115,7 @@ var combat = {
 
 		if (player.strength > (2 * enemy_strength)) {
 			if (rand3 <= 25) {
-				add_text(text.format(text.combat.enemy.run, { enemy: this.enemy_name }));
+				add_text(text.format(text.combat.enemy.run, { enemy: this.enemy_id }));
 				setTimeout(function() {
 					Game.change_state("exploration");
 				}, 500);
@@ -123,7 +123,7 @@ var combat = {
 		}
 
 		if ((player.agility * rand1) < (enemy_agility * rand2 * 0.25)) {
-			add_text(text.format(text.combat.enemy.strike_first, { enemy: this.enemy_name, player_name: player.name }));
+			add_text(text.format(text.combat.enemy.strike_first, { enemy: this.enemy_id, player_name: player.name }));
 			this.player_turn = false;
 		} else {
 			add_text(text.combat.prompt);
@@ -152,7 +152,7 @@ var combat = {
 				}
 
 				if (damage < 0) { damage = 0; }
-				add_text(text.format(text.combat.player.hit, { enemy: this.enemy_name, number: damage}));
+				add_text(text.format(text.combat.player.hit, { enemy: this.enemy_id, number: damage}));
 				this.enemy_current_hp -= damage;
 
 				if (this.enemy_current_hp <= 0) {
@@ -182,13 +182,13 @@ var combat = {
 			    rand1 = Game.random_number(0, 255),
 			    rand2 = Game.random_number(0, 255),
 			    enemy_agility = this.enemy_ptr.agility,
-			    enemy_id = this.enemy_ptr.id;
+			    enemy_index = this.enemy_ptr.index;
 
-			if (enemy_id >= 0 && enemy_id <= 20) {
+			if (enemy_index >= 0 && enemy_index <= 20) {
 				modifier = 0.25;
-			} else if (enemy_id >= 20 && enemy_id <= 29) {
+			} else if (enemy_index >= 20 && enemy_index <= 29) {
 				modifier = 0.375;
-			} else if (enemy_id >= 30 && enemy_id <= 34) {
+			} else if (enemy_index >= 30 && enemy_index <= 34) {
 				modifier = 0.5;
 			} else {
 				modifier = 1;
@@ -223,7 +223,7 @@ var combat = {
 	victory: function() {
 		var current_level = player.level;
 
-		add_text(text.format(text.combat.victory.defeated, { enemy: this.enemy_name }));
+		add_text(text.format(text.combat.victory.defeated, { enemy: this.enemy_id }));
 
 		add_text(text.format(text.combat.victory.gain_exp, { number: this.enemy_ptr.experience }));
 		player.add_experience(this.enemy_ptr.experience);
@@ -269,7 +269,7 @@ var combat = {
 					if (Game.random_number(1, 4) <= this.enemy_ptr.special_probability[i]) {
 						special = this.enemy_ptr.special[i];
 						if (special === "breathe_fire" || special === "breathe_fire2") {
-							add_text(text.format(text.combat.enemy.fire, { enemy: this.enemy_name }));
+							add_text(text.format(text.combat.enemy.fire, { enemy: this.enemy_id }));
 
 							//Erdricks armor reduces damage by 1/3
 							if (special === "breathe_fire2") {
@@ -297,7 +297,7 @@ var combat = {
 								continue;
 							}
 
-							add_text(text.format(text.combat.enemy.cast, { enemy: this.enemy_name, spell: text.spells[special] }));
+							add_text(text.format(text.combat.enemy.cast, { enemy: this.enemy_id, spell: text.spells[special] }));
 							//TODO: actually cast the spell
 						}
 
@@ -308,7 +308,7 @@ var combat = {
 
 			//Regular attack
 			if (!used_special) {
-				add_text(text.format(text.combat.enemy.attack, { enemy: this.enemy_name }));
+				add_text(text.format(text.combat.enemy.attack, { enemy: this.enemy_id }));
 
 				if (player.defense_power >= enemy_strength) {
 					damage = Math.floor(Game.random_number(0, ((enemy_strength + 4) / 6)));

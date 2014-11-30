@@ -146,8 +146,8 @@ var config = {
     },
     enemies: [
         {
-            id: 0,
-            name: "slime",
+            index: 0,
+            id: "slime",
             strength: 5,
             agility: 3,
             hp: 3,
@@ -163,8 +163,8 @@ var config = {
             height: 32
         },
         {
-            id: 1,
-            name: "red_slime",
+            index: 1,
+            id: "red_slime",
             strength: 7,
             agility: 3,
             hp: 4,
@@ -180,8 +180,8 @@ var config = {
             height: 32
         },
         {
-            id: 2,
-            name: "drakee",
+            index: 2,
+            id: "drakee",
             strength: 9,
             agility: 6,
             hp: [5, 6],
@@ -197,8 +197,8 @@ var config = {
             height: 48
         },
         {
-            id: 3,
-            name: "ghost",
+            index: 3,
+            id: "ghost",
             strength: 11,
             agility: 8,
             hp: [6, 7],
@@ -214,8 +214,8 @@ var config = {
             height: 56
         },
         {
-            id: 4,
-            name: "magician",
+            index: 4,
+            id: "magician",
             strength: 11,
             agility: 12,
             hp: [10, 13],
@@ -233,8 +233,8 @@ var config = {
             height: 48
         },
         {
-            id: 5,
-            name: "magidrakee",
+            index: 5,
+            id: "magidrakee",
             strength: 14,
             agility: 14,
             hp: [12, 15],
@@ -252,8 +252,8 @@ var config = {
             height: 48
         },
         {
-            id: 6,
-            name: "scorpion",
+            index: 6,
+            id: "scorpion",
             strength: 18,
             agility: 16,
             hp: [16, 20],
@@ -269,8 +269,8 @@ var config = {
             height: 48
         },
         {
-            id: 7,
-            name: "druin",
+            index: 7,
+            id: "druin",
             strength: 20,
             agility: 18,
             hp: [17, 22],
@@ -286,8 +286,8 @@ var config = {
             height: 32
         },
         {
-            id: 8,
-            name: "poltergeist",
+            index: 8,
+            id: "poltergeist",
             strength: 18,
             agility: 20,
             hp: [18, 23],
@@ -305,8 +305,8 @@ var config = {
             height: 56
         },
         {
-            id: 9,
-            name: "droll",
+            index: 9,
+            id: "droll",
             strength: 24,
             agility: 24,
             hp: [19, 25],
@@ -322,8 +322,8 @@ var config = {
             height: 48
         },
         {
-            id: 10,
-            name: "drakeema",
+            index: 10,
+            id: "drakeema",
             strength: 22,
             agility: 26,
             hp: [16, 20],
@@ -341,8 +341,8 @@ var config = {
             height: 48
         },
         {
-            id: 11,
-            name: "skeleton",
+            index: 11,
+            id: "skeleton",
             strength: 28,
             agility: 22,
             hp: [23, 30],
@@ -358,8 +358,8 @@ var config = {
             height: 56
         },
         {
-            id: 12,
-            name: "warlock",
+            index: 12,
+            id: "warlock",
             strength: 28,
             agility: 22,
             hp: [23, 30],
@@ -377,8 +377,8 @@ var config = {
             height: 48
         },
         {
-            id: 13,
-            name: "metal_scorpion",
+            index: 13,
+            id: "metal_scorpion",
             strength: 36,
             agility: 42,
             hp: [17, 22],
@@ -394,8 +394,8 @@ var config = {
             height: 48
         },
         {
-            id: 14,
-            name: "wolf",
+            index: 14,
+            id: "wolf",
             strength: 40,
             agility: 30,
             hp: [26, 34],
@@ -411,8 +411,8 @@ var config = {
             height: 48
         },
         {
-            id: 15,
-            name: "wraith",
+            index: 15,
+            id: "wraith",
             strength: 44,
             agility: 34,
             hp: [28, 36],
@@ -430,8 +430,8 @@ var config = {
             height: 56
         },
         {
-            id: 16,
-            name: "metal_slime",
+            index: 16,
+            id: "metal_slime",
             strength: 10,
             agility: 255,
             hp: 4,
@@ -449,8 +449,8 @@ var config = {
             height: 24
         },
         {
-            id: 17,
-            name: "specter",
+            index: 17,
+            id: "specter",
             strength: 40,
             agility: 38,
             hp: [28, 36],
@@ -468,8 +468,8 @@ var config = {
             height: 56
         },
         {
-            id: 18,
-            name: "wolflord",
+            index: 18,
+            id: "wolflord",
             strength: 50,
             agility: 36,
             hp: [29, 38],
@@ -487,8 +487,8 @@ var config = {
             height: 48
         },
         {
-            id: 19,
-            name: "druinlord",
+            index: 19,
+            id: "druinlord",
             strength: 47,
             agility: 40,
             hp: [27, 35],
@@ -506,8 +506,8 @@ var config = {
             height: 32
         },
         {
-            id: 20,
-            name: "drollmagi",
+            index: 20,
+            id: "drollmagi",
             strength: 52,
             agility: 50,
             hp: [29, 38],
@@ -525,8 +525,8 @@ var config = {
             height: 48
         },
         {
-            id: 21,
-            name: "wyvern",
+            index: 21,
+            id: "wyvern",
             strength: 56,
             agility: 48,
             hp: [32, 42],
@@ -542,8 +542,8 @@ var config = {
             height: 56
         },
         {
-            id: 22,
-            name: "rogue_scorpion",
+            index: 22,
+            id: "rogue_scorpion",
             strength: 60,
             agility: 90,
             hp: [27, 35],
@@ -559,8 +559,8 @@ var config = {
             height: 40
         },
         {
-            id: 23,
-            name: "wraith_knight",
+            index: 23,
+            id: "wraith_knight",
             strength: 68,
             agility: 56,
             hp: [35, 46],
@@ -578,8 +578,8 @@ var config = {
             height: 56
         },
         {
-            id: 24,
-            name: "golem",
+            index: 24,
+            id: "golem",
             strength: 120,
             agility: 60,
             hp: [53, 70],
@@ -595,8 +595,8 @@ var config = {
             height: 56
         },
         {
-            id: 25,
-            name: "goldman",
+            index: 25,
+            id: "goldman",
             strength: 48,
             agility: 40,
             hp: [38, 50],
@@ -612,8 +612,8 @@ var config = {
             height: 56
         },
         {
-            id: 26,
-            name: "knight",
+            index: 26,
+            id: "knight",
             strength: 76,
             agility: 78,
             hp: [42, 55],
@@ -631,8 +631,8 @@ var config = {
             height: 56
         },
         {
-            id: 27,
-            name: "magiwyvern",
+            index: 27,
+            id: "magiwyvern",
             strength: 78,
             agility: 68,
             hp: [44, 58],
@@ -650,8 +650,8 @@ var config = {
             height: 56
         },
         {
-            id: 28,
-            name: "demon_knight",
+            index: 28,
+            id: "demon_knight",
             strength: 79,
             agility: 64,
             hp: [38, 50],
@@ -667,8 +667,8 @@ var config = {
             height: 56
         },
         {
-            id: 29,
-            name: "werewolf",
+            index: 29,
+            id: "werewolf",
             strength: 86,
             agility: 70,
             hp: [46, 60],
@@ -684,8 +684,8 @@ var config = {
             height: 48
         },
         {
-            id: 30,
-            name: "green_dragon",
+            index: 30,
+            id: "green_dragon",
             strength: 88,
             agility: 74,
             hp: [49, 65],
@@ -703,8 +703,8 @@ var config = {
             height: 48
         },
         {
-            id: 31,
-            name: "starwyvern",
+            index: 31,
+            id: "starwyvern",
             strength: 86,
             agility: 80,
             hp: [49, 65],
@@ -722,8 +722,8 @@ var config = {
             height: 64
         },
         {
-            id: 32,
-            name: "wizard",
+            index: 32,
+            id: "wizard",
             strength: 80,
             agility: 70,
             hp: [49, 65],
@@ -741,8 +741,8 @@ var config = {
             height: 48
         },
         {
-            id: 33,
-            name: "axe_knight",
+            index: 33,
+            id: "axe_knight",
             strength: 94,
             agility: 82,
             hp: [53, 70],
@@ -760,8 +760,8 @@ var config = {
             height: 64
         },
         {
-            id: 34,
-            name: "blue_dragon",
+            index: 34,
+            id: "blue_dragon",
             strength: 98,
             agility: 84,
             hp: [53, 70],
@@ -779,8 +779,8 @@ var config = {
             height: 48
         },
         {
-            id: 35,
-            name: "stoneman",
+            index: 35,
+            id: "stoneman",
             strength: 100,
             agility: 40,
             hp: [121, 160],
@@ -796,8 +796,8 @@ var config = {
             height: 56
         },
         {
-            id: 36,
-            name: "armored_knight",
+            index: 36,
+            id: "armored_knight",
             strength: 105,
             agility: 86,
             hp: [68, 90],
@@ -815,8 +815,8 @@ var config = {
             height: 64
         },
         {
-            id: 37,
-            name: "red_dragon",
+            index: 37,
+            id: "red_dragon",
             strength: 120,
             agility: 90,
             hp: [76, 100],
@@ -834,8 +834,8 @@ var config = {
             height: 48
         },
         {
-            id: 38,
-            name: "dragonlord_first_form",
+            index: 38,
+            id: "dragonlord_first_form",
             strength: 90,
             agility: 75,
             hp: [76, 100],
@@ -853,8 +853,8 @@ var config = {
             height: 40
         },
         {
-            id: 39,
-            name: "dragonlord_second_form",
+            index: 39,
+            id: "dragonlord_second_form",
             strength: 140,
             agility: 200,
             hp: 130,

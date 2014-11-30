@@ -2,6 +2,7 @@
 References
 ##########
 https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame?redirectlocale=en-US&redirectslug=DOM%2Fwindow.requestAnimationFrame
+https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
 https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.drawImage
 */
 
@@ -136,10 +137,10 @@ Game = {
 	// draw single tile frame from sprite sheet
 	draw_tile: function (x, y, frame_number) {
 		// find horizontal and vertical position of tile to be drawn
-		var pos_x = (frame_number % 12) * 16,
-		    pos_y = Math.floor(frame_number / 12) * 16;
+		var pos_x = (frame_number % 12) * tile_width,
+		    pos_y = Math.floor(frame_number / 12) * tile_height;
 
-		this.context.drawImage(this.imgTiles, pos_x, pos_y, 16, 16,
+		this.context.drawImage(this.imgTiles, pos_x, pos_y, tile_width, tile_height,
 			x, y, tile_width, tile_height);
 	},
 
@@ -150,10 +151,10 @@ Game = {
             if (typeof script_command.text !== 'undefined') {
 				if (script_command.text instanceof Array) {
 					script_command.text.forEach(function (element, index, array) {
-						add_text(element);
+						add_text(text.script[element]);
 					});
 				} else {
-					add_text(script_command.text);
+					add_text(text.script[script_command.text]);
 				}
 			}
 		}
