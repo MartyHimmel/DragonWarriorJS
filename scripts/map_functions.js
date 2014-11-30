@@ -52,10 +52,11 @@ var map = {
 
 	// refresh status of doors/treasure chests
 	refresh_map: function () {
+		var self = this;
 		if (typeof this.map_ptr.doors !== 'undefined') {
 			this.map_ptr.doors.forEach(function (element, index, array) {
 				if (player.doors_opened.indexOf(element.id) > -1) {
-					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 4;
+					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 4;
 				}
 			});
 		}
@@ -63,7 +64,7 @@ var map = {
 		if (typeof this.map_ptr.chests !== 'undefined') {
 			this.map_ptr.chests.forEach(function (element, index, array) {
 				if (player.chests_taken.indexOf(element.id) > -1) {
-					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 4;
+					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 4;
 				}
 			});
 		}
