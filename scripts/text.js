@@ -221,6 +221,26 @@ var text = {
             low_mp: "Thy MP is too low."
         }
     },
+    script: {
+        tantegel_throne_guard1: [
+            "East of this castle is a town where armor, weapons, and many other items may \nbe purchased.",
+            "Return to the Inn for a rest if thou art wounded in battle, <player_name>.",
+            "Sleep heals all."
+        ],
+        tantegel_throne_guard2: [
+            "If thou hast collected all the Treasure Chests,\na key will be found.",
+            "Once used, the key will disappear, but the door will be open and thou may pass \nthrough."
+        ]
+        /*king_initial:
+        "Descendant of Erdrick, listen now to my words."
+        "It is told that in ages past Erdrick fought demons with a Ball of Light."
+        "Then came the Dragonlord who stole the precious globe and hid it in the \ndarkness."
+        "Now, <player_name>, thou must help us recover the Ball of Light and restore \npeace to our land."
+        "The Dragonlord must be defeated."
+        "Take now whatever thou may find in these Treasure Chests to aid thee in thy \nquest."
+        "Then speak with the guards, for they have much knowledge that may aid thee."
+        "May the light shine upon thee, <player_name>."*/
+    },
     unknown: {
         //stairs command is stupid; not worth coding it.
         stairs_none: "There are no stairs here.",
@@ -436,20 +456,6 @@ My hope is with thee.
 <number> to the south and{..}
 <number> to the east.
 <number> to the west.
-
-"If thou hast collected all the Treasure Chests,\na key will be found."
-"Once used, the key will disappear, but the door will be open and thou may pass \nthrough."
-"East of this castle is a town where armor, weapons, and many other items may \nbe purchased."
-"Return to the Inn for a rest if thou art wounded in battle, <player_name>."
-"Sleep heals all."
-"Descendant of Erdrick, listen now to my words."
-"It is told that in ages past Erdrick fought demons with a Ball of Light."
-"Then came the Dragonlord who stole the precious globe and hid it in the \ndarkness."
-"Now, <player_name>, thou must help us recover the Ball of Light and restore \npeace to our land."
-"The Dragonlord must be defeated."
-"Take now whatever thou may find in these Treasure Chests to aid thee in thy \nquest."
-"Then speak with the guards, for they have much knowledge that may aid thee."
-"May the light shine upon thee, <player_name>."
 
 The tablet reads as follows:
 

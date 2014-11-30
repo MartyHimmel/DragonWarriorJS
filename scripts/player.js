@@ -15,6 +15,8 @@ var player = {
 	golem_is_alive: true,
 	has_erdricks_armor: false,
 	has_erdricks_token: false,
+	doors_opened: [],
+	chests_taken: [],
 
 	// Screen position
 	x: 0,

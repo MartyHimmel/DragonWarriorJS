@@ -1,13 +1,13 @@
 var map = {
-	"vWidth": 25,
-	"vHeight": 15,
-	"x": 0,
-	"y": 0,
-	"current_map": "",
-	"boundary_right": "",
-	"boundary_bottom": "",
-	"current_zone": 0,
-	"background_music": "",
+	vWidth: 25,
+	vHeight: 15,
+	x: 0,
+	y: 0,
+	current_map: "",
+	boundary_right: "",
+	boundary_bottom: "",
+	current_zone: 0,
+	background_music: "",
 
 	// 0 roof bricks
 	// 1 stone block
@@ -47,14 +47,33 @@ var map = {
 	// 35 coastline
 
 	load_map: function(map_name) {
+		var map = maps[map_name];
 		player.steps = 0;
 		player.set_position(map_name);
 		this.current_map = map_name;
-		this.boundary_right = maps[map_name].width - this.vWidth;
-		this.boundary_bottom = maps[map_name].height - this.vHeight;
-		this.background_music = maps[map_name].music;
+		this.boundary_right = map.width - this.vWidth;
+		this.boundary_bottom = map.height - this.vHeight;
+		this.background_music = map.music;
 		//audio.stop_music();
 		//audio.play_map_music();
+
+		// refresh door status
+		if (typeof map.doors !== 'undefined') {
+			map.doors.forEach(function (element, index, array) {
+				if (player.doors_opened.indexOf(element.id) > -1) {
+					map.layout[element.x + (element.y * map.width)] = 4;
+				}
+			});
+		}
+
+		// refresh treasure chest status
+		if (typeof map.chests !== 'undefined') {
+			map.chests.forEach(function (element, index, array) {
+				if (player.chests_taken.indexOf(element.id) > -1) {
+					map.layout[element.x + (element.y * map.width)] = 4;
+				}
+			});
+		}
 	},
 
 	map_frame: function(frame_number) {		// draw single tile frame from sprite sheet
@@ -62,8 +81,8 @@ var map = {
 		img.src = "assets/sprites/tiles.png";
 
 		// find horizontal and vertical position of tile to be drawn
-		var pos_x = (frame_number % 12) * 16;
-		var pos_y = Math.floor(frame_number / 12) * 16;
+		var pos_x = (frame_number % 12) * 16,
+		    pos_y = Math.floor(frame_number / 12) * 16;
 
 		// drawImage(image name, sprite sheet x pos, sprite sheet y pos, tile width, tile height,
 		// draw to x position, draw to y position, scale x, scale y)
@@ -72,10 +91,11 @@ var map = {
 	},
 
 	draw_viewport: function(map_name, offset_x, offset_y) {
-		var vWidth = 25,
+		var i,
+			vWidth = 25,
 			vHeight = 15;
 
-		for (var i = 0; i < vWidth * vHeight; i++) {
+		for (i = 0; i < vWidth * vHeight; i++) {
 			this.map_frame(maps[map_name].layout[offset_x + (offset_y * maps[map_name].width)] - 1);
 			this.x += tile_width;
 			offset_x++;
@@ -574,5 +594,5 @@ var map = {
 				player.set_offsets(100, 107);
 			}
 		}
-	},
+	}
 };

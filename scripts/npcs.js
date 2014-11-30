@@ -1,13 +1,13 @@
 var npc = {
-	"character_state": "",
+	character_state: "",
 
 	// Call frame from characters.png - starts with frame 0
 	character_frame: function(frame_number, pos_x, pos_y) {
 		var img = new Image();
 		img.src = "assets/sprites/characters.png";
 
-		var image_x = (frame_number % 16) * tile_width;
-		var image_y = Math.floor(frame_number / 16) * tile_height;
+		var image_x = (frame_number % 16) * tile_width,
+		    image_y = Math.floor(frame_number / 16) * tile_height;
 
 		pos_x = pos_x * 32;
 		pos_y = pos_y * 32;
@@ -16,13 +16,16 @@ var npc = {
 	},
 
 	animate_character: function(frame1, frame2, x, y) {
-		if ((Date.now() % 1000) < 500) this.character_frame(frame1, x, y);
-		else this.character_frame(frame2, x, y);
+		if ((Date.now() % 1000) < 500) {
+			this.character_frame(frame1, x, y);
+		} else {
+			this.character_frame(frame2, x, y);
+		}
 	},
 
 	draw_character: function(character_type, direction, x, y) {
 		this.character_state = direction;
-		switch(character_type) {
+		switch (character_type) {
 			case "princess":
 				if (this.character_state === "down") {
 					this.animate_character(80, 81, x, y);
@@ -151,14 +154,16 @@ var npc = {
 
 	draw_npcs: function() {
 		var number_of_npcs = maps[map.current_map].npcs.length;
-		if (map.current_map === "Tantagel2F" && player.rescued_princess === "false") {
+		if (map.current_map === "Tantagel2F" && player.rescued_princess === false) {
 			number_of_npcs--;
 		}
 		for (var i = 0; i < number_of_npcs; i++) {
-			this.draw_character(maps[map.current_map].npcs[i][0],
-				maps[map.current_map].npcs[i][1],
-				maps[map.current_map].npcs[i][2],
-				maps[map.current_map].npcs[i][3]);
+			this.draw_character(
+				maps[map.current_map].npcs[i].type,
+				maps[map.current_map].npcs[i].facing,
+				maps[map.current_map].npcs[i].x,
+				maps[map.current_map].npcs[i].y
+			);
 		}
 	}
 };

@@ -296,7 +296,7 @@ var combat = {
 								breath_max_dmg = player.has_erdricks_armor ? 14 : 23;
 							}
 
-							damage = Math.floor(random_number(breath_min_dmg, breath_max_dmg));
+							damage = random_number(breath_min_dmg, breath_max_dmg);
 							add_text(text.format(text.combat.enemy.hit, { number: damage }));
 							player.lose_hp(damage);
 
