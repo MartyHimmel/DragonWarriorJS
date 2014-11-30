@@ -83,13 +83,13 @@ var config = {
             show_in_combat: true,
             show_in_explore: true,
             cost: 4,
-            effect: function() { player.add_hp(random_number(10, 17)); }
+            effect: function() { player.add_hp(Game.random_number(10, 17)); }
         },
         hurt: {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
-            effect: function() { combat.enemy_current_hp -= random_number(5, 12); }
+            effect: function() { combat.enemy_current_hp -= Game.random_number(5, 12); }
         },
         sleep: {
             show_in_combat: true,
@@ -135,13 +135,13 @@ var config = {
             show_in_combat: true,
             show_in_explore: true,
             cost: 10,
-            effect: function() { player.add_hp(random_number(85, 100)); }
+            effect: function() { player.add_hp(Game.random_number(85, 100)); }
         },
         hurtmore: {
             show_in_combat: true,
             show_in_explore: false,
             cost: 5,
-            effect: function() { combat.enemy_current_hp -= random_number(58, 65); }
+            effect: function() { combat.enemy_current_hp -= Game.random_number(58, 65); }
         }
     },
     enemies: [

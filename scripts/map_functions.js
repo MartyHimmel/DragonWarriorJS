@@ -4,6 +4,7 @@ var map = {
 	x: 0,
 	y: 0,
 	current_map: "",
+	map_ptr: null,
 	boundary_right: "",
 	boundary_bottom: "",
 	current_zone: 0,
@@ -34,69 +35,47 @@ var map = {
 	// 22 bridge
 	// 23 princess in swamp cave
 	// 24 water
-	// 25 coastline
-	// 26 coastline
-	// 27 coastline
-	// 28 coastline
-	// 29 coastline
-	// 30 coastline
-	// 31 coastline
-	// 32 coastline
-	// 33 coastline
-	// 34 coastline
-	// 35 coastline
+	// 25 - 35 coastline
 
-	load_map: function(map_name) {
-		var map = maps[map_name];
+	load_map: function (map_name) {
 		player.steps = 0;
 		player.set_position(map_name);
 		this.current_map = map_name;
-		this.boundary_right = map.width - this.vWidth;
-		this.boundary_bottom = map.height - this.vHeight;
-		this.background_music = map.music;
+		this.map_ptr = maps[map_name];
+		this.boundary_right = this.map_ptr.width - this.vWidth;
+		this.boundary_bottom = this.map_ptr.height - this.vHeight;
+		this.background_music = this.map_ptr.music;
 		//audio.stop_music();
 		//audio.play_map_music();
+		this.refresh_map();
+	},
 
-		// refresh door status
-		if (typeof map.doors !== 'undefined') {
-			map.doors.forEach(function (element, index, array) {
+	// refresh status of doors/treasure chests
+	refresh_map: function () {
+		if (typeof this.map_ptr.doors !== 'undefined') {
+			this.map_ptr.doors.forEach(function (element, index, array) {
 				if (player.doors_opened.indexOf(element.id) > -1) {
-					map.layout[element.x + (element.y * map.width)] = 4;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 4;
 				}
 			});
 		}
 
-		// refresh treasure chest status
-		if (typeof map.chests !== 'undefined') {
-			map.chests.forEach(function (element, index, array) {
+		if (typeof this.map_ptr.chests !== 'undefined') {
+			this.map_ptr.chests.forEach(function (element, index, array) {
 				if (player.chests_taken.indexOf(element.id) > -1) {
-					map.layout[element.x + (element.y * map.width)] = 4;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 4;
 				}
 			});
 		}
 	},
 
-	map_frame: function(frame_number) {		// draw single tile frame from sprite sheet
-		var img = new Image();
-		img.src = "assets/sprites/tiles.png";
-
-		// find horizontal and vertical position of tile to be drawn
-		var pos_x = (frame_number % 12) * 16,
-		    pos_y = Math.floor(frame_number / 12) * 16;
-
-		// drawImage(image name, sprite sheet x pos, sprite sheet y pos, tile width, tile height,
-		// draw to x position, draw to y position, scale x, scale y)
-		context.drawImage(img, pos_x, pos_y, 16, 16,
-			this.x, this.y, tile_width, tile_height);
-	},
-
-	draw_viewport: function(map_name, offset_x, offset_y) {
+	draw_viewport: function (map_name, offset_x, offset_y) {
 		var i,
 			vWidth = 25,
 			vHeight = 15;
 
-		for (i = 0; i < vWidth * vHeight; i++) {
-			this.map_frame(maps[map_name].layout[offset_x + (offset_y * maps[map_name].width)] - 1);
+		for (i=0; i<(vWidth * vHeight); i++) {
+			Game.draw_tile(this.x, this.y, this.map_ptr.layout[offset_x + (offset_y * this.map_ptr.width)] - 1);
 			this.x += tile_width;
 			offset_x++;
 			if (this.x === vWidth * tile_width) {
@@ -106,32 +85,33 @@ var map = {
 				offset_x -= vWidth;
 			}
 		}
+
 		this.y = 0;
 	},
 
-	set_zone: function() {
+	set_zone: function () {
 		if (this.current_map === "World") {
 			// 16 tile square, break world into 8 x 8 grid
-			var x_coord = Math.floor(((player.x / tile_width) + (player.offset_x)) / 16);
-			var y_coord = Math.floor(((player.y / tile_width) + (player.offset_y)) / 16);
-			var zone_map = [
-				3,	3,	2,	2,	3,	5,	4,	5,
-				3,	2,	1,	2,	3,	3,	4,	5,
-				4,	1,	0,	0,	1,	3,	4,	5,
-				5,	1,	1,	12,	9,	6,	6,	6,
-				5,	5,	4,	12,	12,	7,	7,	7,
-				10,	9,	8,	12,	12,	12,	8,	7,
-				10,	10,	11,	12,	13,	13,	9,	8,
-				11,	11,	12,	13,	13,	12,	9,	9,
-			];
+			var x_coord = Math.floor(((player.x / tile_width) + (player.offset_x)) / 16),
+				y_coord = Math.floor(((player.y / tile_width) + (player.offset_y)) / 16),
+			    zone_map = [
+					3,	3,	2,	2,	3,	5,	4,	5,
+					3,	2,	1,	2,	3,	3,	4,	5,
+					4,	1,	0,	0,	1,	3,	4,	5,
+					5,	1,	1,	12,	9,	6,	6,	6,
+					5,	5,	4,	12,	12,	7,	7,	7,
+					10,	9,	8,	12,	12,	12,	8,	7,
+					10,	10,	11,	12,	13,	13,	9,	8,
+					11,	11,	12,	13,	13,	12,	9,	9,
+				];
 			this.current_zone = zone_map[x_coord + (y_coord * 8)];
 		}
-		if (maps[this.current_map].type === "dungeon") {
-			this.current_zone = maps[this.current_map].zone;
+		if (this.map_ptr.type === "dungeon") {
+			this.current_zone = this.map_ptr.zone;
 		}
 	},
 
-	check_location: function() {
+	check_location: function () {
 		if (this.current_map === "World") {
 			if (player.offset_x === 35 && player.offset_y === 41 && player.steps !== 0) {
 				this.load_map("Tantagel1F");

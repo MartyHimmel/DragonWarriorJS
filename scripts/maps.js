@@ -229,16 +229,16 @@ var maps = {
 		],
 		chests: [
 			{ id: "tantegel_chest1", x: 12, y: 19, take: function () {
-				player.add_gold(random_number(6, 13));
+				player.add_gold(Game.random_number(6, 13));
 			}},
 			{ id: "tantegel_chest2", x: 13, y: 20, take: function () {
-				player.add_gold(random_number(6, 13));
+				player.add_gold(Game.random_number(6, 13));
 			}},
 			{ id: "tantegel_chest3", x: 12, y: 21, take:function () {
-				player.add_gold(random_number(6, 13));
+				player.add_gold(Game.random_number(6, 13));
 			}},
 			{ id: "tantegel_chest4", x: 14, y: 21, take: function () {
-				player.add_gold(random_number(6, 13));
+				player.add_gold(Game.random_number(6, 13));
 			}}
 		],
 		npcs:
@@ -291,10 +291,10 @@ var maps = {
 		[
 			{ type: "king", facing: "down", x: 11, y: 6 },
 			{ type: "soldier", facing: "right", x: 11, y: 9, talk: function () {
-				add_text(text.script.tantegel_throne_guard1);
+				Game.process_script({ text: "tantegel_throne_guard1" });
 			}},
 			{ type: "soldier", facing: "left", x: 13, y: 9, talk: function () {
-				add_text(text.script.tantegel_throne_guard2);
+				Game.process_script({ text: "tantegel_throne_guard2" });
 			}},
 			{ type: "soldier", facing: "down", x: 15, y: 7 },
 			{ type: "princess", facing: "down", x: 14, y: 6 }

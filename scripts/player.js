@@ -63,21 +63,11 @@ var player = {
 	// Draw player and animations
 	// -------------------------------------------------------------------
 
-	character_frame: function(frame_number, pos_x, pos_y) {
-		var img = new Image();
-		img.src = "assets/sprites/characters.png";
-
-		var image_x = (frame_number % 16) * tile_width,
-		    image_y = Math.floor(frame_number / 16) * tile_height;
-
-		context.drawImage(img, image_x, image_y, tile_width, tile_height, pos_x, pos_y, tile_width, tile_height);
-	},
-
 	animate_player: function(frame1, frame2) {
 		if ((Date.now() % 1000) < 500) {
-			this.character_frame(frame1, this.x, this.y);
+			Game.draw_character(frame1, this.x, this.y);
 		} else {
-			this.character_frame(frame2, this.x, this.y);
+			Game.draw_character(frame2, this.x, this.y);
 		}
 	},
 
@@ -184,7 +174,7 @@ var player = {
 							this.steps++;
 						}
 						if (combat.random_encounter() === true) {
-							change_state("combat");
+							Game.change_state("combat");
 						}
 						time = Date.now();
 					}
@@ -203,7 +193,7 @@ var player = {
 							this.steps++;
 						}
 						if (combat.random_encounter() === true) {
-							change_state("combat");
+							Game.change_state("combat");
 						}
 						time = Date.now();
 					}
@@ -222,7 +212,7 @@ var player = {
 							this.steps++;
 						}
 						if (combat.random_encounter() === true) {
-							change_state("combat");
+							Game.change_state("combat");
 						}
 						time = Date.now();
 					}
@@ -241,7 +231,7 @@ var player = {
 							this.steps++;
 						}
 						if (combat.random_encounter() === true) {
-							change_state("combat");
+							Game.change_state("combat");
 						}
 						time = Date.now();
 					}
@@ -358,7 +348,7 @@ var player = {
 		var self = this;
 		Object.keys(this.spells).forEach(function (spellId) {
 			var spell = self.spells[spellId];
-			if ((game_state === "combat" && spell.show_in_combat) || (game_state === "exploration" && spell.show_in_explore)) {
+			if ((Game.state === "combat" && spell.show_in_combat) || (Game.state === "exploration" && spell.show_in_explore)) {
 				add_option(text.spells[spellId], text.spells[spellId], "spell");
 			}
 		});
