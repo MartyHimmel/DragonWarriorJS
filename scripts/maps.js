@@ -389,8 +389,14 @@ var maps = {
 			15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
 			15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15
 		],
+		doors: [
+			{ id: "brecconary_door1", x: 17, y: 30 },
+			{ id: "brecconary_door2", x: 33, y: 13 }
+		],
 		npcs:
 		[
+			{ type: "townsman", facing: "down", x: 13, y: 5 },
+			{ type: "merchant", facing: "left", x: 22, y: 13 }
 		]
 	},
 
@@ -1114,6 +1120,11 @@ var maps = {
 			2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
 			2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
 		],
+		chests: [
+			{ id: "charlock_b2_chest1", x: 12, y: 7, take: function () {
+				player.add_item("erdricks_sword");
+			}}
+		],
 		npcs:
 		[
 		]
@@ -1296,8 +1307,32 @@ var maps = {
 			25, 25, 25, 25, 25, 25, 25, 25, 22, 22,  2,  8,  2, 22, 22, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
 			25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25
 		],
+		doors: [
+			{ id: "charlock_b7_door1", x: 18, y: 13 }
+		],
+		chests: [
+			{ id: "charlock_b7_chest1", x: 14, y: 14, take: function () {
+				player.add_item("herb");
+			}},
+			{ id: "charlock_b7_chest2", x: 13, y: 14, take: function () {
+				player.add_item("cursed_belt");
+			}},
+			{ id: "charlock_b7_chest3", x: 12, y: 14, take: function () {
+				player.add_item("wyvern_wings");
+			}},
+			{ id: "charlock_b7_chest4", x: 12, y: 13, take: function () {
+				player.add_gold(680);
+			}},
+			{ id: "charlock_b7_chest5", x: 12, y: 12, take: function () {
+				player.add_item("herb");
+			}},
+			{ id: "charlock_b7_chest6", x: 13, y: 13, take: function () {
+				player.add_item("magic_key");
+			}}
+		],
 		npcs:
 		[
+			{ type: "dragonlord", facing: "right", x: 17, y: 8 }
 		]
 	},
 
