@@ -54,15 +54,6 @@ function add_text(text) {
 	}, 500);
 }
 
-// Keyboard inputs
-var keysDown = {};
-window.addEventListener("keydown", function(e) {
-	keysDown[e.keyCode] = true;
-});
-window.addEventListener("keyup", function(e) {
-	delete keysDown[e.keyCode];
-});
-
 // display stats, equipment, commands, and other options (side bars)
 function display_output() {
     getId('character_name').innerHTML = player.name;

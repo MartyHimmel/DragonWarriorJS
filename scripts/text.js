@@ -25,6 +25,11 @@ var text = {
 
         return formatString;
     },
+    game_title: "Dragon Warrior",
+    name_prompt: "What is thy name?",
+    default_player_name: "Yuji Horii",
+    welcome: "Welcome, descendent of Erdrick.",
+    dead: "Thou art dead.",
     weapons: {
         none: "None",
         bamboo_pole: "Bamboo Pole",
@@ -125,7 +130,6 @@ var text = {
         dragonlord_first_form: "Dragonlord",
         dragonlord_second_form: "Dragonlord"
     },
-    dead: "Thou art dead.",
     combat: {
         cast_blocked: "But that spell hath been blocked.",
         prompt: "Command?",
@@ -222,12 +226,12 @@ var text = {
         }
     },
     script: {
-        tantegel_throne_guard1: [
+        tantagel_throne_guard1: [
             "East of this castle is a town where armor, weapons, and many other items may be purchased.",
             "Return to the Inn for a rest if thou art wounded in battle, <player_name>.",
             "Sleep heals all."
         ],
-        tantegel_throne_guard2: [
+        tantagel_throne_guard2: [
             "If thou hast collected all the Treasure Chests, a key will be found.",
             "Once used, the key will disappear, but the door will be open and thou may pass through."
         ]

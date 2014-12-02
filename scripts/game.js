@@ -11,12 +11,13 @@ Game = {
 	possible_states: ["exploration", "combat"],
 	canvas: null,
 	context: null,
-	imgTiles: null,
-	imgCharacters: null,
-	imgMonsters: null,
+	img_characters: null,
+	img_enemies: null,
+	img_tiles: null,
 
 	begin: function () {
-		var self = this;
+		var self = this,
+			keysDown = {};
 
 		function draw () {
 			self.clear();
@@ -71,29 +72,37 @@ Game = {
 			display_output();
 		}
 
-		function loadImages() {
-			//TODO: load from config.
-			self.imgTiles = new Image();
-			self.imgTiles.src = "assets/sprites/tiles.png";
-			self.imgCharacters = new Image();
-			self.imgCharacters.src = "assets/sprites/characters.png";
-			self.imgMonsters = new Image();
-			self.imgMonsters.src = "assets/sprites/monsters.png";
+		function load_images() {
+			self.img_characters = new Image();
+			self.img_characters.src = config.sprites.characters;
+			self.img_enemies = new Image();
+			self.img_enemies.src = config.sprites.enemies;
+			self.img_tiles = new Image();
+			self.img_tiles.src = config.sprites.tiles;
 		}
 
 		// Main game window
+		document.title = text.game_title;
 		this.canvas = document.getElementById("game");
 		this.context = this.canvas.getContext("2d");
-		loadImages();
+		load_images();
+
+		// Keyboard inputs
+		window.addEventListener("keydown", function(e) {
+			keysDown[e.keyCode] = true;
+		});
+		window.addEventListener("keyup", function(e) {
+			delete keysDown[e.keyCode];
+		});
 
 		// Start the game!
-		player.name = prompt("What is thy name?");
-		if (player.name === "") { player.name = "Yuji Horii"; }
+		player.name = prompt(text.name_prompt);
+		if (player.name === "") { player.name = text.default_player_name; }
 		Game.change_state("exploration");
 		map.load_map("World");
 		player.load_player();
 		player.set_current_tile();
-		add_text("Welcome, descendent of Erdrick.");
+		add_text(text.welcome);
 		main();
 	},
 
@@ -109,16 +118,11 @@ Game = {
 	},
 
 	// call frame from characters.png - starts with frame 0
-	draw_character: function (frame_number, pos_x, pos_y, is_npc) {
+	draw_character: function (frame_number, pos_x, pos_y) {
 		var image_x = (frame_number % 16) * tile_width,
 		    image_y = Math.floor(frame_number / 16) * tile_height;
 
-		if (is_npc) {
-			pos_x = pos_x * 32;
-			pos_y = pos_y * 32;
-		}
-
-		this.context.drawImage(this.imgCharacters, image_x, image_y, tile_width, tile_height,
+		this.context.drawImage(this.img_characters, image_x, image_y, tile_width, tile_height,
 			pos_x, pos_y, tile_width, tile_height);
 	},
 
@@ -130,7 +134,7 @@ Game = {
 		    pos_x = (this.canvas.width / 2) - tile_width,
 		    pos_y = (this.canvas.height / 2) - tile_height;
 
-		this.context.drawImage(this.imgMonsters, tile_x, tile_y, tile_width, tile_height,
+		this.context.drawImage(this.img_enemies, tile_x, tile_y, tile_width, tile_height,
 			pos_x, pos_y, tile_width * 2, tile_height *2);
 	},
 
@@ -140,7 +144,7 @@ Game = {
 		var pos_x = (frame_number % 12) * tile_width,
 		    pos_y = Math.floor(frame_number / 12) * tile_height;
 
-		this.context.drawImage(this.imgTiles, pos_x, pos_y, tile_width, tile_height,
+		this.context.drawImage(this.img_tiles, pos_x, pos_y, tile_width, tile_height,
 			x, y, tile_width, tile_height);
 	},
 
@@ -163,4 +167,4 @@ Game = {
 	random_number: function (min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
-}
+};

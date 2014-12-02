@@ -1,4 +1,9 @@
 var config = {
+    sprites: {
+        characters: "assets/sprites/characters.png",
+        enemies: "assets/sprites/monsters.png",
+        tiles: "assets/sprites/tiles.png"
+    },
     levels: [
         //TODO: needs to take this into account- http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/18342
         { max_hp: 15,  max_mp: 0,   strength: 4,   agility: 4,   required_exp: 0 },

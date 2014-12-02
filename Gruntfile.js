@@ -23,14 +23,14 @@ module.exports = function(grunt) {
                 src: [
                     'scripts/config.js',
                     'scripts/text.js',
-                    'scripts/init.js',
+                    'scripts/game.js',
                     'scripts/npcs.js',
                     'scripts/player.js',
                     'scripts/maps.js',
                     'scripts/map_functions.js',
                     'scripts/audio.js',
                     'scripts/combat.js',
-                    'scripts/game.js'
+                    'scripts/init.js'
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
             }

@@ -166,7 +166,7 @@ var maps = {
 		]
 	},
 
-	"Tantagel1F": {
+	"Tantegel1F": {
 		type: "town",
 		pos_x: 9,
 		pos_y: 29,
@@ -174,7 +174,7 @@ var maps = {
 		char_y: 6,
 		width: 55,
 		height: 45,
-		music: "tantagel",
+		music: "tantegel",
 		layout:
 		[
 			15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
@@ -243,10 +243,40 @@ var maps = {
 		],
 		npcs:
 		[
+			//two by stairs
+			{ type: "soldier", facing: "down", x: 19, y: 12 },
+			{ type: "soldier", facing: "up", x: 19, y: 14 },
+			{ type: "townsman", facing: "down", x: 13, y: 14 },
+			//guy by chest
+			{ type: "soldier", facing: "down", x: 13, y: 18 },
+			{ type: "townsman", facing: "down", x: 22, y: 17, wanders: true },
+			{ type: "townswoman", facing: "down", x: 19, y: 19, wanders: true },
+			//guy by locked door towards right
+			{ type: "soldier", facing: "down", x: 30, y: 8, wanders: true },
+			//wandering old man
+			{ type: "old_man", facing: "down", x: 27, y: 17, wanders: true },
+			//guards by old man that gives you MP
+			{ type: "soldier", facing: "right", x: 26, y: 26 },
+			{ type: "soldier", facing: "down", x: 29, y: 24, wanders: true },
+			//guy that gives you MP
+			{ type: "old_man", facing: "left", x: 31, y: 32 },
+			//front door guards
+			{ type: "soldier", facing: "right", x: 20, y: 33 },
+			{ type: "soldier", facing: "left", x: 23, y: 33 },
+			//merchants at entrance
+			{ type: "merchant", facing: "down", x: 17, y: 31, wanders: true },
+			{ type: "merchant", facing: "down", x: 15, y: 27, wanders: true },
+			//guy that sells keys
+			{ type: "merchant", facing: "down", x: 35, y: 7 },
+			{ type: "solider_2", facing: "down", x: 36, y: 15, wanders: true },
+			{ type: "townswoman", facing: "down", x: 38, y: 11 },
+			//by the barrier
+			{ type: "soldier", facing: "up", x: 37, y: 21 },
+			{ type: "solider_2", facing: "up", x: 35, y: 27, wanders: true }
 		]
 	},
 
-	"Tantagel2F": {
+	"Tantegel2F": {
 		type: "town",
 		pos_x: 0,
 		pos_y: 0,
@@ -254,7 +284,7 @@ var maps = {
 		char_y: 11,
 		width: 25,
 		height: 15,
-		music: "tantagel",
+		music: "tantegel",
 		layout:
 		[
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -301,7 +331,7 @@ var maps = {
 		]
 	},
 
-	"TantagelB1": {
+	"TantegelB1": {
 		type: "town",
 		pos_x: 0,
 		pos_y: 0,
@@ -309,7 +339,7 @@ var maps = {
 		char_y: 6,
 		width: 25,
 		height: 15,
-		music: "tantagel",
+		music: "tantegel",
 		layout:
 		[
 			2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -330,6 +360,7 @@ var maps = {
 		],
 		npcs:
 		[
+		{ type: "old_man", facing: "down", x: 11, y: 8 }
 		]
 	},
 
@@ -395,8 +426,33 @@ var maps = {
 		],
 		npcs:
 		[
-			{ type: "townsman", facing: "down", x: 13, y: 5 },
-			{ type: "merchant", facing: "left", x: 22, y: 13 }
+			//greeter
+			{ type: "townsman", facing: "down", x: 13, y: 20 },
+			//inkeeper
+			{ type: "merchant", facing: "left", x: 22, y: 28 },
+			{ type: "soldier", facing: "up", x: 22, y: 33 },
+			{ type: "solider_2", facing: "down", x: 15, y: 33, wanders: true },
+			//armor/weapons store
+			{ type: "townswoman", facing: "down", x: 16, y: 14 },
+			{ type: "merchant", facing: "down", x: 17, y: 11 },
+			//wandering people
+			{ type: "old_man", facing: "down", x: 23, y: 12, wanders: true },
+			{ type: "solider_2", facing: "up", x: 24, y: 28, wanders: true },
+			{ type: "townsman", facing: "down", x: 22, y: 21, wanders: true },
+			{ type: "merchant", facing: "down", x: 29, y: 17, wanders: true },
+			{ type: "solider_2", facing: "down", x: 31, y: 26, wanders: true },
+			{ type: "townswoman", facing: "up", x: 28, y: 32, wanders: true },
+			//item store
+			{ type: "merchant", facing: "left", x: 37, y: 32, wanders: true },
+			{ type: "townsman", facing: "left", x: 32, y: 31, wanders: true },
+			{ type: "townsman", facing: "down", x: 37, y: 29, wanders: true },
+			//"there are keys" guy and curse removing old man
+			{ type: "townsman", facing: "down", x: 32, y: 17 },
+			{ type: "old_man", facing: "down", x: 36, y: 17 },
+			//guy in the corner
+			{ type: "solider_2", facing: "down", x: 40, y: 8 },
+			//fairy water
+			{ type: "townswoman", facing: "left", x: 36, y: 11, wanders: true }
 		]
 	},
 
@@ -452,6 +508,17 @@ var maps = {
 		],
 		npcs:
 		[
+			//guy at top
+			{ type: "old_man", facing: "down", x: 13, y: 9 },
+			//entrance area
+			{ type: "old_man", facing: "down", x: 32, y: 27, wanders: true },
+			{ type: "merchant", facing: "left", x: 26, y: 29 },
+			//by inn/spring
+			{ type: "townswoman", facing: "down", x: 24, y: 9 },
+			{ type: "merchant", facing: "up", x: 31, y: 12 },
+			//weapons
+			{ type: "merchant", facing: "left", x: 34, y: 20 }
+			//didn't finish; still more.
 		]
 	},
 

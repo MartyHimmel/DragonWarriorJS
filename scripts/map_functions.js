@@ -115,7 +115,7 @@ var map = {
 	check_location: function () {
 		if (this.current_map === "World") {
 			if (player.offset_x === 35 && player.offset_y === 41 && player.steps !== 0) {
-				this.load_map("Tantagel1F");
+				this.load_map("Tantegel1F");
 			}
 			if (player.offset_x === 40 && player.offset_y === 39 && player.steps !== 0) {
 				this.load_map("Brecconary");
@@ -160,27 +160,27 @@ var map = {
 				this.load_map("SouthShrine");
 			}
 		}
-		if (this.current_map === "Tantagel1F") {
+		if (this.current_map === "Tantegel1F") {
 			if (player.offset_x > 28 || player.y < 6 * tile_height|| player.offset_y > 29) {
 				this.load_map("World");
 				player.set_offsets(35, 41);
 			}
 			if (player.offset_x === 6 && player.offset_y === 7 && player.steps !== 0) {
-				this.load_map("Tantagel2F");
+				this.load_map("Tantegel2F");
 			}
 			if (player.offset_x === 28 && player.offset_y === 29 && player.steps !== 0) {
-				this.load_map("TantagelB1");
+				this.load_map("TantegelB1");
 			}
 		}
-		if (this.current_map === "Tantagel2F") {
+		if (this.current_map === "Tantegel2F") {
 			if (player.x === 16 * tile_width && player.y === 11 * tile_height && player.steps !== 0) {
-				this.load_map("Tantagel1F");
+				this.load_map("Tantegel1F");
 				player.set_offsets(6, 7);
 			}
 		}
-		if (this.current_map === "TantagelB1") {
-			if (player.x === 7 * tile_width && player.y == 6 * tile_height && player.steps !== 0) {
-				this.load_map("Tantagel1F");
+		if (this.current_map === "TantegelB1") {
+			if (player.x === 7 * tile_width && player.y === 6 * tile_height && player.steps !== 0) {
+				this.load_map("Tantegel1F");
 				player.set_offsets(28, 29);
 			}
 		}

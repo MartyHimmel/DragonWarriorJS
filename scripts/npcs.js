@@ -2,10 +2,13 @@ var npc = {
 	character_state: "",
 
 	animate_character: function(frame1, frame2, x, y) {
+		x = ((x-player.offset_x) * tile_width);
+		y = ((y-player.offset_y) * tile_height);
+
 		if ((Date.now() % 1000) < 500) {
-			Game.draw_character(frame1, x, y, true);
+			Game.draw_character(frame1, x, y);
 		} else {
-			Game.draw_character(frame2, x, y, true);
+			Game.draw_character(frame2, x, y);
 		}
 	},
 
@@ -140,7 +143,7 @@ var npc = {
 
 	draw_npcs: function() {
 		var number_of_npcs = map.map_ptr.npcs.length;
-		if (map.current_map === "Tantagel2F" && player.rescued_princess === false) {
+		if (map.current_map === "Tantegel2F" && player.rescued_princess === false) {
 			number_of_npcs--;
 		}
 		for (var i = 0; i < number_of_npcs; i++) {
