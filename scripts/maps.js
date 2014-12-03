@@ -1399,7 +1399,7 @@ var maps = {
 		],
 		npcs:
 		[
-			{ type: "dragonlord", facing: "right", x: 17, y: 8 }
+			{ type: "dragonlord", facing: "right", x: 17, y: 25 }
 		]
 	},
 

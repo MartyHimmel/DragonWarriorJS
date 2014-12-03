@@ -81,11 +81,11 @@ var player = {
 			case "up" :
 				if (this.carrying_princess === true) {
 					this.animate_player(68, 69);
-				} else if (this.weapon === "None" && this.shield === "None") {
+				} else if (this.weapon === "none" && this.shield === "none") {
 					this.animate_player(4, 5);
-				} else if (this.weapon !== "None" && this.shield === "None") {
+				} else if (this.weapon !== "none" && this.shield === "none") {
 					this.animate_player(20, 21);
-				} else if (this.weapon === "None" && this.shield !== "None") {
+				} else if (this.weapon === "none" && this.shield !== "none") {
 					this.animate_player(36, 37);
 				} else {
 					this.animate_player(52, 53);
@@ -94,11 +94,11 @@ var player = {
 			case "down":
 				if (this.carrying_princess === true) {
 					this.animate_player(64, 65);
-				} else if (this.weapon === "None" && this.shield === "None") {
+				} else if (this.weapon === "none" && this.shield === "none") {
 					this.animate_player(0, 1);
-				} else if (this.weapon !== "None" && this.shield === "None") {
+				} else if (this.weapon !== "none" && this.shield === "none") {
 					this.animate_player(16, 17);
-				} else if (this.weapon === "None" && this.shield !== "None") {
+				} else if (this.weapon === "none" && this.shield !== "none") {
 					this.animate_player(32, 33);
 				} else {
 					this.animate_player(48, 49);
@@ -107,11 +107,11 @@ var player = {
 			case "left":
 				if (this.carrying_princess === true) {
 					this.animate_player(66, 67);
-				} else if (this.weapon === "None" && this.shield === "None") {
+				} else if (this.weapon === "none" && this.shield === "none") {
 					this.animate_player(2, 3);
-				} else if (this.weapon !== "None" && this.shield === "None") {
+				} else if (this.weapon !== "none" && this.shield === "none") {
 					this.animate_player(18, 19);
-				} else if (this.weapon === "None" && this.shield !== "None") {
+				} else if (this.weapon === "none" && this.shield !== "none") {
 					this.animate_player(34, 35);
 				} else {
 					this.animate_player(50, 51);
@@ -120,11 +120,11 @@ var player = {
 			case "right":
 				if (this.carrying_princess === true) {
 					this.animate_player(70, 71);
-				} else if (this.weapon === "None" && this.shield === "None") {
+				} else if (this.weapon === "none" && this.shield === "none") {
 					this.animate_player(6, 7);
-				} else if (this.weapon !== "None" && this.shield === "None") {
+				} else if (this.weapon !== "none" && this.shield === "none") {
 					this.animate_player(22, 23);
-				} else if (this.weapon === "None" && this.shield !== "None") {
+				} else if (this.weapon === "none" && this.shield !== "none") {
 					this.animate_player(38, 39);
 				} else {
 					this.animate_player(54, 55);
@@ -157,86 +157,78 @@ var player = {
 	// Movement and collision
 	// -------------------------------------------------------------------
 
-	move: function(direction) {
+	move: function (direction) {
+		var x = player.offset_x + (player.x / tile_width),
+			y = player.offset_y + (player.y / tile_height),
+			prev_steps = this.steps;
+
 		this.set_current_tile();
 		map.set_zone();
-		switch(direction) {
+
+		switch (direction) {
 			case "up":
 				this.character_state = "up";
 				this.draw_player("up");
-				if (this.collide_up() === false) {
+				if (this.will_collide(x, y-1) === false) {
 					if (delta_time - time > this.movement) {
 						if (this.offset_y > 0 && this.y === 6 * tile_height) {
 							this.offset_y -= 1;
-							this.steps++;
 						} else {
 							this.y -= tile_height;
-							this.steps++;
 						}
-						if (combat.random_encounter() === true) {
-							Game.change_state("combat");
-						}
-						time = Date.now();
+						this.steps++;
 					}
 				}
 				break;
 			case "down":
 				this.character_state = "down";
 				this.draw_player("down");
-				if (this.collide_down() === false) {
+				if (this.will_collide(x, y+1) === false) {
 					if (delta_time - time > this.movement) {
 						if (this.offset_y < map.boundary_bottom && this.y === 6 * tile_height) {
 							this.offset_y += 1;
-							this.steps++;
 						} else {
 							this.y += tile_height;
-							this.steps++;
 						}
-						if (combat.random_encounter() === true) {
-							Game.change_state("combat");
-						}
-						time = Date.now();
+						this.steps++;
 					}
 				}
 				break;
 			case "left":
 				this.character_state = "left";
 				this.draw_player("left");
-				if (this.collide_left() === false) {
+				if (this.will_collide(x-1, y) === false) {
 					if (delta_time - time > this.movement) {
 						if (this.offset_x > 0 && this.x === 12 * tile_width) {
 							this.offset_x -= 1;
-							this.steps++;
 						} else {
 							this.x -= tile_width;
-							this.steps++;
 						}
-						if (combat.random_encounter() === true) {
-							Game.change_state("combat");
-						}
-						time = Date.now();
+						this.steps++;
 					}
 				}
 				break;
 			case "right":
 				this.character_state = "right";
 				this.draw_player("right");
-				if (this.collide_right() === false) {
+				if (this.will_collide(x+1, y) === false) {
 					if (delta_time - time > this.movement) {
 						if (this.offset_x < map.boundary_right && this.x === 12 * tile_width) {
 							this.offset_x += 1;
-							this.steps++;
 						} else {
 							this.x += tile_width;
-							this.steps++;
 						}
-						if (combat.random_encounter() === true) {
-							Game.change_state("combat");
-						}
-						time = Date.now();
+						this.steps++;
 					}
 				}
 				break;
+		}
+
+		if (this.steps > prev_steps) {
+			if (combat.random_encounter() === true) {
+				Game.change_state("combat");
+			}
+			time = Date.now();
 		}
 	},
 
@@ -245,44 +237,12 @@ var player = {
 				((player.offset_y + (player.y / tile_height)) * maps[map.current_map].width)] - 1;
 	},
 
-	collide_right: function() {
-		var next_tile = maps[map.current_map].layout[(player.offset_x + 1 + (player.x / tile_width)) +
-				((player.offset_y + (player.y / tile_height)) * maps[map.current_map].width)] - 1;
-		if (this.collide_tiles.indexOf(next_tile) > -1) {
+	will_collide: function (x, y) {
+		var next_tile = maps[map.current_map].layout[x + (y * maps[map.current_map].width)] - 1;
+		if (this.collide_tiles.indexOf(next_tile) > -1 || npc.get_npc(x, y) !== null) {
 			return true;
-		} else {
-			return false;
 		}
-	},
-
-	collide_left: function() {
-		var next_tile = maps[map.current_map].layout[(player.offset_x - 1 + (player.x / tile_width)) +
-				((player.offset_y + (player.y / tile_height)) * maps[map.current_map].width)] - 1;
-		if (this.collide_tiles.indexOf(next_tile) > -1) {
-			return true;
-		} else {
-			return false;
-		}
-	},
-
-	collide_down: function() {
-		var next_tile = maps[map.current_map].layout[(player.offset_x + (player.x / tile_width)) +
-				((player.offset_y + 1 + (player.y / tile_height)) * maps[map.current_map].width)] - 1;
-		if (this.collide_tiles.indexOf(next_tile) > -1) {
-			return true;
-		} else {
-			return false;
-		}
-	},
-
-	collide_up: function() {
-		var next_tile = maps[map.current_map].layout[(player.offset_x + (player.x / tile_width)) +
-				((player.offset_y - 1 + (player.y / tile_height)) * maps[map.current_map].width)] - 1;
-		if (this.collide_tiles.indexOf(next_tile) > -1) {
-			return true;
-		} else {
-			return false;
-		}
+		return false;
 	},
 
 	// Set stats
