@@ -38,6 +38,12 @@ var map = {
 	// 25 - 35 coastline
 
 	load_map: function (map_name) {
+		if (map_name === "World") {
+			//reset door flags when leaving towns.
+			//TODO: don't reset all flags; some stay unlocked (e.g. throne room).
+			player.doors_opened = [];
+		}
+
 		player.steps = 0;
 		player.set_position(map_name);
 		this.current_map = map_name;
@@ -53,10 +59,13 @@ var map = {
 	// refresh status of doors/treasure chests
 	refresh_map: function () {
 		var self = this;
+
 		if (typeof this.map_ptr.doors !== 'undefined') {
 			this.map_ptr.doors.forEach(function (element, index, array) {
 				if (player.doors_opened.indexOf(element.id) > -1) {
 					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 4;
+				} else {
+					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 6;
 				}
 			});
 		}
@@ -65,9 +74,42 @@ var map = {
 			this.map_ptr.chests.forEach(function (element, index, array) {
 				if (player.chests_taken.indexOf(element.id) > -1) {
 					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 4;
+				} else {
+					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 5;
 				}
 			});
 		}
+	},
+
+	get_npc: function (x, y) {
+		var number_of_npcs, i;
+
+		if (typeof this.map_ptr.npcs !== 'undefined') {
+			number_of_npcs = map.map_ptr.npcs.length;
+			for (i=0; i<number_of_npcs; i++) {
+				//TODO: consider visibility.
+				if (map.map_ptr.npcs[i].x === x && map.map_ptr.npcs[i].y === y) {
+					return map.map_ptr.npcs[i];
+				}
+			}
+		}
+
+		return null;
+	},
+
+	get_door: function (x, y) {
+		var number_of_doors, i;
+
+		if (typeof this.map_ptr.doors !== 'undefined') {
+			number_of_doors = map.map_ptr.doors.length;
+			for (i=0; i<number_of_doors; i++) {
+				if (map.map_ptr.doors[i].x === x && map.map_ptr.doors[i].y === y) {
+					return map.map_ptr.doors[i];
+				}
+			}
+		}
+
+		return null;
 	},
 
 	draw_viewport: function (map_name, offset_x, offset_y) {

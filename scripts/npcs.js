@@ -155,18 +155,5 @@ var npc = {
 				map.map_ptr.npcs[i].y
 			);
 		}
-	},
-
-	get_npc: function (x, y) {
-		var number_of_npcs = map.map_ptr.npcs.length;
-
-		for (var i = 0; i < number_of_npcs; i++) {
-			//TODO: consider visibility.
-			if (map.map_ptr.npcs[i].x === x && map.map_ptr.npcs[i].y === y) {
-				return map.map_ptr.npcs[i];
-			}
-		}
-
-		return null;
 	}
 };

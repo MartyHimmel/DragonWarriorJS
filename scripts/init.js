@@ -97,6 +97,13 @@ function display_output() {
         getId('run').onclick = function() {
             combat.player_run();
         };
+    } else {
+        getId('door').onclick = function() {
+            player.door();
+        };
+        getId('talk').onclick = function() {
+            player.talk();
+        };
     }
 }
 

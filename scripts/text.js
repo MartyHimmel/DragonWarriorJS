@@ -226,12 +226,12 @@ var text = {
         }
     },
     script: {
-        tantagel_throne_guard1: [
+        tantegel_throne_guard1: [
             "East of this castle is a town where armor, weapons, and many other items may be purchased.",
             "Return to the Inn for a rest if thou art wounded in battle, <player_name>.",
             "Sleep heals all."
         ],
-        tantagel_throne_guard2: [
+        tantegel_throne_guard2: [
             "If thou hast collected all the Treasure Chests, a key will be found.",
             "Once used, the key will disappear, but the door will be open and thou may pass through."
         ]

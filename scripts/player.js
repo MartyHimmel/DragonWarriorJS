@@ -71,39 +71,8 @@ var player = {
 		}
 	},
 
-	draw_player: function(direction) {
-		if (this.character_state === "up") { direction = "up"; }
-		if (this.character_state === "down") { direction = "down"; }
-		if (this.character_state === "") { direction = "down"; }
-		if (this.character_state === "left") { direction = "left"; }
-		if (this.character_state === "right") { direction = "right"; }
-		switch (direction) {
-			case "up" :
-				if (this.carrying_princess === true) {
-					this.animate_player(68, 69);
-				} else if (this.weapon === "none" && this.shield === "none") {
-					this.animate_player(4, 5);
-				} else if (this.weapon !== "none" && this.shield === "none") {
-					this.animate_player(20, 21);
-				} else if (this.weapon === "none" && this.shield !== "none") {
-					this.animate_player(36, 37);
-				} else {
-					this.animate_player(52, 53);
-				}
-				break;
-			case "down":
-				if (this.carrying_princess === true) {
-					this.animate_player(64, 65);
-				} else if (this.weapon === "none" && this.shield === "none") {
-					this.animate_player(0, 1);
-				} else if (this.weapon !== "none" && this.shield === "none") {
-					this.animate_player(16, 17);
-				} else if (this.weapon === "none" && this.shield !== "none") {
-					this.animate_player(32, 33);
-				} else {
-					this.animate_player(48, 49);
-				}
-				break;
+	draw_player: function () {
+		switch (this.character_state) {
 			case "left":
 				if (this.carrying_princess === true) {
 					this.animate_player(66, 67);
@@ -128,6 +97,33 @@ var player = {
 					this.animate_player(38, 39);
 				} else {
 					this.animate_player(54, 55);
+				}
+				break;
+			case "up":
+				if (this.carrying_princess === true) {
+					this.animate_player(68, 69);
+				} else if (this.weapon === "none" && this.shield === "none") {
+					this.animate_player(4, 5);
+				} else if (this.weapon !== "none" && this.shield === "none") {
+					this.animate_player(20, 21);
+				} else if (this.weapon === "none" && this.shield !== "none") {
+					this.animate_player(36, 37);
+				} else {
+					this.animate_player(52, 53);
+				}
+				break;
+			case "down":
+			default:
+				if (this.carrying_princess === true) {
+					this.animate_player(64, 65);
+				} else if (this.weapon === "none" && this.shield === "none") {
+					this.animate_player(0, 1);
+				} else if (this.weapon !== "none" && this.shield === "none") {
+					this.animate_player(16, 17);
+				} else if (this.weapon === "none" && this.shield !== "none") {
+					this.animate_player(32, 33);
+				} else {
+					this.animate_player(48, 49);
 				}
 				break;
 		}
@@ -166,37 +162,9 @@ var player = {
 		map.set_zone();
 
 		switch (direction) {
-			case "up":
-				this.character_state = "up";
-				this.draw_player("up");
-				if (this.will_collide(x, y-1) === false) {
-					if (delta_time - time > this.movement) {
-						if (this.offset_y > 0 && this.y === 6 * tile_height) {
-							this.offset_y -= 1;
-						} else {
-							this.y -= tile_height;
-						}
-						this.steps++;
-					}
-				}
-				break;
-			case "down":
-				this.character_state = "down";
-				this.draw_player("down");
-				if (this.will_collide(x, y+1) === false) {
-					if (delta_time - time > this.movement) {
-						if (this.offset_y < map.boundary_bottom && this.y === 6 * tile_height) {
-							this.offset_y += 1;
-						} else {
-							this.y += tile_height;
-						}
-						this.steps++;
-					}
-				}
-				break;
 			case "left":
 				this.character_state = "left";
-				this.draw_player("left");
+				this.draw_player();
 				if (this.will_collide(x-1, y) === false) {
 					if (delta_time - time > this.movement) {
 						if (this.offset_x > 0 && this.x === 12 * tile_width) {
@@ -210,13 +178,41 @@ var player = {
 				break;
 			case "right":
 				this.character_state = "right";
-				this.draw_player("right");
+				this.draw_player();
 				if (this.will_collide(x+1, y) === false) {
 					if (delta_time - time > this.movement) {
 						if (this.offset_x < map.boundary_right && this.x === 12 * tile_width) {
 							this.offset_x += 1;
 						} else {
 							this.x += tile_width;
+						}
+						this.steps++;
+					}
+				}
+				break;
+			case "up":
+				this.character_state = "up";
+				this.draw_player();
+				if (this.will_collide(x, y-1) === false) {
+					if (delta_time - time > this.movement) {
+						if (this.offset_y > 0 && this.y === 6 * tile_height) {
+							this.offset_y -= 1;
+						} else {
+							this.y -= tile_height;
+						}
+						this.steps++;
+					}
+				}
+				break;
+			case "down":
+				this.character_state = "down";
+				this.draw_player();
+				if (this.will_collide(x, y+1) === false) {
+					if (delta_time - time > this.movement) {
+						if (this.offset_y < map.boundary_bottom && this.y === 6 * tile_height) {
+							this.offset_y += 1;
+						} else {
+							this.y += tile_height;
 						}
 						this.steps++;
 					}
@@ -239,7 +235,7 @@ var player = {
 
 	will_collide: function (x, y) {
 		var next_tile = maps[map.current_map].layout[x + (y * maps[map.current_map].width)] - 1;
-		if (this.collide_tiles.indexOf(next_tile) > -1 || npc.get_npc(x, y) !== null) {
+		if (this.collide_tiles.indexOf(next_tile) > -1 || map.get_npc(x, y) !== null) {
 			return true;
 		}
 		return false;
@@ -316,6 +312,42 @@ var player = {
 
 	// Item management
 	// -------------------------------------------------------------------
+
+	door: function () {
+		var x = player.offset_x + (player.x / tile_width),
+			y = player.offset_y + (player.y / tile_height),
+			door = null;
+
+		switch (this.character_state) {
+			case "left":  door = map.get_door(x-1, y); break;
+			case "right": door = map.get_door(x+1, y); break;
+			case "up":    door = map.get_door(x, y-1); break;
+			case "down":  door = map.get_door(x, y+1); break;
+		}
+
+		if (door !== null) {
+			//TODO: check for (and use) keys!
+			player.doors_opened.push(door.id);
+			map.refresh_map();
+		}
+	},
+
+	talk: function () {
+		var x = player.offset_x + (player.x / tile_width),
+			y = player.offset_y + (player.y / tile_height),
+			character = null;
+
+		switch (this.character_state) {
+			case "left":  character = map.get_npc(x-1, y); break;
+			case "right": character = map.get_npc(x+1, y); break;
+			case "up":    character = map.get_npc(x, y-1); break;
+			case "down":  character = map.get_npc(x, y+1); break;
+		}
+
+		if (character !== null && typeof character.talk === 'function') {
+			character.talk();
+		}
+	},
 
 	add_item: function(item) {
 		this.inventory.push(item);

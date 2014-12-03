@@ -152,15 +152,21 @@ Game = {
 	process_script: function (script_command) {
 		if (typeof script_command !== 'undefined') {
 			// Display raw text
-            if (typeof script_command.text !== 'undefined') {
-				if (script_command.text instanceof Array) {
-					script_command.text.forEach(function (element, index, array) {
-						add_text(text.script[element]);
+            if (typeof script_command.text !== 'undefined' &&
+                typeof text.script[script_command.text] !== 'undefined') {
+
+				if (text.script[script_command.text] instanceof Array) {
+					text.script[script_command.text].forEach(function (element, index, array) {
+						add_text(element);
 					});
 				} else {
 					add_text(text.script[script_command.text]);
 				}
 			}
+
+			//TODO: menu support
+			//yes/no
+			//item selection
 		}
 	},
 
