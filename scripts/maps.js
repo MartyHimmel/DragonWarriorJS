@@ -23,10 +23,8 @@ var maps = {
 
 	"World": {
 		type: "world",
-		pos_x: 34,
-		pos_y: 41,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [34, 41],
+		player_start: [12, 6],
 		width: 128,
 		height: 128,
 		music: "overworld",
@@ -168,12 +166,11 @@ var maps = {
 
 	"Tantegel1F": {
 		type: "town",
-		pos_x: 9,
-		pos_y: 29,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [9, 29],
+		player_start: [12, 6],
 		width: 55,
 		height: 45,
+		world_offset: [35, 41],
 		music: "tantegel",
 		layout:
 		[
@@ -278,10 +275,8 @@ var maps = {
 
 	"Tantegel2F": {
 		type: "town",
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 16,
-		char_y: 11,
+		player_offset: [0, 0],
+		player_start: [16, 11],
 		width: 25,
 		height: 15,
 		music: "tantegel",
@@ -333,10 +328,8 @@ var maps = {
 
 	"TantegelB1": {
 		type: "town",
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 7,
-		char_y: 6,
+		player_offset: [0, 0],
+		player_start: [7, 6],
 		width: 25,
 		height: 15,
 		music: "tantegel",
@@ -366,12 +359,11 @@ var maps = {
 
 	"Brecconary": {
 		type: "town",
-		pos_x: 0,
-		pos_y: 15,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [0, 15],
+		player_start: [12, 6],
 		width: 54,
 		height: 44,
+		world_offset: [40, 39],
 		music: "village",
 		layout:
 		[
@@ -458,12 +450,11 @@ var maps = {
 
 	"Kol": {
 		type: "town",
-		pos_x: 19,
-		pos_y: 23,
-		char_x: 12,
-		char_y: 8,
+		player_offset: [19, 23],
+		player_start: [12, 8],
 		width: 48,
 		height: 38,
+		world_offset: [96, 8],
 		music: "village",
 		layout:
 		[
@@ -524,10 +515,8 @@ var maps = {
 
 	"Garinham": {
 		type: "town",
-		pos_x: 0,
-		pos_y: 15,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [0, 15],
+		player_start: [12, 6],
 		width: 44,
 		height: 34,
 		music: "village",
@@ -575,12 +564,11 @@ var maps = {
 
 	"Rimuldar": {
 		type: "town",
-		pos_x: 29,
-		pos_y: 15,
-		char_x: 13,
-		char_y: 6,
+		player_offset: [29, 15],
+		player_start: [13, 6],
 		width: 54,
 		height: 44,
+		world_offset: [94, 70],
 		music: "village",
 		layout:
 		[
@@ -636,12 +624,11 @@ var maps = {
 
 	"Cantlin": {
 		type: "town",
-		pos_x: 13,
-		pos_y: 0,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [13, 0],
+		player_start: [12, 6],
 		width: 54,
 		height: 44,
+		world_offset: [65, 100],
 		music: "village",
 		layout:
 		[
@@ -698,12 +685,11 @@ var maps = {
 	"Hauksness": {
 		type: "dungeon",
 		zone: 13,
-		pos_x: 0,
-		pos_y: 9,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [0, 9],
+		player_start: [12, 6],
 		width: 44,
 		height: 34,
+		world_offset: [17, 87],
 		music: "dungeon1",
 		layout:
 		[
@@ -749,12 +735,11 @@ var maps = {
 
 	"ErdricksCaveB1": {
 		type: "town",
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 6,
-		char_y: 2,
+		player_offset: [0, 0],
+		player_start: [6, 2],
 		width: 25,
 		height: 15,
+		world_offset: [20, 10],
 		music: "dungeon1",
 		layout:
 		[
@@ -781,10 +766,8 @@ var maps = {
 
 	"ErdricksCaveB2": {
 		type: "town",
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 14,
-		char_y: 11,
+		player_offset: [0, 0],
+		player_start: [14, 11],
 		width: 25,
 		height: 15,
 		music: "dungeon2",
@@ -814,10 +797,8 @@ var maps = {
 	"SwampCave": {
 		type: "dungeon",
 		zone: 19,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 9,
-		char_y: 1,
+		player_offset: [0, 0],
+		player_start: [9, 1],
 		width: 25,
 		height: 32,
 		music: "dungeon1",
@@ -864,10 +845,8 @@ var maps = {
 	"GarinhamsGraveB1": {
 		type: "dungeon",
 		zone: 14,
-		pos_x: 0,
-		pos_y: 6,
-		char_x: 8,
-		char_y: 6,
+		player_offset: [0, 6],
+		player_start: [8, 6],
 		width: 25,
 		height: 22,
 		music: "dungeon1",
@@ -904,10 +883,8 @@ var maps = {
 	"GarinhamsGraveB2": {
 		type: "dungeon",
 		zone: 7,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 16,
-		char_y: 3,
+		player_offset: [0, 0],
+		player_start: [16, 3],
 		width: 25,
 		height: 15,
 		music: "dungeon1",
@@ -937,10 +914,8 @@ var maps = {
 	"GarinhamsGraveB3": {
 		type: "dungeon",
 		zone: 15,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 20,
-		char_y: 2,
+		player_offset: [0, 0],
+		player_start: [20, 2],
 		width: 25,
 		height: 22,
 		music: "dungeon3",
@@ -977,10 +952,8 @@ var maps = {
 	"GarinhamsGraveB4": {
 		type: "dungeon",
 		zone: 15,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 7,
-		char_y: 7,
+		player_offset: [0, 0],
+		player_start: [7, 7],
 		width: 25,
 		height: 15,
 		music: "dungeon4",
@@ -1010,12 +983,11 @@ var maps = {
 	"MountainCaveB1": {
 		type: "dungeon",
 		zone: 19,
-		pos_x: 0,
-		pos_y: 1,
-		char_x: 6,
-		char_y: 7,
+		player_offset: [0, 1],
+		player_start: [6, 7],
 		width: 25,
 		height: 16,
+		world_offset: [21, 55],
 		music: "dungeon1",
 		layout:
 		[
@@ -1044,10 +1016,8 @@ var maps = {
 	"MountainCaveB2": {
 		type: "dungeon",
 		zone: 14,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 6,
-		char_y: 1,
+		player_offset: [0, 0],
+		player_start: [6, 1],
 		width: 25,
 		height: 16,
 		music: "dungeon2",
@@ -1078,12 +1048,11 @@ var maps = {
 	"CharlockCastle1F": {
 		type: "dungeon",
 		zone: 16,
-		pos_x: 0,
-		pos_y: 11,
-		char_x: 12,
-		char_y: 11,
+		player_offset: [0, 11],
+		player_start: [12, 11],
 		width: 25,
 		height: 26,
+		world_offset: [40, 46],
 		music: "dungeon1",
 		layout:
 		[
@@ -1122,10 +1091,8 @@ var maps = {
 	"CharlockCastleB1": {
 		type: "dungeon",
 		zone: 16,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 12,
-		char_y: 1,
+		player_offset: [0, 0],
+		player_start: [12, 1],
 		width: 25,
 		height: 22,
 		music: "dungeon2",
@@ -1162,10 +1129,8 @@ var maps = {
 	"CharlockCastleB2": {
 		type: "dungeon",
 		zone: 17,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [0, 0],
+		player_start: [12, 6],
 		width: 25,
 		height: 15,
 		music: "dungeon3",
@@ -1200,10 +1165,8 @@ var maps = {
 	"CharlockCastleB3": {
 		type: "dungeon",
 		zone: 17,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [0, 0],
+		player_start: [12, 6],
 		width: 25,
 		height: 15,
 		music: "dungeon4",
@@ -1233,10 +1196,8 @@ var maps = {
 	"CharlockCastleB4": {
 		type: "dungeon",
 		zone: 17,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [0, 0],
+		player_start: [12, 6],
 		width: 25,
 		height: 15,
 		music: "dungeon5",
@@ -1266,10 +1227,8 @@ var maps = {
 	"CharlockCastleB5": {
 		type: "dungeon",
 		zone: 18,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [0, 0],
+		player_start: [12, 6],
 		width: 25,
 		height: 15,
 		music: "dungeon6",
@@ -1299,10 +1258,8 @@ var maps = {
 	"CharlockCastleB6": {
 		type: "dungeon",
 		zone: 18,
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 12,
-		char_y: 6,
+		player_offset: [0, 0],
+		player_start: [12, 6],
 		width: 25,
 		height: 15,
 		music: "dungeon7",
@@ -1332,10 +1289,8 @@ var maps = {
 	"CharlockCastleB7": {
 		type: "dungeon",
 		zone: 18,
-		pos_x: 0,
-		pos_y: 17,
-		char_x: 11,
-		char_y: 13,
+		player_offset: [0, 17],
+		player_start: [11, 13],
 		width: 32,
 		height: 32,
 		music: "dungeon8",
@@ -1405,10 +1360,8 @@ var maps = {
 
 	"NorthShrine": {
 		type: "town",
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 11,
-		char_y: 11,
+		player_offset: [0, 0],
+		player_start: [11, 11],
 		width: 25,
 		height: 15,
 		music: "dungeon1",
@@ -1437,12 +1390,11 @@ var maps = {
 
      "SouthShrine": {
 		type: "town",
-		pos_x: 0,
-		pos_y: 0,
-		char_x: 8,
-		char_y: 6,
+		player_offset: [0, 0],
+		player_start: [8, 6],
 		width: 25,
 		height: 15,
+		world_offset: [100, 107],
 		music: "dungeon1",
 		layout:
 		[

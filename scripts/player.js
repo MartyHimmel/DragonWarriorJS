@@ -133,20 +133,32 @@ var player = {
 	// -------------------------------------------------------------------
 
 	set_position: function(map_name) {
+		var map = maps[map_name];
+
 		this.steps = 0;
-		this.offset_x = maps[map_name].pos_x;
-		this.offset_y = maps[map_name].pos_y;
-		this.x = maps[map_name].char_x * tile_width;
-		this.y = maps[map_name].char_y * tile_height;
+
+		if (typeof map.player_offset !== 'undefined' && map.player_offset instanceof Array && map.player_offset.length === 2) {
+			this.offset_x = map.player_offset[0],
+			this.offset_y = map.player_offset[1];
+		} else {
+			this.offset_x = 0,
+			this.offset_y = 0;
+		}
+
+		if (typeof map.player_start !== 'undefined' && map.player_start instanceof Array && map.player_start.length === 2) {
+			this.set_xy(map.player_start[0], map.player_start[1]);
+		} else {
+			this.set_xy(12, 6);
+		}
 	},
 
 	set_offsets: function(offset_x, offset_y) {
-		this.offset_x = offset_x;
+		this.offset_x = offset_x,
 		this.offset_y = offset_y;
 	},
 
 	set_xy: function(x, y) {
-		this.x = x * tile_width;
+		this.x = x * tile_width,
 		this.y = y * tile_height;
 	},
 
@@ -301,9 +313,10 @@ var player = {
 	},
 
 	set_spells: function() {
-		var self = this;
+		var self = this,
+		    spell;
 		Object.keys(this.spells).forEach(function (spellId) {
-			var spell = self.spells[spellId];
+			spell = self.spells[spellId];
 			if ((Game.state === "combat" && spell.show_in_combat) || (Game.state === "exploration" && spell.show_in_explore)) {
 				add_option(text.spells[spellId], text.spells[spellId], "spell");
 			}
