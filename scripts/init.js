@@ -82,9 +82,14 @@ function display_output() {
         "current zone = " + map.current_zone + "<br>" +
         "player turn = " + combat.player_turn + "<br>";
 
+    var npc_count = 0;
+    if (typeof map.map_ptr.npcs !== 'undefined') {
+        npc_count = map.map_ptr.npcs.length;
+    }
+
     getId('output2').innerHTML = "Current Map = " + map.current_map + "<br>" +
         "Game State = " + Game.state + "<br>" +
-        "Number of NPCS = " + maps[map.current_map].npcs.length + "<br>" +
+        "Number of NPCS = " + npc_count + "<br>" +
         "<hr>" +
         "Rescued Princess? = " + player.rescued_princess + "<br>" +
         "<hr>";

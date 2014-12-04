@@ -133,7 +133,7 @@ var player = {
 	// -------------------------------------------------------------------
 
 	set_position: function(map_name) {
-		var map = maps[map_name];
+		var map = config.maps[map_name];
 
 		this.steps = 0;
 
@@ -241,12 +241,12 @@ var player = {
 	},
 
 	set_current_tile: function() {
-		this.current_tile = maps[map.current_map].layout[(player.offset_x + (player.x / tile_width)) +
-				((player.offset_y + (player.y / tile_height)) * maps[map.current_map].width)] - 1;
+		this.current_tile = map.map_ptr.layout[(player.offset_x + (player.x / tile_width)) +
+				((player.offset_y + (player.y / tile_height)) * map.map_ptr.width)] - 1;
 	},
 
 	will_collide: function (x, y) {
-		var next_tile = maps[map.current_map].layout[x + (y * maps[map.current_map].width)] - 1;
+		var next_tile = map.map_ptr.layout[x + (y * map.map_ptr.width)] - 1;
 		if (this.collide_tiles.indexOf(next_tile) > -1 || map.get_npc(x, y) !== null) {
 			return true;
 		}

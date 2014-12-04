@@ -142,18 +142,20 @@ var npc = {
 	},
 
 	draw_npcs: function() {
-		var number_of_npcs = map.map_ptr.npcs.length;
-		//TODO: replace with a visible flag, which checks player.rescued_princess.
-		if (map.current_map === "Tantegel2F" && player.rescued_princess === false) {
-			number_of_npcs--;
-		}
-		for (var i = 0; i < number_of_npcs; i++) {
-			this.draw_character(
-				map.map_ptr.npcs[i].type,
-				map.map_ptr.npcs[i].facing,
-				map.map_ptr.npcs[i].x,
-				map.map_ptr.npcs[i].y
-			);
+		if (typeof map.map_ptr.npcs !== 'undefined') {
+			var number_of_npcs = map.map_ptr.npcs.length;
+			//TODO: replace with a visible flag, which checks player.rescued_princess.
+			if (map.current_map === "Tantegel2F" && player.rescued_princess === false) {
+				number_of_npcs--;
+			}
+			for (var i = 0; i < number_of_npcs; i++) {
+				this.draw_character(
+					map.map_ptr.npcs[i].type,
+					map.map_ptr.npcs[i].facing,
+					map.map_ptr.npcs[i].x,
+					map.map_ptr.npcs[i].y
+				);
+			}
 		}
 	}
 };

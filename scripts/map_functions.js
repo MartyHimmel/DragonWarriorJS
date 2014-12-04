@@ -51,11 +51,13 @@ var map = {
 
 		player.steps = 0;
 		player.set_position(map_name);
-		this.current_map = map_name;
-		this.map_ptr = maps[map_name];
-		this.boundary_right = this.map_ptr.width - this.vWidth;
-		this.boundary_bottom = this.map_ptr.height - this.vHeight;
+
+		this.current_map = map_name,
+		this.map_ptr = config.maps[this.current_map],
+		this.boundary_right = this.map_ptr.width - this.vWidth,
+		this.boundary_bottom = this.map_ptr.height - this.vHeight,
 		this.background_music = this.map_ptr.music;
+
 		//audio.stop_music();
 		//audio.play_map_music();
 		this.refresh_map();
@@ -108,6 +110,7 @@ var map = {
 		if (typeof this.map_ptr.doors !== 'undefined') {
 			number_of_doors = map.map_ptr.doors.length;
 			for (i=0; i<number_of_doors; i++) {
+				//TODO: only consider if not already opened.
 				if (map.map_ptr.doors[i].x === x && map.map_ptr.doors[i].y === y) {
 					return map.map_ptr.doors[i];
 				}
@@ -160,14 +163,14 @@ var map = {
 	},
 
 	check_location: function () {
-		var keys = Object.keys(maps),
+		var keys = Object.keys(config.maps),
 		    key,
 		    map,
 		    i;
 
 		if (this.current_map === "World") {
 			for (i=0; i<keys.length; i++) {
-				key = keys[i], map = maps[key];
+				key = keys[i], map = config.maps[key];
 				if (typeof map.world_offset !== 'undefined' && map.world_offset instanceof Array && map.world_offset.length === 2) {
 					if (player.offset_x === map.world_offset[0] && player.offset_y === map.world_offset[1] && player.steps !== 0) {
 						//TODO: conditionally do more (set_xy/set_offsets).

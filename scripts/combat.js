@@ -12,7 +12,7 @@ var combat = {
 
 	// Check for random encounters at each step in player.move()
 	random_encounter: function() {
-		if (maps[map.current_map].type === "world" || maps[map.current_map].type === "dungeon") {
+		if (map.map_ptr.type === "world" || map.map_ptr.type === "dungeon") {
 			if (player.current_tile === 16 ||
 				player.current_tile === 20) {
 				this.random_num = Game.random_number(1, 8);
