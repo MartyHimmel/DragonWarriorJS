@@ -902,6 +902,22 @@ var config = {
             player_start: [12, 6],
             width: 128,
             height: 128,
+            map_links: [
+                { offset_x: 35, offset_y: 41, map: "Tantegel1F" },
+                { offset_x: 40, offset_y: 39, map: "Brecconary" },
+                { offset_x: 96, offset_y: 8, map: "Kol" },
+                { offset_x: 0,  offset_y: 0, x: 6, y: 6, map: "Garinham" },
+                { offset_x: 94, offset_y: 70, map: "Rimuldar" },
+                { offset_x: 65, offset_y: 100, map: "Cantlin" },
+                { offset_x: 17, offset_y: 87, map: "Hauksness" },
+                { offset_x: 20, offset_y: 10, map: "ErdricksCaveB1" },
+                { offset_x: 96, offset_y: 42, map: "SwampCave" },
+                { offset_x: 96, offset_y: 47, map: "SwampCave", set_offsets: [0, 17], set_xy: [9, 13] },
+                { offset_x: 21, offset_y: 55, map: "MountainCaveB1" },
+                { offset_x: 40, offset_y: 46, map: "CharlockCastle1F" },
+                { offset_x: 73, offset_y: 0, y: 5, map: "NorthShrine" },
+                { offset_x: 100, offset_y: 107, map: "SouthShrine" }
+            ],
             music: "overworld",
             layout: [
                 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
@@ -1041,7 +1057,13 @@ var config = {
             player_start: [12, 6],
             width: 55,
             height: 45,
-            world_offset: [35, 41],
+            map_links: [
+                { offset_x: 29, map: "World", set_offsets: [35, 41] },
+                { y: 5, map: "World", set_offsets: [35, 41] },
+                { offset_y: 30, map: "World", set_offsets: [35, 41] },
+                { offset_x: 6, offset_y: 7, map: "Tantegel2F" },
+                { offset_x: 28, offset_y: 29, map: "TantegelB1" }
+            ],
             music: "tantegel",
             layout: [
                 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
@@ -1148,6 +1170,9 @@ var config = {
             player_start: [16, 11],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 16, y: 11, map: "Tantegel1F", set_offsets: [6, 7] }
+            ],
             music: "tantegel",
             layout: [
                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -1199,6 +1224,9 @@ var config = {
             player_start: [7, 6],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 7, y: 6, map: "Tantegel1F", set_offsets: [28, 29] }
+            ],
             music: "tantegel",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -1228,7 +1256,11 @@ var config = {
             player_start: [12, 6],
             width: 54,
             height: 44,
-            world_offset: [40, 39],
+            map_links: [
+                { x: 11, map: "World", set_offsets: [40, 39] },
+                { x: 13, map: "World", set_offsets: [40, 39] },
+                { offset_y: 0, map: "World", set_offsets: [40, 39] }
+            ],
             music: "village",
             layout: [
                 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
@@ -1317,7 +1349,6 @@ var config = {
             player_start: [12, 8],
             width: 48,
             height: 38,
-            world_offset: [96, 8],
             music: "village",
             layout: [
                 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
@@ -1427,7 +1458,6 @@ var config = {
             player_start: [13, 6],
             width: 54,
             height: 44,
-            world_offset: [94, 70],
             music: "village",
             layout: [
                 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
@@ -1485,7 +1515,6 @@ var config = {
             player_start: [12, 6],
             width: 54,
             height: 44,
-            world_offset: [65, 100],
             music: "village",
             layout: [
                 4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
@@ -1544,7 +1573,6 @@ var config = {
             player_start: [12, 6],
             width: 44,
             height: 34,
-            world_offset: [17, 87],
             music: "dungeon1",
             layout: [
                 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21,
@@ -1590,7 +1618,10 @@ var config = {
             player_start: [6, 2],
             width: 25,
             height: 15,
-            world_offset: [20, 10],
+            map_links: [
+                { x: 6, y: 2, map: "World", set_offsets: [20, 10] },
+                { x: 15, y: 11, map: "ErdricksCaveB2", set_xy: [14, 11] }
+            ],
             music: "dungeon1",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -1617,6 +1648,9 @@ var config = {
             player_start: [14, 11],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 14, y: 11, map: "ErdricksCaveB1", set_xy: [15, 11] }
+            ],
             music: "dungeon2",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -1644,6 +1678,10 @@ var config = {
             player_start: [9, 1],
             width: 25,
             height: 32,
+            map_links: [
+                { x: 9, y: 1, map: "World", set_offsets: [96, 42] },
+                { offset_y: 17, x: 9, y: 13, map: "World", set_offsets: [96, 47] }
+            ],
             music: "dungeon1",
             layout: [
                 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,
@@ -1690,6 +1728,10 @@ var config = {
             player_start: [8, 6],
             width: 25,
             height: 22,
+            map_links: [
+                { offset_y: 6, x: 8, map: "Garinham", set_offsets: [19, 1] },
+                { offset_y: 7, x: 3, y: 12, map: "GarinhamsGraveB2" }
+            ],
             music: "dungeon1",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -1724,6 +1766,14 @@ var config = {
             player_start: [16, 3],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 16, y: 3, map: "GarinhamsGraveB1", set_offsets: [0, 7], set_xy: [3, 12] },
+                { x: 17, y: 2, map: "GarinhamsGraveB3" },
+                { x: 6, y: 2, map: "GarinhamsGraveB3", set_xy: [16, 2] },
+                { x: 6, y: 11, map: "GarinhamsGraveB3", set_offsets: [0, 7], set_xy: [4, 11] },
+                { x: 17, y: 11, map: "GarinhamsGraveB3", set_offsets: [0, 7], set_xy: [20, 7] },
+                { x: 10, y: 7, map: "GarinhamsGraveB3", set_offsets: [0, 6], set_xy: [8, 6] }
+            ],
             music: "dungeon1",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -1751,6 +1801,15 @@ var config = {
             player_start: [20, 2],
             width: 25,
             height: 22,
+            map_links: [
+                { x: 20, y: 2, map: "GarinhamsGraveB2", set_xy: [17, 2] },
+                { x: 16, y: 2, map: "GarinhamsGraveB2", set_xy: [6, 2] },
+                { offset_y: 0, x: 11, y: 6, map: "GarinhamsGraveB4" },
+                { offset_y: 4, x: 12, y: 6, map: "GarinhamsGraveB4", set_xy: [12, 7] },
+                { offset_y: 6, x: 8, map: "GarinhamsGraveB2", set_xy: [10, 7] },
+                { offset_y: 7, x: 4, y: 11, map: "GarinhamsGraveB2", set_xy: [6, 11] },
+                { offset_y: 7, x: 20, y: 7, map: "GarinhamsGraveB2", set_xy: [17, 11] }
+            ],
             music: "dungeon3",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -1785,6 +1844,10 @@ var config = {
             player_start: [7, 7],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 7, y: 7, map: "GarinhamsGraveB3", set_xy: [11, 6] },
+                { x: 12, y: 7, map: "GarinhamsGraveB3", set_offsets: [0, 4], set_xy: [12, 6] }
+            ],
             music: "dungeon4",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -1812,7 +1875,12 @@ var config = {
             player_start: [6, 7],
             width: 25,
             height: 16,
-            world_offset: [21, 55],
+            map_links: [
+                { offset_y: 1, x: 6, y: 7, map: "World", set_offsets: [21, 55] },
+                { x: 6, y: 1, map: "MountainCaveB2" },
+                { offset_y: 0, x: 12, y: 6, map: "MountainCaveB2", set_xy: [12, 6] },
+                { x: 18, y: 12, map: "MountainCaveB2", set_offsets: [0, 1], set_xy: [18, 12] }
+            ],
             music: "dungeon1",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -1841,6 +1909,11 @@ var config = {
             player_start: [6, 1],
             width: 25,
             height: 16,
+            map_links: [
+                { x: 6, y: 1, map: "MountainCaveB1", set_offsets: [0, 0], set_xy: [6, 1] },
+                { offset_y: 0, x: 12, y: 6, map: "MountainCaveB1", set_offsets: [0, 0], set_xy: [12, 6] },
+                { x: 18, y: 12, map: "MountainCaveB1", set_xy: [18, 12] }
+            ],
             music: "dungeon2",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -1869,7 +1942,6 @@ var config = {
             player_start: [12, 11],
             width: 25,
             height: 26,
-            world_offset: [40, 46],
             music: "dungeon1",
             layout: [
                 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
@@ -2179,7 +2251,6 @@ var config = {
             player_start: [8, 6],
             width: 25,
             height: 15,
-            world_offset: [100, 107],
             music: "dungeon1",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,

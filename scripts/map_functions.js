@@ -166,69 +166,63 @@ var map = {
 		var keys = Object.keys(config.maps),
 		    key,
 		    map,
-		    i;
+		    link,
+		    i, j;
 
-		if (this.current_map === "World") {
+		//TODO: remove this massive if once everything is put into map_links.
+		if (this.current_map === "World"
+			|| this.current_map === "Tantegel1F"
+			|| this.current_map === "Tantegel2F"
+			|| this.current_map === "TantegelB1"
+			|| this.current_map === "Brecconary"
+			|| this.current_map === "ErdricksCaveB1"
+			|| this.current_map === "ErdricksCaveB2"
+			|| this.current_map === "SwampCave"
+			|| this.current_map === "GarinhamsGraveB1"
+			|| this.current_map === "GarinhamsGraveB2"
+			|| this.current_map === "GarinhamsGraveB3"
+			|| this.current_map === "GarinhamsGraveB4"
+			|| this.current_map === "MountainCaveB1"
+			|| this.current_map === "MountainCaveB2"
+			) {
 			for (i=0; i<keys.length; i++) {
-				key = keys[i], map = config.maps[key];
-				if (typeof map.world_offset !== 'undefined' && map.world_offset instanceof Array && map.world_offset.length === 2) {
-					if (player.offset_x === map.world_offset[0] && player.offset_y === map.world_offset[1] && player.steps !== 0) {
-						//TODO: conditionally do more (set_xy/set_offsets).
-						this.load_map(key);
+				key = keys[i];
+				if (key !== this.current_map) {
+					continue;
+				}
+
+				map = config.maps[key];
+				if (typeof map.map_links !== 'undefined' && map.map_links instanceof Array) {
+					for (j=0; j<map.map_links.length; j++) {
+						link = map.map_links[j];
+
+						if (player.steps === 0 ||
+							(typeof link.offset_x !== 'undefined' && player.offset_x !== link.offset_x) ||
+							(typeof link.offset_y !== 'undefined' && player.offset_y !== link.offset_y) ||
+							(typeof link.x !== 'undefined' && player.x !== (link.x * tile_width)) ||
+							(typeof link.y !== 'undefined' && player.y !== (link.y * tile_height)))
+						{
+							continue;
+						}
+
+						this.load_map(link.map);
+
+						if (typeof link.set_offsets !== 'undefined' && link.set_offsets instanceof Array && link.set_offsets.length === 2) {
+							player.set_offsets(link.set_offsets[0], link.set_offsets[1]);
+						}
+
+						if (typeof link.set_xy !== 'undefined' && link.set_xy instanceof Array && link.set_xy.length === 2) {
+							player.set_xy(link.set_xy[0], link.set_xy[1]);
+						}
+
 						return;
 					}
 				}
+
+				return;
 			}
 
-			//TODO: More complex cases.
-			if (player.offset_x === 0 && player.offset_y === 0 &&
-				player.x === 6 * tile_width && player.y === 6 * tile_height && player.steps !== 0) {
-				this.load_map("Garinham");
-			}
-			if (player.offset_x === 96 && player.offset_y === 42 && player.steps !== 0) {
-				this.load_map("SwampCave");
-			}
-			if (player.offset_x === 96 && player.offset_y === 47 && player.steps !== 0) {
-				this.load_map("SwampCave");
-				player.set_offsets(0, 17);
-				player.set_xy(9, 13);
-			}
-			if (player.offset_x === 73 && player.offset_y === 0 && player.y === 5 * tile_height && player.steps !== 0) {
-				this.load_map("NorthShrine");
-			}
 		} else {
-			//TODO: refactor
-			//for (i=0; i<keys.length; i++) {
-			if (this.current_map === "Tantegel1F") {
-				if (player.offset_x > 28 || player.y < 6 * tile_height|| player.offset_y > 29) {
-					this.load_map("World");
-					player.set_offsets(35, 41);
-				}
-				if (player.offset_x === 6 && player.offset_y === 7 && player.steps !== 0) {
-					this.load_map("Tantegel2F");
-				}
-				if (player.offset_x === 28 && player.offset_y === 29 && player.steps !== 0) {
-					this.load_map("TantegelB1");
-				}
-			}
-			if (this.current_map === "Tantegel2F") {
-				if (player.x === 16 * tile_width && player.y === 11 * tile_height && player.steps !== 0) {
-					this.load_map("Tantegel1F");
-					player.set_offsets(6, 7);
-				}
-			}
-			if (this.current_map === "TantegelB1") {
-				if (player.x === 7 * tile_width && player.y === 6 * tile_height && player.steps !== 0) {
-					this.load_map("Tantegel1F");
-					player.set_offsets(28, 29);
-				}
-			}
-			if (this.current_map === "Brecconary") {
-				if (player.x !== 12 * tile_width || player.offset_y < 1) {
-					this.load_map("World");
-					player.set_offsets(40, 39);
-				}
-			}
 			if (this.current_map === "Kol") {
 				if(player.y > 8 * tile_height || player.x !== 12 * tile_width || player.offset_y < 2) {
 					this.load_map("World");
@@ -261,144 +255,6 @@ var map = {
 				if (player.x !== 12 * tile_width || player.y !== 6 * tile_height) {
 					this.load_map("World");
 					player.set_offsets(17, 87);
-				}
-			}
-			if (this.current_map === "ErdricksCaveB1") {
-				if (player.x === 6 * tile_width && player.y === 2 * tile_height && player.steps !== 0) {
-					this.load_map("World");
-					player.set_offsets(20, 10);
-				}
-				if (player.x === 15 * tile_width && player.y === 11 * tile_height && player.steps !== 0) {
-					this.load_map("ErdricksCaveB2");
-					player.set_xy(14, 11);
-				}
-			}
-			if (this.current_map === "ErdricksCaveB2") {
-				if (player.x === 14 * tile_width && player.y === 11 * tile_height && player.steps !== 0) {
-					this.load_map("ErdricksCaveB1");
-					player.set_xy(15, 11);
-				}
-			}
-			if (this.current_map === "SwampCave") {
-				if (player.x === 9 * tile_width && player.y === 1 * tile_height && player.steps !== 0) {
-					this.load_map("World");
-					player.set_offsets(96, 42);
-				}
-				if (player.x === 9 * tile_width && player.y === 13 * tile_height && player.offset_y === 17 && player.steps !== 0) {
-					this.load_map("World");
-					player.set_offsets(96, 47);
-				}
-			}
-			if (this.current_map === "GarinhamsGraveB1") {
-				if (player.offset_y === 6 && player.x === 8 * tile_width && player.steps !== 0) {
-					this.load_map("Garinham");
-					player.set_offsets(19, 1);
-				}
-				if (player.offset_y === 7 && player.x === 3 * tile_width && player.y === 12 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB2");
-				}
-			}
-			if (this.current_map === "GarinhamsGraveB2") {
-				if (player.x === 16 * tile_width && player.y === 3 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB1");
-					player.set_offsets(0, 7);
-					player.set_xy(3, 12);
-				}
-				if (player.x === 17 * tile_width && player.y === 2 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB3");
-				}
-				if (player.x === 6 * tile_width && player.y === 2 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB3");
-					player.set_xy(16, 2);
-				}
-				if (player.x === 6 * tile_width && player.y === 11 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB3");
-					player.set_offsets(0, 7);
-					player.set_xy(4, 11);
-				}
-				if (player.x === 17 * tile_width && player.y === 11 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB3");
-					player.set_offsets(0, 7);
-					player.set_xy(20, 7);
-				}
-				if (player.x === 10 * tile_width && player.y === 7 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB3");
-					player.set_offsets(0, 6);
-					player.set_xy(8, 6);
-				}
-			}
-			if (this.current_map === "GarinhamsGraveB3") {
-				if (player.x === 20 * tile_width && player.y === 2 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB2");
-					player.set_xy(17, 2);
-				}
-				if (player.x === 16 * tile_width && player.y === 2 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB2");
-					player.set_xy(6, 2);
-				}
-				if (player.x === 11 * tile_width && player.y === 6 * tile_height && player.offset_y === 0 && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB4");
-				}
-				if (player.x === 12 * tile_width && player.y === 6 * tile_height && player.offset_y === 4 && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB4");
-					player.set_xy(12, 7);
-				}
-				if (player.x === 8 * tile_width && player.offset_y === 6 && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB2");
-					player.set_xy(10, 7);
-				}
-				if (player.x === 4 * tile_width && player.y === 11 * tile_height && player.offset_y === 7 && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB2");
-					player.set_xy(6, 11);
-				}
-				if (player.x === 20 * tile_width && player.y === 7 * tile_height && player.offset_y === 7 && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB2");
-					player.set_xy(17, 11);
-				}
-			}
-			if (this.current_map === "GarinhamsGraveB4") {
-				if (player.x === 7 * tile_width && player.y === 7 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB3");
-					player.set_xy(11, 6);
-				}
-				if (player.x === 12 * tile_width && player.y === 7 * tile_height && player.steps !== 0) {
-					this.load_map("GarinhamsGraveB3");
-					player.set_xy(12, 6);
-					player.set_offsets(0, 4);
-				}
-			}
-			if (this.current_map === "MountainCaveB1") {
-				if (player.x === 6 * tile_width && player.y === 7 * tile_height && player.offset_y === 1 && player.steps !== 0) {
-					this.load_map("World");
-					player.set_offsets(21, 55);
-				}
-				if (player.x === 6 * tile_width && player.y === 1 * tile_height && player.steps !== 0) {
-					this.load_map("MountainCaveB2");
-				}
-				if (player.x === 12 * tile_width && player.y === 6 * tile_height && player.offset_y === 0 && player.steps !== 0) {
-					this.load_map("MountainCaveB2");
-					player.set_xy(12, 6);
-				}
-				if (player.x === 18 * tile_width && player.y === 12 * tile_height && player.steps !== 0) {
-					this.load_map("MountainCaveB2");
-					player.set_xy(18, 12);
-					player.set_offsets(0, 1);
-				}
-			}
-			if (this.current_map === "MountainCaveB2") {
-				if (player.x === 6 * tile_width && player.y === 1 * tile_height && player.steps !== 0) {
-					this.load_map("MountainCaveB1");
-					player.set_xy(6, 1);
-					player.set_offsets(0, 0);
-				}
-				if (player.x === 12 * tile_width && player.y === 6 * tile_height && player.offset_y === 0 && player.steps !== 0) {
-					this.load_map("MountainCaveB1");
-					player.set_xy(12, 6);
-					player.set_offsets(0, 0);
-				}
-				if (player.x === 18 * tile_width && player.y === 12 * tile_height && player.steps !== 0) {
-					this.load_map("MountainCaveB1");
-					player.set_xy(18, 12);
 				}
 			}
 			if (this.current_map === "CharlockCastle1F") {
@@ -614,7 +470,6 @@ var map = {
 					player.set_offsets(100, 107);
 				}
 			}
-			//}
 		}
 	}
 };

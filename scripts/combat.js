@@ -253,9 +253,15 @@ var combat = {
 			special,
 			used_special = false,
 		    damage = 0,
-		    enemy_strength = this.enemy_ptr.strength,
+		    enemy_strength,
 		    breath_min_dmg,
 		    breath_max_dmg;
+
+		if (this.enemy_ptr === null) {
+			return;
+		}
+
+		enemy_strength = this.enemy_ptr.strength;
 
 		if (this.player_turn === false) {
 			//Special move (spell, breathe fire)
