@@ -22,7 +22,7 @@ Game = {
 		function draw () {
 			self.clear();
 			map.draw_viewport(map.current_map, player.offset_x, player.offset_y);
-			npc.draw_npcs();
+			self.draw_npcs();
 		}
 
 		function update () {
@@ -117,6 +117,24 @@ Game = {
 		return this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	},
 
+	random_number: function (min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	},
+
+	// Animation and rendering
+	// -------------------------------------------------------------------
+
+	animate_npc: function(frame1, frame2, x, y) {
+		x = ((x-player.offset_x) * tile_width);
+		y = ((y-player.offset_y) * tile_height);
+
+		if ((Date.now() % 1000) < 500) {
+			this.draw_character(frame1, x, y);
+		} else {
+			this.draw_character(frame2, x, y);
+		}
+	},
+
 	// call frame from characters.png - starts with frame 0
 	draw_character: function (frame_number, pos_x, pos_y) {
 		var image_x = (frame_number % 16) * tile_width,
@@ -124,6 +142,127 @@ Game = {
 
 		this.context.drawImage(this.img_characters, image_x, image_y, tile_width, tile_height,
 			pos_x, pos_y, tile_width, tile_height);
+	},
+
+	draw_npc: function(character_type, direction, x, y) {
+		switch (character_type) {
+			case "princess":
+				if (direction === "down") {
+					this.animate_npc(80, 81, x, y);
+				} else if (direction === "left") {
+					this.animate_npc(82, 83, x, y);
+				} else if (direction === "up") {
+					this.animate_npc(84, 85, x, y);
+				} else if (direction === "right") {
+					this.animate_npc(86, 87, x, y);
+				}
+				break;
+			case "soldier":
+				if (direction === "down") {
+					this.animate_npc(96, 97, x, y);
+				} else if (direction === "left") {
+					this.animate_npc(98, 99, x, y);
+				} else if (direction === "up") {
+					this.animate_npc(100, 101, x, y);
+				} else if (direction === "right") {
+					this.animate_npc(102, 103, x, y);
+				}
+				break;
+			case "townsman":
+				if (direction === "down") {
+					this.animate_npc(8, 9, x, y);
+				} else if (direction === "left") {
+					this.animate_npc(10, 11, x, y);
+				} else if (direction === "up") {
+					this.animate_npc(12, 13, x, y);
+				} else if (direction === "right") {
+					this.animate_npc(14, 15, x, y);
+				}
+				break;
+			case "townswoman":
+				if (direction === "down") {
+					this.animate_npc(24, 25, x, y);
+				} else if (direction === "left") {
+					this.animate_npc(26, 27, x, y);
+				} else if (direction === "up") {
+					this.animate_npc(28, 29, x, y);
+				} else if (direction === "right") {
+					this.animate_npc(30, 31, x, y);
+				}
+				break;
+			case "old_man":
+				if (direction === "down") {
+					this.animate_npc(40, 41, x, y);
+				} else if (direction === "left") {
+					this.animate_npc(42, 43, x, y);
+				} else if (direction === "up") {
+					this.animate_npc(44, 45, x, y);
+				} else if (direction === "right") {
+					this.animate_npc(46, 47, x, y);
+				}
+				break;
+			case "merchant":
+				if (direction === "down") {
+					this.animate_npc(56, 57, x, y);
+				} else if (direction === "left") {
+					this.animate_npc(58, 59, x, y);
+				} else if (direction === "up") {
+					this.animate_npc(60, 61, x, y);
+				} else if (direction === "right") {
+					this.animate_npc(62, 63, x, y);
+				}
+				break;
+			case "solider_2":
+				if (direction === "down") {
+					this.animate_npc(72, 73, x, y);
+				} else if (direction === "left") {
+					this.animate_npc(74, 75, x, y);
+				} else if (direction === "up") {
+					this.animate_npc(76, 77, x, y);
+				} else if (direction === "right") {
+					this.animate_npc(78, 79, x, y);
+				}
+				break;
+			case "dragonlord":
+				if (direction === "down") {
+					this.animate_npc(88, 89, x, y);
+				} else if (direction === "left") {
+					this.animate_npc(90, 91, x, y);
+				} else if (direction === "up") {
+					this.animate_npc(92, 93, x, y);
+				} else if (direction === "right") {
+					this.animate_npc(94, 95, x, y);
+				}
+				break;
+			case "trumpeteer":
+				if (direction === "left") {
+					this.animate_npc(105, 105, x, y);
+				} else if (direction === "right") {
+					this.animate_npc(104, 104, x, y);
+				}
+				break;
+			case "king":
+				this.animate_npc(106, 107, x, y);
+				break;
+		}
+	},
+
+	draw_npcs: function() {
+		if (typeof map.map_ptr.npcs !== 'undefined') {
+			var number_of_npcs = map.map_ptr.npcs.length;
+			//TODO: replace with a visible flag, which checks player.rescued_princess.
+			if (map.current_map === "Tantegel2F" && player.rescued_princess === false) {
+				number_of_npcs--;
+			}
+			for (var i = 0; i < number_of_npcs; i++) {
+				this.draw_npc(
+					map.map_ptr.npcs[i].type,
+					map.map_ptr.npcs[i].facing,
+					map.map_ptr.npcs[i].x,
+					map.map_ptr.npcs[i].y
+				);
+			}
+		}
 	},
 
 	draw_enemy: function (enemy) {
@@ -148,6 +287,9 @@ Game = {
 			x, y, tile_width, tile_height);
 	},
 
+	// Scripting
+	// -------------------------------------------------------------------
+
 	// TODO: for handling menu system displaying text, etc.
 	process_script: function (script_command) {
 		if (typeof script_command !== 'undefined') {
@@ -168,9 +310,5 @@ Game = {
 			//yes/no
 			//item selection
 		}
-	},
-
-	random_number: function (min, max) {
-		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 };

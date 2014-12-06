@@ -27,12 +27,10 @@ of each file:
     * map data (world, towns, dungeons)
 * game.js - game loop, check input, draw assets, outputs test data
 * init.js - initialize the game
+* map_functions.js - map object, map interaction functions
 * player.js - player object, properties and functions for the player
 * text.js - all in-game displayed text
 
-in process of being deprecated:
-* map_functions.js - map object, map interaction functions
-* npcs.js - npc object, functions for in game NPCs
 
 ##References
 * English text dump by [Blueberry Buttface](http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/54647)

@@ -113,6 +113,7 @@ var player = {
 				}
 				break;
 			case "down":
+			/* falls through */
 			default:
 				if (this.carrying_princess === true) {
 					this.animate_player(64, 65);
@@ -138,10 +139,10 @@ var player = {
 		this.steps = 0;
 
 		if (typeof map.player_offset !== 'undefined' && map.player_offset instanceof Array && map.player_offset.length === 2) {
-			this.offset_x = map.player_offset[0],
+			this.offset_x = map.player_offset[0];
 			this.offset_y = map.player_offset[1];
 		} else {
-			this.offset_x = 0,
+			this.offset_x = 0;
 			this.offset_y = 0;
 		}
 
@@ -153,12 +154,12 @@ var player = {
 	},
 
 	set_offsets: function(offset_x, offset_y) {
-		this.offset_x = offset_x,
+		this.offset_x = offset_x;
 		this.offset_y = offset_y;
 	},
 
 	set_xy: function(x, y) {
-		this.x = x * tile_width,
+		this.x = x * tile_width;
 		this.y = y * tile_height;
 	},
 

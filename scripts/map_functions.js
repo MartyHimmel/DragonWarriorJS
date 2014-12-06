@@ -52,10 +52,10 @@ var map = {
 		player.steps = 0;
 		player.set_position(map_name);
 
-		this.current_map = map_name,
-		this.map_ptr = config.maps[this.current_map],
-		this.boundary_right = this.map_ptr.width - this.vWidth,
-		this.boundary_bottom = this.map_ptr.height - this.vHeight,
+		this.current_map = map_name;
+		this.map_ptr = config.maps[this.current_map];
+		this.boundary_right = this.map_ptr.width - this.vWidth;
+		this.boundary_bottom = this.map_ptr.height - this.vHeight;
 		this.background_music = this.map_ptr.music;
 
 		//audio.stop_music();
