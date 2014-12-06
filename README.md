@@ -1,10 +1,9 @@
 DragonWarriorJS
 ===============
 
-The purpose of this project is to learn JavaScript and Canvas by recreating
-the original NES Dragon Warrior. Given that purpose, this is a very rough
-code base with plenty of room for improvements (refactoring, optimizations,
-etc.). All in due time.
+Recreating the original NES Dragon Warrior using JavaScript
+
+##Files
 
 The "index.html" file loads all the scripts, testing elements, and the canvas.
 
@@ -25,12 +24,22 @@ of each file:
     * spell data
     * enemy data
     * map data (world, towns, dungeons)
-* game.js - game loop, check input, draw assets, outputs test data
+* game.js - game loop, rendering, script processing
 * init.js - initialize the game
 * map_functions.js - map object, map interaction functions
 * player.js - player object, properties and functions for the player
 * text.js - all in-game displayed text
 
+##Grunt setup (optional)
+
+If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started guide](http://gruntjs.com/getting-started).
+
+Supported options:
+
+```bash
+grunt lint #check source for errors, etc
+grunt      #build a combined/minified "release" version of the project
+```
 
 ##References
 * English text dump by [Blueberry Buttface](http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/54647)

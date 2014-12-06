@@ -10,7 +10,14 @@ module.exports = function(grunt) {
                 bitwise: true,
                 curly: true,
                 eqeqeq: true,
-                latedef: true
+                forin: true,
+                freeze: true,
+                immed: true,
+                latedef: true,
+                newcap: true,
+                noarg: true,
+                nonbsp: true,
+                nonew: true
             }
         },
 
@@ -24,9 +31,7 @@ module.exports = function(grunt) {
                     'scripts/config.js',
                     'scripts/text.js',
                     'scripts/game.js',
-                    'scripts/npcs.js',
                     'scripts/player.js',
-                    'scripts/maps.js',
                     'scripts/map_functions.js',
                     'scripts/audio.js',
                     'scripts/combat.js',
@@ -40,12 +45,32 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 // the banner is inserted at the top of the output
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("mm-dd-yyyy") %> */\n',
-                mangle: false
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("mm-dd-yyyy") %> */\n'
             },
             dist: {
                 files: {
                     'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                }
+            }
+        },
+
+        //https://www.npmjs.org/package/grunt-contrib-copy
+        copy: {
+            main: {
+                files: [
+                    { src: 'assets/**', dest: 'dist/' },
+                    { src: 'styles.css', dest: 'dist/' },
+                    { src: 'index.html', dest: 'dist/' }
+                ],
+                options: {
+                    process: function (content, srcpath) {
+                        if (srcpath === "index.html") {
+                            content = content.replace(/<script src=\"scripts\/.*\"><\/script>/, "<script src=\"DragonWarrior.min.js\"></script>");
+                            return content.replace(/<script src=\"scripts\/.*\"><\/script>/g, "");
+                        }
+                        return content;
+                    },
+                    noProcess: ['assets/**', 'styles.css']
                 }
             }
         }
@@ -54,7 +79,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.registerTask('default', ['concat', 'uglify']);
+    grunt.registerTask('default', ['concat', 'uglify', 'copy']);
     grunt.registerTask('lint', ['jshint']);
 };
