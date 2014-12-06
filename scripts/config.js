@@ -1349,6 +1349,12 @@ var config = {
             player_start: [12, 8],
             width: 48,
             height: 38,
+            map_links: [
+                { y: 9, map: "World", set_offsets: [96, 8] },
+                { x: 11, map: "World", set_offsets: [96, 8] },
+                { x: 13, map: "World", set_offsets: [96, 8] },
+                { offset_y: 1, map: "World", set_offsets: [96, 8] }
+            ],
             music: "village",
             layout: [
                 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
@@ -1411,6 +1417,13 @@ var config = {
             player_start: [12, 6],
             width: 44,
             height: 34,
+            map_links: [
+                { x: 11, map: "World", set_offsets: [0, 0], set_xy: [6, 6] },
+                { x: 13, map: "World", set_offsets: [0, 0], set_xy: [6, 6] },
+                { y: 8, map: "World", set_offsets: [0, 0], set_xy: [6, 6] },
+                { offset_y: 0, map: "World", set_offsets: [0, 0], set_xy: [6, 6] },
+                { offset_x: 19, offset_y: 1, map: "GarinhamsGraveB1" }
+            ],
             music: "village",
             layout: [
                 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
@@ -1458,6 +1471,12 @@ var config = {
             player_start: [13, 6],
             width: 54,
             height: 44,
+            map_links: [
+                { x: 14, map: "World", set_offsets: [94, 70] },
+                { offset_x: 0, map: "World", set_offsets: [94, 70] },
+                { offset_y: 0, map: "World", set_offsets: [94, 70] },
+                { y: 7, map: "World", set_offsets: [94, 70] }
+            ],
             music: "village",
             layout: [
                 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15,
@@ -1515,6 +1534,12 @@ var config = {
             player_start: [12, 6],
             width: 54,
             height: 44,
+            map_links: [
+                { y: 5, map: "World", set_offsets: [65, 100] },
+                { offset_y: 29, map: "World", set_offsets: [65, 100] },
+                { x: 11, map: "World", set_offsets: [65, 100] },
+                { offset_x: 28, map: "World", set_offsets: [65, 100] }
+            ],
             music: "village",
             layout: [
                 4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
@@ -1573,6 +1598,12 @@ var config = {
             player_start: [12, 6],
             width: 44,
             height: 34,
+            map_links: [
+                { x: 11, map: "World", set_offsets: [17, 87] },
+                { x: 13, map: "World", set_offsets: [17, 87] },
+                { y: 5, map: "World", set_offsets: [17, 87] },
+                { y: 7, map: "World", set_offsets: [17, 87] }
+            ],
             music: "dungeon1",
             layout: [
                 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21,
@@ -1942,6 +1973,12 @@ var config = {
             player_start: [12, 11],
             width: 25,
             height: 26,
+            map_links: [
+                { x: 13, y: 4, map: "CharlockCastleB1" },
+                { x: 7, y: 6, offset_y: 11, map: "CharlockCastleB1", set_offsets: [0, 7], set_xy: [11, 7] },
+                { x: 18, y: 6, offset_y: 11, map: "CharlockCastleB1", set_offsets: [0, 7], set_xy: [20, 9] },
+                { y: 12, map: "World", set_offsets: [40, 46] }
+            ],
             music: "dungeon1",
             layout: [
                 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
@@ -1970,7 +2007,11 @@ var config = {
                 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
                 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22,
                 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22
-            ]
+            ],
+            doors: [
+                { id: "charlock_f1_door1", x: 7, y: 11 },
+                { id: "charlock_f1_door2", x: 18, y: 11 }
+            ],
         },
 
         "CharlockCastleB1": {
@@ -1980,6 +2021,18 @@ var config = {
             player_start: [12, 1],
             width: 25,
             height: 22,
+            map_links: [
+                { x: 12, y: 1, map: "CharlockCastle1F", set_offsets: [0, 0], set_xy: [13, 4] },
+                { x: 11, y: 7, offset_y: 7, map: "CharlockCastle1F", set_offsets: [0, 11], set_xy: [7, 6] },
+                { x: 20, y: 9, offset_y: 7, map: "CharlockCastle1F", set_offsets: [0, 11], set_xy: [18, 6] },
+                { x: 18, y: 1, map: "CharlockCastleB2", set_xy: [15, 2] },
+                { x: 5, y: 5, map: "CharlockCastleB2", set_xy: [7, 2] },
+                { x: 16, offset_y:2, map: "CharlockCastleB2", set_xy: [11, 6] },
+                { x: 22, offset_y: 2, map: "CharlockCastleB2", set_xy: [16, 10] },
+                { x: 17, offset_y: 4, map: "CharlockCastleB2", set_xy: [15, 11] },
+                { x: 5, y: 8, map: "CharlockCastleB2", set_xy: [7, 3] },
+                { x: 11, y: 13, map: "CharlockCastleB2", set_xy: [12, 2] }
+            ],
             music: "dungeon2",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2014,6 +2067,19 @@ var config = {
             player_start: [12, 6],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 15, y: 2, map: "CharlockCastleB1", set_xy: [18, 1] },
+                { x: 7, y: 2, map: "CharlockCastleB1", set_xy: [5, 5] },
+                { x: 11, y: 6, map: "CharlockCastleB1", set_offsets: [0, 2], set_xy: [16, 6] },
+                { x: 16, y: 10, map: "CharlockCastleB1", set_offsets: [0, 2], set_xy: [22, 6] },
+                { x: 15, y: 11, map: "CharlockCastleB1", set_offsets: [0, 4], set_xy: [17, 6] },
+                { x: 7, y: 3, map: "CharlockCastleB1", set_offsets: [0, 7], set_xy: [5, 8] },
+                { x: 12, y: 2, map: "CharlockCastleB1", set_offsets: [0, 7], set_xy: [11, 13] },
+                { x: 16, y: 3, map: "CharlockCastleB3", set_xy: [9, 4] },
+                { x: 10, y: 2, map: "CharlockCastleB3", set_xy: [14, 2] },
+                { x: 7, y: 10, map: "CharlockCastleB3", set_xy: [12, 6] },
+                { x: 8, y: 11, map: "CharlockCastleB3", set_xy: [7, 11] }
+            ],
             music: "dungeon3",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2046,6 +2112,14 @@ var config = {
             player_start: [12, 6],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 9, y: 4, map: "CharlockCastleB2", set_xy: [16, 3] },
+                { x: 14, y: 2, map: "CharlockCastleB2", set_xy: [10, 2] },
+                { x: 12, y: 6, map: "CharlockCastleB2", set_xy: [7, 10] },
+                { x: 7, y: 11, map: "CharlockCastleB2", set_xy: [8, 11] },
+                { x: 8, y: 8, map: "CharlockCastleB4", set_xy: [7, 11] },
+                { x: 14, y: 9, map: "CharlockCastleB4", set_xy: [14, 9] }
+            ],
             music: "dungeon4",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2073,6 +2147,12 @@ var config = {
             player_start: [12, 6],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 7, y: 11, map: "CharlockCastleB3", set_xy: [8, 8] },
+                { x: 14, y: 9, map: "CharlockCastleB3", set_xy: [14, 9] },
+                { x: 9, y: 4, map: "CharlockCastleB5", set_xy: [16, 2] },
+                { x: 15, y: 3, map: "CharlockCastleB5", set_xy: [11, 2] }
+            ],
             music: "dungeon5",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2100,6 +2180,12 @@ var config = {
             player_start: [12, 6],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 16, y: 2, map: "CharlockCastleB4", set_xy: [9, 4] },
+                { x: 11, y: 2, map: "CharlockCastleB4", set_xy: [15, 3] },
+                { x: 12, y: 7, map: "CharlockCastleB6", set_xy: [7, 2] },
+                { x: 7, y: 2, map: "CharlockCastleB6", set_xy: [7, 9] }
+            ],
             music: "dungeon6",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2127,6 +2213,12 @@ var config = {
             player_start: [12, 6],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 7, y: 2, map: "CharlockCastleB5", set_xy: [12, 7] },
+                { x: 16, y: 2, map: "CharlockCastleB6", set_xy: [7, 2] },
+                { x: 7, y: 9, map: "CharlockCastleB5", set_xy: [7, 2] },
+                { x: 16, y: 9, map: "CharlockCastleB7" }
+            ],
             music: "dungeon7",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2154,6 +2246,9 @@ var config = {
             player_start: [11, 13],
             width: 32,
             height: 32,
+            map_links: [
+                { x: 11, y: 13, map: "CharlockCastleB6", set_xy: [16, 9] }
+            ],
             music: "dungeon8",
             layout: [
                 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,
@@ -2223,6 +2318,9 @@ var config = {
             player_start: [11, 11],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 11, y: 11, map: "World", set_offsets: [73, 0], set_xy: [12, 5] }
+            ],
             music: "dungeon1",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2251,6 +2349,9 @@ var config = {
             player_start: [8, 6],
             width: 25,
             height: 15,
+            map_links: [
+                { x: 8, y: 6, map: "World", set_offsets: [100, 107] }
+            ],
             music: "dungeon1",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
