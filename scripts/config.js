@@ -1393,10 +1393,10 @@ var config = {
                     Game.process_script({ text: "brecconary_man1" });
                 }},
                 { type: "merchant", facing: "down", x: 29, y: 17, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_merchant1" });
+                    Game.process_script({ text: "save_us" });
                 }},
                 { type: "solider_2", facing: "down", x: 31, y: 26, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_soldier3" });
+                    Game.process_script({ text: "erdrick_proof" });
                 }},
                 { type: "townswoman", facing: "up", x: 28, y: 32, wanders: true, talk: function () {
                     Game.process_script({ text: "brecconary_woman2" });
@@ -1468,9 +1468,9 @@ var config = {
                 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2,  2,  2,  2,  2,  2, 16, 16, 16, 16, 21, 21, 21, 16, 16, 16, 15, 15, 15, 16, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
                 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2, 16, 16, 16, 21, 21, 21, 21, 21, 16, 16, 16, 15, 16, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
                 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2,  2,  2,  2,  2, 16, 16,  2, 16, 16, 21, 21, 21, 21, 21, 21, 21, 16,  2,  2,  2,  2,  2,  2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-                16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2, 16, 16, 16,  2, 16, 16,  2, 16, 21, 21, 21, 21, 21, 21, 21, 21, 21,  2,  4,  4,  2,  4,  2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-                16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2, 16, 16, 16,  2, 16, 21,  6, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21,  4,  4,  4,  3,  4,  2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-                16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2, 16, 16, 16,  2, 16, 21,  2, 16, 21, 21, 21, 21, 21, 21, 21, 21, 21,  2,  4,  4,  2,  4,  2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+                16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2,  4,  4,  4,  2, 16, 16,  2, 16, 21, 21, 21, 21, 21, 21, 21, 21, 21,  2,  4,  4,  2,  4,  2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+                16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2,  4,  4,  4,  2, 16, 21,  6, 21, 21, 21, 21, 21, 21, 21, 21, 21, 21,  4,  4,  4,  3,  4,  2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+                16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2,  4,  4,  4,  2, 16, 21,  2, 16, 21, 21, 21, 21, 21, 21, 21, 21, 21,  2,  4,  4,  2,  4,  2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
                 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2,  6,  2,  2,  2,  4, 21,  2, 16, 16, 21, 21, 21, 21, 21, 21, 21, 16,  2,  2,  2,  2,  2,  2, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
                 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2,  4,  2,  4,  4,  4,  4,  2, 16, 16, 16, 21, 21, 21, 21, 21, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
                 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  2,  4,  2,  4,  2,  2,  2,  2,  2,  2,  2, 16, 21, 21, 21, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
@@ -1493,17 +1493,53 @@ var config = {
                 { id: "kol_door2", x: 19, y: 20 }
             ],
             npcs: [
-                //guy at top
-                { type: "old_man", facing: "down", x: 13, y: 9 },
-                //entrance area
-                { type: "old_man", facing: "down", x: 32, y: 27, wanders: true },
-                { type: "merchant", facing: "left", x: 26, y: 29 },
-                //by inn/spring
-                { type: "townswoman", facing: "down", x: 24, y: 9 },
-                { type: "merchant", facing: "up", x: 31, y: 12 },
+                //entrance area / wandering people
+                { type: "old_man", facing: "down", x: 32, y: 27, wanders: true, talk: function () {
+                    Game.process_script({ text: "kol_old_man3" });
+                }},
+                { type: "townswoman", facing: "down", x: 23, y: 22, wanders: true, talk: function () {
+                    Game.process_script({ text: "save_us" });
+                }},
+                { type: "old_man", facing: "left", x: 32, y: 17, wanders: true, talk: function () {
+                    Game.process_script({ text: "kol_old_man4" });
+                }},
+                { type: "solider_2", facing: "down", x: 32, y: 20, wanders: true, talk: function () {
+                    Game.process_script({ text: "kol_soldier3" });
+                }},
+                { type: "townsman", facing: "down", x: 25, y: 20, wanders: true, talk: function () {
+                    Game.process_script({ text: "kol_man1" });
+                }},
+                { type: "soldier", facing: "down", x: 23, y: 17, wanders: true, talk: function () {
+                    Game.process_script({ text: "kol_soldier2" });
+                }},
                 //weapons
-                { type: "merchant", facing: "left", x: 34, y: 20 }
-                //didn't finish; still more.
+                { type: "merchant", facing: "left", x: 34, y: 20 },
+                //by inn/spring
+                { type: "townswoman", facing: "down", x: 24, y: 9, talk: function () {
+                    Game.process_script({ text: "kol_woman1" });
+                }},
+                { type: "merchant", facing: "up", x: 31, y: 12 },
+                //behind door
+                { type: "townsman", facing: "right", x: 18, y: 20, wanders: true, talk: function () {
+                    Game.process_script({ text: "erdrick_proof" });
+                }},
+                { type: "old_man", facing: "down", x: 14, y: 20, wanders: true, talk: function () {
+                    Game.process_script({ text: "kol_old_man1" });
+                    //TODO: yes/no menu
+                }},
+                { type: "merchant", facing: "down", x: 18, y: 26, wanders: true, talk: function () {
+                    Game.process_script({ text: "kol_merchant1" });
+                    //TODO: yes/no menu
+                }},
+                { type: "soldier", facing: "down", x: 13, y: 31, talk: function () {
+                    Game.process_script({ text: "kol_soldier1" });
+                }},
+                { type: "merchant", facing: "left", x: 26, y: 29 },
+                //old man in booth at top left
+                { type: "old_man", facing: "down", x: 13, y: 9, talk: function () {
+                    //TODO: conditional on armor
+                    Game.process_script({ text: "kol_old_man2" });
+                }}
             ]
         },
 
@@ -1562,6 +1598,49 @@ var config = {
                 { id: "garinham_door2", x: 29, y: 17 }
             ],
             npcs: [
+                { type: "old_man", facing: "down", x: 14, y: 17, wanders: true, talk: function () {
+                    Game.process_script({ text: "garinham_old_man1" });
+                }},
+                { type: "old_man", facing: "right", x: 14, y: 24, talk: function () {
+                    Game.process_script({ text: "garinham_old_man2" });
+                }},
+                { type: "solider_2", facing: "up", x: 19, y: 24, wanders: true, talk: function () {
+                    Game.process_script({ text: "garinham_soldier1" });
+                }},
+                { type: "townsman", facing: "right", x: 30, y: 20, wanders: true, talk: function () {
+                    Game.process_script({ text: "garinham_man1" });
+                }},
+                { type: "townswoman", facing: "down", x: 24, y: 20, wanders: true, talk: function () {
+                    Game.process_script({ text: "garinham_woman1" });
+                }},
+                //merchants
+                { type: "merchant", facing: "left", x: 17, y: 18 },
+                { type: "merchant", facing: "up", x: 22, y: 25 },
+                { type: "merchant", facing: "left", x: 29, y: 22 },
+                //behind the door
+                { type: "townswoman", facing: "down", x: 24, y: 11, wanders: true, talk: function () {
+                    Game.process_script({ text: "garinham_woman2" });
+                }},
+                { type: "townsman", facing: "down", x: 22, y: 14, wanders: true, talk: function () {
+                    Game.process_script({ text: "garinham_man2" });
+                }},
+                { type: "old_man", facing: "down", x: 24, y: 15, wanders: true, talk: function () {
+                    Game.process_script({ text: "garinham_old_man4" });
+                }},
+                { type: "merchant", facing: "down", x: 21, y: 13, talk: function () {
+                    Game.process_script({ text: "garinham_merchant1" });
+                }},
+                //behind door #2
+                { type: "soldier", facing: "right", x: 15, y: 12, talk: function () {
+                    Game.process_script({ text: "garinham_soldier2" });
+                }},
+                { type: "soldier", facing: "left", x: 17, y: 12, talk: function () {
+                    Game.process_script({ text: "garinham_soldier2" });
+                }},
+                //by stairs down to grave
+                { type: "old_man", facing: "down", x: 26, y: 8, wanders: true, talk: function () {
+                    Game.process_script({ text: "garinham_old_man3" });
+                }}
             ]
         },
 

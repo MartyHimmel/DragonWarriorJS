@@ -229,6 +229,9 @@ var text = {
         //General
         innkeeper1: "Welcome to the traveler's Inn. Room and board is <number> GOLD per night. Dost thou want a room?",
         item_store1: "Welcome. We deal in tools. What can I do for thee?",
+        //Common
+        erdrick_proof: "Art thou the descendant of Erdrick? Hast thou any proof?",
+        save_us: "Please, save us from the minions of the Dragonlord.",
         //Tantegel (throne room)
         tantegel_throne_king1: [
             "Descendant of Erdrick, listen now to my words.",
@@ -271,7 +274,7 @@ var text = {
         tantegel_soldier7: "Thou must have a key to open a door.",
         tantegel_soldier8: "If thy Hit Points are high enough, by all means, enter.",
         tantegel_soldier9: "I am looking for the castle cellar. I heard it is not easily found.",
-        tantegel_soldier10: "In Garinham,look for the grave of Garin. Thou must push on a wall of darkness there.",
+        tantegel_soldier10: "In Garinham, look for the grave of Garin. Thou must push on a wall of darkness there.",
         tantegel_merchant1: "We are merchants who have traveled much in this land. Many of our colleagues have been killed by servants of the Dragonlord.",
         tantegel_merchant2: "Rumor has it that entire towns have been destroyed by the Dragonlord's servants.",
         tantagel_old_man1: "<player_name>'s coming was foretold by legend. May the light shine upon this brave warrior.",
@@ -300,7 +303,6 @@ var text = {
         brecconary_woman1: "Welcome! Enter the shop and speak to its keeper across the desk.",
         brecconary_woman2: "No, I am not Princess Gwaelin.",
         brecconary_woman3: "Will thou buy some Fairy Water for <number> GOLD to keep the Dragonlord's minions away?",
-        brecconary_merchant1: "Please, save us from the minions of the Dragonlord.",
         brecconary_old_man1: "Watch thy Hit Points when in the Poisonous Marsh.",
         brecconary_old_man2: "If thou art cursed, come again.",
         brecconary_soldier1: "Some say that Garin's grave is home to a Silver Harp.",
@@ -308,13 +310,38 @@ var text = {
             "Many have been the warriors who have perished on this quest.",
             "But for thee I wish success, <player_name>."
         ],
-        brecconary_soldier3: "Art thou the descendant of Erdrick? Hast thou any proof?",
         brecconary_soldier4: "Who touches me? I see nothing, nor can I hear.",
         brecconary_soldier5: [
             "Beware the bridges!",
             "Danger grows when thou crosses."
         ],
-        brecconary_soldier6: "See King Lorik when thy experience levels are raised."
+        brecconary_soldier6: "See King Lorik when thy experience levels are raised.",
+        //Kol
+        kol_old_man1: "Hast thou found the flute?",
+        kol_old_man2: "Finally thou hast obtained it, <player_name>.",
+        kol_old_man3: "This is the village of Kol.",
+        kol_old_man4: "In legends it is said that fairies know how to put Golem to sleep.",
+        kol_soldier1: "Rimuldar is the place to buy keys.",
+        kol_soldier2: "Golem is afraid of the music of the flute, so 'tis said.",
+        kol_soldier3: "East of Hauksness there is a town, 'tis said, where one may purchase weapons of extraordinary quality.",
+        kol_merchant1: "Hast thou been to the southern island?",
+        kol_woman1: "This bath cures rheumatism.",
+        kol_man1: [
+            "Dreadful is the South Island.",
+            "Great strength and skill and wit only will bring thee back from that place."
+        ],
+        //Garinham
+        garinham_old_man1: "Garin, a wandering minstrel of legendary fame, is said to have built this town.",
+        garinham_old_man2: "Many believe that Princess Gwaelin is hidden away in a cave.",
+        garinham_old_man3: "The harp attracts enemies. Stay away from the grave in Garinham.",
+        garinham_old_man4: "They say that Erdrick's armor was hidden long ago.",
+        garinham_soldier1: "I have heard of one named Nester. Dost thou know such a one?",
+        garinham_soldier2: "I'm too busy. Ask the other guard.",
+        garinham_woman1: "Welcome to Garinham. May thy stay be a peaceful one.",
+        garinham_woman2: "I hate people! Go! Leave me!",
+        garinham_man1: "It is said that the Princess was kidnapped and taken eastward.",
+        garinham_man2: "Once there was a town called Hauksness far to the south, but I do not know if it still exists.",
+        garinham_merchant1: "I suggest making a map if thy path leads into the darkness."
     },
     unknown: {
         //stairs command is stupid; not worth coding it.
@@ -370,25 +397,7 @@ Thou cannot enter here.
 
 "A word of advice."\n"Save thy money for more expensive armor."
 "Listen to what people say.\nIt can be of great help."
-"This bath cures rheumatism."
-"East of Hauksness there is a town, 'tis said, where one may purchase weapons \nof extraordinary quality."
-"Rimuldar is the place to buy keys."
 "Hast thou seen Nester?\nI think he may need help."
-"Dreadful is the South Island."\n"Great strength and skill and wit only will bring thee back from that place."
-"Golem is afraid of the music of the flute, so 'tis said."
-"This is the village of Kol."
-"In legends it is said that fairies know how to put Golem to sleep."
-"The harp attracts enemies.\nStay away from the grave in Garinham."
-"I'm too busy.\nAsk the other guard."
-"I suggest making a map if thy path leads into the darkness."
-"Once there was a town called Hauksness far to the south,but I do not know if \nit still exists."
-"I hate people!\nGo! Leave me!"
-"They say that Erdrick's armor was hidden long ago."
-"Many believe that Princess Gwaelin is hidden away in a cave."
-"I have heard of one named Nester.\nDost thou know such a one?"
-"Garin, a wandering minstrel of legendary fame, is said to have built this \ntown."
-"Welcome to Garinham.\nMay thy stay be a peaceful one."
-"It is said that the Princess was kidnapped and taken eastward."
 "Come buy my radishes! They are fresh and cheap.\nBuy thy radishes today!"
 "To learn how proof may be obtained that thy ancestor was the great Erdrick, \nsee a man in this very town."
 "'Tis said that Erdrick's sword could cleave steel."
@@ -414,8 +423,6 @@ Thou cannot enter here.
 "Heed my warning! Travel not to the south for there the monsters are fierce and \nterrible."
 "In this world is there any sword that can pierce the scales of the \nDragonlord?"
 "Orwick is late again. I'm starving."
-"Hast thou found the flute?"
-"Hast thou been to the southern island?"
 "'Tis said that the Dragonlord hath claws that can cleave iron and fiery breath \nthat can melt stone."
 "Dost thou still wish to go on?"
 "This is a magic place.\nHast thou found a magic temple?"
@@ -441,7 +448,6 @@ Thou cannot enter here.
 "Now, go."
 "Though thou art as brave as thy ancestor, <player_name>, thou cannot defeat \nthe great Dragonlord with such weapons."
 "Thou shouldst come here again."
-"Finally thou hast obtained it, <player_name>."
 "Is that a wedding ring?"\n"Thou seems too young to be married."
 "All true warriors wear a ring."
 "Thou may go and search."
