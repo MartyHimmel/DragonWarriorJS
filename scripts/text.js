@@ -226,6 +226,32 @@ var text = {
         }
     },
     script: {
+        //General
+        innkeeper1: "Welcome to the traveler's Inn. Room and board is <number> GOLD per night. Dost thou want a room?",
+        item_store1: "Welcome. We deal in tools. What can I do for thee?",
+        //Tantegel (throne room)
+        tantegel_throne_king1: [
+            "Descendant of Erdrick, listen now to my words.",
+            "It is told that in ages past Erdrick fought demons with a Ball of Light.",
+            "Then came the Dragonlord who stole the precious globe and hid it in the darkness.",
+            "Now, <player_name>, thou must help us recover the Ball of Light and restore peace to our land.",
+            "The Dragonlord must be defeated.",
+            "Take now whatever thou may find in these Treasure Chests to aid thee in thy quest.",
+            "Then speak with the guards, for they have much knowledge that may aid thee.",
+            "May the light shine upon thee, <player_name>."
+        ],
+        tantegel_throne_king2: [
+            "Death should not have taken thee, <player_name>.",
+            "I will give thee another chance.",
+            "To reach the next level, thy Experience must increase by <number>.",
+            "Now, go, <player_name>!"
+        ],
+        tantegel_throne_king3: [
+            "I am greatly pleased that thou hast returned, <player_name>.",
+            "Before reaching thy next level of experience thou must gain <number of \nexperience>.",
+            "If thou dies I can bring thee back for another attempt without loss of thy \ndeeds to date.",
+            "Goodbye now, <player_name>.\nTake care and tempt not the Fates."
+        ],
         tantegel_throne_guard1: [
             "East of this castle is a town where armor, weapons, and many other items may be purchased.",
             "Return to the Inn for a rest if thou art wounded in battle, <player_name>.",
@@ -234,16 +260,61 @@ var text = {
         tantegel_throne_guard2: [
             "If thou hast collected all the Treasure Chests, a key will be found.",
             "Once used, the key will disappear, but the door will be open and thou may pass through."
-        ]
-        /*king_initial:
-        "Descendant of Erdrick, listen now to my words."
-        "It is told that in ages past Erdrick fought demons with a Ball of Light."
-        "Then came the Dragonlord who stole the precious globe and hid it in the \ndarkness."
-        "Now, <player_name>, thou must help us recover the Ball of Light and restore \npeace to our land."
-        "The Dragonlord must be defeated."
-        "Take now whatever thou may find in these Treasure Chests to aid thee in thy \nquest."
-        "Then speak with the guards, for they have much knowledge that may aid thee."
-        "May the light shine upon thee, <player_name>."*/
+        ],
+        //Tantegel
+        tantegel_soldier1: "Welcome to Tantegel Castle.",
+        tantegel_soldier2: "When entering the cave, take with thee a torch.",
+        tantegel_soldier3: "Oh, my dearest Gwaelin! I hate thee, <player_name>.",
+        tantegel_soldier4: "King Lorik will record thy deeds in his Imperial Scroll so thou may return to thy quest later.",
+        tantegel_soldier5: "If thou art planning to take a rest, first see King Lorik.",
+        tantegel_soldier6: "Never does a brave person steal.",
+        tantegel_soldier7: "Thou must have a key to open a door.",
+        tantegel_soldier8: "If thy Hit Points are high enough, by all means, enter.",
+        tantegel_soldier9: "I am looking for the castle cellar. I heard it is not easily found.",
+        tantegel_soldier10: "In Garinham,look for the grave of Garin. Thou must push on a wall of darkness there.",
+        tantegel_merchant1: "We are merchants who have traveled much in this land. Many of our colleagues have been killed by servants of the Dragonlord.",
+        tantegel_merchant2: "Rumor has it that entire towns have been destroyed by the Dragonlord's servants.",
+        tantagel_old_man1: "<player_name>'s coming was foretold by legend. May the light shine upon this brave warrior.",
+        tantagel_old_man2: [
+            "Let us wish the warrior well!",
+            "May the light be thy strength!"
+        ],
+        tantegel_man1: "There was a time when Brecconary was a paradise. Then the Dragonlord's minions came.",
+        tantegel_man2: "To become strong enough to face future trials thou must first battle many foes.",
+        tantegel_woman1: "Thank you for saving the Princess.",
+        tantegel_woman2: [
+            "When the sun and rain meet, a Rainbow Bridge shall appear.",
+            "It's a legend."
+        ],
+        //Tantegel basement
+        tantegel_basement_old_man1: "Thou hast no business here. Go away.",
+        //Brecconary
+        brecconary_man1: "Go north to the seashore, then follow the coastline west until thou hath reached Garinham.",
+        brecconary_man2: "Thou art most welcome in Brecconary.",
+        brecconary_man3: "Enter where thou can.",
+        brecconary_man4: [
+            "Within sight of Tantegel Castle to the south is Charlock,",
+            "The fortress of the Dragonlord."
+        ],
+        brecconary_man5: "There is a town where magic keys can be purchased.",
+        brecconary_woman1: "Welcome! Enter the shop and speak to its keeper across the desk.",
+        brecconary_woman2: "No, I am not Princess Gwaelin.",
+        brecconary_woman3: "Will thou buy some Fairy Water for <number> GOLD to keep the Dragonlord's minions away?",
+        brecconary_merchant1: "Please, save us from the minions of the Dragonlord.",
+        brecconary_old_man1: "Watch thy Hit Points when in the Poisonous Marsh.",
+        brecconary_old_man2: "If thou art cursed, come again.",
+        brecconary_soldier1: "Some say that Garin's grave is home to a Silver Harp.",
+        brecconary_soldier2: [
+            "Many have been the warriors who have perished on this quest.",
+            "But for thee I wish success, <player_name>."
+        ],
+        brecconary_soldier3: "Art thou the descendant of Erdrick? Hast thou any proof?",
+        brecconary_soldier4: "Who touches me? I see nothing, nor can I hear.",
+        brecconary_soldier5: [
+            "Beware the bridges!",
+            "Danger grows when thou crosses."
+        ],
+        brecconary_soldier6: "See King Lorik when thy experience levels are raised."
     },
     unknown: {
         //stairs command is stupid; not worth coding it.
@@ -260,16 +331,13 @@ The <item> is squeezing thy body.
 Thou cannot enter here.
 
 "Thou art strong enough!\nWhy can thou not defeat the Dragonlord?"
-"If thou art planning to take a rest, first see King Lorik."
 "Good morning.\nThou hast had a good night's sleep I hope."
 "I shall see thee again."
 "Good morning.\nThou seems to have spent a good night."
 "Good night."
 "Okay.\nGood-bye, traveler."
-"Welcome to the traveler's Inn.\nRoom and board is <number> GOLD per night.\nDost thou want a room?"
 "All the best to thee."
 "I thank thee.\nWon't thou buy one more bottle?"
-"Will thou buy some Fairy Water for <number> GOLD to keep the Dragonlord's \nminions away?"
 "I will see thee later."
 "Thou hast not enough money."
 "I am sorry, but I cannot sell thee anymore."
@@ -288,7 +356,6 @@ Thou cannot enter here.
 "Thou hast not enough money."
 "The <item>?\nThank you very much."
 "What dost thou want?"
-"Welcome.\nWe deal in tools.\nWhat can I do for thee?"
 "Oh, yes?\nThat's too bad."
 "Is that Okay.?"
 "We deal in weapons and armor.\nDost thou wish to buy anything today?"
@@ -300,34 +367,9 @@ Thou cannot enter here.
 "I thank thee."
 "Please, come again."
 "Cursed one, be gone!"
-"I am looking for the castle cellar.\nI heard it is not easily found."
-"Thou must have a key to open a door."
-"To become strong enough to face future trials thou must first battle many \nfoes."
-"King Lorik will record thy deeds in his Imperial Scroll so thou may return to \nthy quest later."
-"When the sun and rain meet, a Rainbow Bridge shall appear."
-"Never does a brave person steal."
-"There was a time when Brecconary was a paradise.\nThen the Dragonlord's minions came."
-"Let us wish the warrior well!"
-"May the light be thy strength!"
-"If thy Hit Points are high enough, by all means, enter."
-"We are merchants who have traveled much in this land.\nMany of our colleagues have been killed by servants of the Dragonlord."
-"Rumor has it that entire towns have been destroyed by the Dragonlord's \nservants."
-"Welcome to Tantegel Castle."
-"In Garinham,look for the grave of Garin.\nThou must push on a wall of darkness there."
+
 "A word of advice."\n"Save thy money for more expensive armor."
 "Listen to what people say.\nIt can be of great help."
-"Beware the bridges!"\n"Danger grows when thou crosses."
-"There is a town where magic keys can be purchased."
-"Some say that Garin's grave is home to a Silver Harp."\n"Enter where thou can."
-"Welcome!\nEnter the shop and speak to its keeper across the desk."
-"Thou art most welcome in Brecconary."
-"Watch thy Hit Points when in the Poisonous Marsh."
-"Go north to the seashore, then follow the coastline west until thou hath \nreached Garinham."
-"No,I am not Princess Gwaelin."
-"Please,save us from the minions of the Dragonlord."
-"See King Lorik when thy experience levels are raised."
-"Art thou the descendant of Erdrick?\nHast thou any proof?"
-"Within sight of Tantegel Castle to the south is Charlock,"\n"The fortress of the Dragonlord."
 "This bath cures rheumatism."
 "East of Hauksness there is a town, 'tis said, where one may purchase weapons \nof extraordinary quality."
 "Rimuldar is the place to buy keys."
@@ -372,14 +414,11 @@ Thou cannot enter here.
 "Heed my warning! Travel not to the south for there the monsters are fierce and \nterrible."
 "In this world is there any sword that can pierce the scales of the \nDragonlord?"
 "Orwick is late again. I'm starving."
-"Many have been the warriors who have perished on this quest."
-"But for thee I wish success, <player_name>."
 "Hast thou found the flute?"
 "Hast thou been to the southern island?"
 "'Tis said that the Dragonlord hath claws that can cleave iron and fiery breath \nthat can melt stone."
 "Dost thou still wish to go on?"
 "This is a magic place.\nHast thou found a magic temple?"
-"When entering the cave, take with thee a torch."
 "Go to the town of Cantlin."
 "I have heard that powerful enemies live there."
 "Thou art truly brave."
@@ -390,20 +429,14 @@ Thou cannot enter here.
 "No one will say thou art afraid."
 "Go to the south."
 "Where oh where can I find Princess Gwaelin?"
-"Thank you for saving the Princess."
-"Oh, my dearest Gwaelin!"
-"I hate thee, <player_name>."
 "Tell King Lorik that the search for his daughter hath failed."
 "I am almost gone...."
-"Who touches me?"
-"I see nothing, nor can I hear."
 "Dost thou know about Princess Gwaelin?"
 "Half a year now hath passed since the Princess was kidnapped by the enemy."\n"Never does the King speak of it, but he must be suffering much."
 "<player_name>, please save the Princess."
 "Oh, brave <player_name>."
 "I have been waiting long for one such as thee."
-"Thou hast no business here.\nGo away."
-"If thou art cursed, come again."
+
 "I will free thee from thy curse."
 "Now, go."
 "Though thou art as brave as thy ancestor, <player_name>, thou cannot defeat \nthe great Dragonlord with such weapons."
@@ -411,10 +444,8 @@ Thou cannot enter here.
 "Finally thou hast obtained it, <player_name>."
 "Is that a wedding ring?"\n"Thou seems too young to be married."
 "All true warriors wear a ring."
-"<player_name>'s coming was foretold by legend.\nMay the light shine upon this brave warrior."
 "Thou may go and search."
 "From Tantegel Castle travel {07}{00} leagues to the south and {04}{00} to the \neast."
-"It's a legend."
 "Thy bravery must be proven."
 "Thus, I propose a test."
 "There is a Silver Harp that beckons to the creatures of the Dragonlord."
@@ -439,10 +470,6 @@ Gwaelin then whispers:\n"Wait a moment, please.\nI would give a present to <play
 "I love thee, <player_name>."
 "Dost thou love me, <player_name>?"
 "When thou art finished preparing for thy departure, please see me.\nI shall wait."
-"I am greatly pleased that thou hast returned, <player_name>."
-"Before reaching thy next level of experience thou must gain <number of \nexperience>."
-"If thou dies I can bring thee back for another attempt without loss of thy \ndeeds to date."
-"Goodbye now, <player_name>.\nTake care and tempt not the Fates."
 "Will thou take me to the castle?"
 "Take the Treasure Chest."
 "Welcome, <player_name>.\nI am the Dragonlord--King of Kings."
@@ -470,10 +497,6 @@ The tablet reads as follows:
  "Their descendants will protect the items until thy quest leads thee to seek \nthem out."
  "When a new evil arises, find the three items, then fight!"
 "<player_name>?\nThis is Gwaelin.\nKnow that thou hath reached the final level."
-"Death should not have taken thee, <player_name>."
-"I will give thee another chance."
-"To reach the next level, thy Experience{F0} must increase by <number>."
-"Now, go, <player_name>!"
 "Thou hast failed and thou art cursed."
 "Leave at once!"
 "...."
