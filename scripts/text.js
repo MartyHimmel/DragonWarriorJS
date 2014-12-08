@@ -200,10 +200,13 @@ var text = {
         }
     },
     script: {
-        //General
-        innkeeper1: "Welcome to the traveler's Inn. Room and board is <number> GOLD per night. Dost thou want a room?",
-        item_store1: "Welcome. We deal in tools. What can I do for thee?",
         //Common
+        innkeeper1: "Welcome to the traveler's Inn. Room and board is <number> GOLD per night. Dost thou want a room?",
+        weapons_armor1: "We deal in weapons and armor. Dost thou wish to buy anything today?",
+        item_store1: "Welcome. We deal in tools. What can I do for thee?",
+        key_sales1: "Magic keys! They will unlock any door. Dost thou wish to purchase one for <number> GOLD?",
+        fairy_water1: "Will thou buy some Fairy Water for <number> GOLD to keep the Dragonlord's minions away?",
+        fairy_water2: "I thank thee. Won't thou buy one more bottle?",
         erdrick_proof: "Art thou the descendant of Erdrick? Hast thou any proof?",
         save_us: "Please, save us from the minions of the Dragonlord.",
         //Tantegel (throne room)
@@ -276,7 +279,6 @@ var text = {
         brecconary_man5: "There is a town where magic keys can be purchased.",
         brecconary_woman1: "Welcome! Enter the shop and speak to its keeper across the desk.",
         brecconary_woman2: "No, I am not Princess Gwaelin.",
-        brecconary_woman3: "Will thou buy some Fairy Water for <number> GOLD to keep the Dragonlord's minions away?",
         brecconary_old_man1: "Watch thy Hit Points when in the Poisonous Marsh.",
         brecconary_old_man2: "If thou art cursed, come again.",
         brecconary_soldier1: "Some say that Garin's grave is home to a Silver Harp.",
@@ -315,7 +317,34 @@ var text = {
         garinham_woman2: "I hate people! Go! Leave me!",
         garinham_man1: "It is said that the Princess was kidnapped and taken eastward.",
         garinham_man2: "Once there was a town called Hauksness far to the south, but I do not know if it still exists.",
-        garinham_merchant1: "I suggest making a map if thy path leads into the darkness."
+        garinham_merchant1: "I suggest making a map if thy path leads into the darkness.",
+        //Rimuldar
+        rimuldar_woman1: "Who art thou? Leave at once or I will call my friends.",
+        rimuldar_woman2: "No, I have no tomatoes. I have no tomatoes today.",
+        rimuldar_woman3: "Before long the enemy will arrive.",
+        rimuldar_woman4: "Orwick is late again. I'm starving.",
+        rimuldar_soldier1: "The scales of the Dragonlord are as hard as steel.",
+        rimuldar_soldier2: "You are <player_name>? It has been long since last we met.",
+        rimuldar_soldier3: "Is that a wedding ring? Thou seems too young to be married.",
+        rimuldar_soldier4: "Thou shalt find the Stones of Sunlight in Tantegel Castle, if thou has not found them yet.",
+        rimuldar_soldier5: "In this world is there any sword that can pierce the scales of the Dragonlord?",
+        rimuldar_man1: "Welcome to the town of Rimuldar.",
+        rimuldar_man2: "Heed my warning! Travel not to the south for there the monsters are fierce and terrible.",
+        rimuldar_man3: "I am Orwick, and I am waiting for my girl friend.",
+        rimuldar_old_man1: "Good day,I am Howard. Four steps south of the bath in Kol thou shalt find a magic item.",
+        rimuldar_old_man2: [
+            "Over the western part of this island Erdrick created a rainbow.",
+            "'Tis also said that he entered the darkness from a hidden entrance in the room of the Dragonlord."
+        ],
+        rimuldar_old_man3: "This is a magic place. Hast thou found a magic temple?",
+        rimuldar_merchant1: "Welcome!",
+        //Cantlin
+        cantlin_soldier1: "Welcome to Cantlin, the castle town.",
+        cantlin_soldier2: [
+            "It is said that many have held Erdrick's armor.",
+            "The last to have it was a fellow named Wynn."
+        ],
+        cantlin_merchant1: "Grandfather used to say that his friend, Wynn, had buried something of great value at the foot of a tree behind his shop.",
     },
     unknown: {
         //stairs command is stupid; not worth coding it.
@@ -330,7 +359,6 @@ var text = {
 Thy body is being squeezed.
 The <item> is squeezing thy body.
 Thou cannot enter here.
-
 "Thou art strong enough!\nWhy can thou not defeat the Dragonlord?"
 "Good morning.\nThou hast had a good night's sleep I hope."
 "I shall see thee again."
@@ -338,12 +366,10 @@ Thou cannot enter here.
 "Good night."
 "Okay.\nGood-bye, traveler."
 "All the best to thee."
-"I thank thee.\nWon't thou buy one more bottle?"
 "I will see thee later."
 "Thou hast not enough money."
 "I am sorry, but I cannot sell thee anymore."
 "Here,take this key.\nDost thou wish to purchase more?"
-"Magic keys!\nThey will unlock any door.\nDost thou wish to purchase one for <number> GOLD?"
 "I am sorry.\nA curse is upon thy body."
 "Thou hast no possessions."
 "Wilt thou sell anything else?"
@@ -359,7 +385,6 @@ Thou cannot enter here.
 "What dost thou want?"
 "Oh, yes?\nThat's too bad."
 "Is that Okay.?"
-"We deal in weapons and armor.\nDost thou wish to buy anything today?"
 "The <item>?"
 "Then I will buy thy <item> for <number> GOLD."
 "Sorry.\nThou hast not enough money."
@@ -368,38 +393,18 @@ Thou cannot enter here.
 "I thank thee."
 "Please, come again."
 "Cursed one, be gone!"
-
 "A word of advice."\n"Save thy money for more expensive armor."
 "Listen to what people say.\nIt can be of great help."
 "Hast thou seen Nester?\nI think he may need help."
 "Come buy my radishes! They are fresh and cheap.\nBuy thy radishes today!"
 "To learn how proof may be obtained that thy ancestor was the great Erdrick, \nsee a man in this very town."
 "'Tis said that Erdrick's sword could cleave steel."
-"Welcome to Cantlin, the castle town."
 "What shall I get for thy dinner?"
 "I know nothing."
 "I'm Nester.\nHey, where am I? No, don't tell me!"
-"Grandfather used to say that his friend, Wynn, had buried something of great \nvalue at the foot of a tree behind his shop."
-"It is said that many have held Erdrick's armor."\n"The last to have it was a fellow named Wynn."
 "My Grandfather Wynn once had a shop on the east side of Hauksness."
-"Welcome!"
-"Who art thou?\nLeave at once or I will call my friends."
-"I am Orwick, and I am waiting for my girl friend."
-"The scales of the Dragonlord are as hard as steel."
-"Over the western part of this island Erdrick created a rainbow."
-"'Tis also said that he entered the darkness from a hidden entrance in the room \nof the Dragonlord."
-"Thou shalt find the Stones of Sunlight in Tantegel Castle,\nif thou has not found them yet."
-"Welcome to the town of Rimuldar."
-"No, I have no tomatoes.\nI have no tomatoes today."
-"You are <player_name>?\nIt has been long since last we met."
-"Good day,I am Howard. Four steps south of the bath in Kol thou shalt find a \nmagic item."
-"Before long the enemy will arrive."
-"Heed my warning! Travel not to the south for there the monsters are fierce and \nterrible."
-"In this world is there any sword that can pierce the scales of the \nDragonlord?"
-"Orwick is late again. I'm starving."
 "'Tis said that the Dragonlord hath claws that can cleave iron and fiery breath \nthat can melt stone."
 "Dost thou still wish to go on?"
-"This is a magic place.\nHast thou found a magic temple?"
 "Go to the town of Cantlin."
 "I have heard that powerful enemies live there."
 "Thou art truly brave."
@@ -417,12 +422,10 @@ Thou cannot enter here.
 "<player_name>, please save the Princess."
 "Oh, brave <player_name>."
 "I have been waiting long for one such as thee."
-
 "I will free thee from thy curse."
 "Now, go."
 "Though thou art as brave as thy ancestor, <player_name>, thou cannot defeat \nthe great Dragonlord with such weapons."
 "Thou shouldst come here again."
-"Is that a wedding ring?"\n"Thou seems too young to be married."
 "All true warriors wear a ring."
 "Thou may go and search."
 "From Tantegel Castle travel {07}{00} leagues to the south and {04}{00} to the \neast."

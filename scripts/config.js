@@ -1189,7 +1189,7 @@ var config = {
                 }},
                 //guy that sells keys
                 { type: "merchant", facing: "down", x: 35, y: 7 },
-                { type: "solider_2", facing: "down", x: 36, y: 15, wanders: true, talk: function (script) {
+                { type: "soldier_2", facing: "down", x: 36, y: 15, wanders: true, talk: function (script) {
                     script.text("tantegel_soldier9");
                 }},
                 { type: "townswoman", facing: "down", x: 38, y: 11, talk: function (script) {
@@ -1199,7 +1199,7 @@ var config = {
                 { type: "soldier", facing: "up", x: 37, y: 21, talk: function (script) {
                     script.text("tantegel_soldier8");
                 }},
-                { type: "solider_2", facing: "up", x: 35, y: 27, wanders: true, talk: function (script) {
+                { type: "soldier_2", facing: "up", x: 35, y: 27, wanders: true, talk: function (script) {
                     script.text("tantegel_soldier10");
                 }}
             ]
@@ -1374,7 +1374,7 @@ var config = {
                 { type: "soldier", facing: "up", x: 22, y: 33, talk: function (script) {
                     script.text("brecconary_soldier4");
                 }},
-                { type: "solider_2", facing: "down", x: 15, y: 33, wanders: true, talk: function (script) {
+                { type: "soldier_2", facing: "down", x: 15, y: 33, wanders: true, talk: function (script) {
                     script.text("brecconary_soldier1");
                 }},
                 //armor/weapons store
@@ -1386,7 +1386,7 @@ var config = {
                 { type: "old_man", facing: "down", x: 23, y: 12, wanders: true, talk: function (script) {
                     script.text("brecconary_old_man1");
                 }},
-                { type: "solider_2", facing: "up", x: 24, y: 28, wanders: true, talk: function (script) {
+                { type: "soldier_2", facing: "up", x: 24, y: 28, wanders: true, talk: function (script) {
                     script.text("brecconary_soldier2");
                 }},
                 { type: "townsman", facing: "down", x: 22, y: 21, wanders: true, talk: function (script) {
@@ -1395,7 +1395,7 @@ var config = {
                 { type: "merchant", facing: "down", x: 29, y: 17, wanders: true, talk: function (script) {
                     script.text("save_us");
                 }},
-                { type: "solider_2", facing: "down", x: 31, y: 26, wanders: true, talk: function (script) {
+                { type: "soldier_2", facing: "down", x: 31, y: 26, wanders: true, talk: function (script) {
                     script.text("erdrick_proof");
                 }},
                 { type: "townswoman", facing: "up", x: 28, y: 32, wanders: true, talk: function (script) {
@@ -1424,12 +1424,12 @@ var config = {
                     script.text("brecconary_old_man2");
                 }},
                 //guy in the corner
-                { type: "solider_2", facing: "down", x: 40, y: 8, talk: function (script) {
+                { type: "soldier_2", facing: "down", x: 40, y: 8, talk: function (script) {
                     script.text("brecconary_soldier5");
                 }},
                 //fairy water
                 { type: "townswoman", facing: "left", x: 36, y: 11, wanders: true, talk: function (script) {
-                    script.text("brecconary_woman3");
+                    script.text("fairy_water1");
                     //TODO: menu
                 }}
             ]
@@ -1503,7 +1503,7 @@ var config = {
                 { type: "old_man", facing: "left", x: 32, y: 17, wanders: true, talk: function (script) {
                     script.text("kol_old_man4");
                 }},
-                { type: "solider_2", facing: "down", x: 32, y: 20, wanders: true, talk: function (script) {
+                { type: "soldier_2", facing: "down", x: 32, y: 20, wanders: true, talk: function (script) {
                     script.text("kol_soldier3");
                 }},
                 { type: "townsman", facing: "down", x: 25, y: 20, wanders: true, talk: function (script) {
@@ -1604,7 +1604,7 @@ var config = {
                 { type: "old_man", facing: "right", x: 14, y: 24, talk: function (script) {
                     script.text("garinham_old_man2");
                 }},
-                { type: "solider_2", facing: "up", x: 19, y: 24, wanders: true, talk: function (script) {
+                { type: "soldier_2", facing: "up", x: 19, y: 24, wanders: true, talk: function (script) {
                     script.text("garinham_soldier1");
                 }},
                 { type: "townsman", facing: "right", x: 30, y: 20, wanders: true, talk: function (script) {
@@ -1708,6 +1708,72 @@ var config = {
                 { id: "rimuldar_door2", x: 35, y: 30 }
             ],
             npcs: [
+                //by weapons store
+                { type: "merchant", facing: "down", x: 36, y: 14 },
+                { type: "soldier_2", facing: "down", x: 36, y: 18, wanders: true, talk: function (script) {
+                    script.text("rimuldar_soldier1");
+                }},
+                //wandering, middle of town
+                { type: "townswoman", facing: "down", x: 35, y: 21, wanders: true, talk: function (script) {
+                    script.text("rimuldar_woman2");
+                }},
+                { type: "townsman", facing: "down", x: 27, y: 18, wanders: true, talk: function (script) {
+                    script.text("rimuldar_man1");
+                }},
+                { type: "soldier", facing: "up", x: 22, y: 23, wanders: true, talk: function (script) {
+                    script.text("rimuldar_soldier4");
+                }},
+                { type: "soldier_2", facing: "down", x: 30, y: 32, wanders: true, talk: function (script) {
+                    //TODO: conditional on having fighters ring, I think?
+                    script.text("rimuldar_soldier3");
+                }},
+                { type: "old_man", facing: "left", x: 19, y: 20, talk: function (script) {
+                    script.text("rimuldar_old_man2");
+                }},
+                //inn
+                { type: "merchant", facing: "right", x: 29, y: 25 },
+                { type: "soldier_2", facing: "down", x: 37, y: 26, wanders: true, talk: function (script) {
+                    script.text("rimuldar_soldier2");
+                }},
+                { type: "old_man", facing: "down", x: 33, y: 30, talk: function (script) {
+                    script.text("rimuldar_old_man1");
+                }},
+                //two isolated people
+                { type: "townswoman", facing: "up", x: 28, y: 15, talk: function (script) {
+                    script.text("rimuldar_woman1");
+                }},
+                { type: "townsman", facing: "up", x: 24, y: 15, wanders: true, talk: function (script) {
+                    script.text("erdrick_proof");
+                }},
+                //shed
+                { type: "townswoman", facing: "right", x: 16, y: 27, wanders: true, talk: function (script) {
+                    script.text("rimuldar_woman3");
+                }},
+                { type: "old_man", facing: "right", x: 16, y: 30, talk: function (script) {
+                    script.text("rimuldar_old_man3");
+                    //TODO: menu
+                }},
+                { type: "townsman", facing: "down", x: 22, y: 27, wanders: true, talk: function (script) {
+                    script.text("rimuldar_man2");
+                }},
+                { type: "soldier_2", facing: "down", x: 22, y: 31, wanders: true, talk: function (script) {
+                    script.text("rimuldar_soldier5");
+                }},
+                //key sales
+                { type: "merchant", facing: "up", x: 15, y: 11, talk: function (script) {
+                    script.text("rimuldar_merchant1");
+                }},
+                { type: "old_man", facing: "up", x: 17, y: 14, talk: function (script) {
+                    script.text("key_sales1");
+                    //TODO: menu
+                }},
+                //hiding girl and her boyfriend
+                { type: "townswoman", facing: "down", x: 13, y: 33, talk: function (script) {
+                    script.text("rimuldar_woman4");
+                }},
+                { type: "townsman", facing: "down", x: 40, y: 7, talk: function (script) {
+                    script.text("rimuldar_man3");
+                }}
             ]
         },
 
@@ -1778,6 +1844,36 @@ var config = {
                 { id: "cantlin_door5", x: 37, y: 14 }
             ],
             npcs: [
+                //weapons store
+                { type: "merchant", facing: "down", x: 33, y: 10, wandering: true, talk: function (script) {
+                    //TODO: menu
+                }},
+                { type: "soldier", facing: "down", x: 26, y: 11, wanders: true, talk: function (script) {
+                    script.text("cantlin_soldier1");
+                }},
+                { type: "soldier", facing: "down", x: 33, y: 14, wanders: true, talk: function (script) {
+                    script.text("cantlin_soldier2");
+                }},
+                //inn
+                { type: "merchant", facing: "down", x: 19, y: 8, talk: function (script) {
+                    //TODO: menu
+                }},
+                //locked store area
+                { type: "old_man", facing: "down", x: 38, y: 11, talk: function (script) {
+                    script.text("key_sales1");
+                    //TODO: menu
+                }},
+                { type: "soldier", facing: "right", x: 35, y: 17, talk: function (script) {
+                    script.text("weapons_armor1");
+                    //TODO: menu
+                }},
+                { type: "townswoman", facing: "left", x: 33, y: 18, talk: function (script) {
+                    script.text("fairy_water1");
+                }},
+                { type: "merchant", facing: "right", x: 35, y: 20, wandering: true, talk: function (script) {
+                    script.text("cantlin_merchant1");
+                }},
+                //TODO: not done yet.
             ]
         },
 
@@ -2517,7 +2613,7 @@ var config = {
             map_links: [
                 { x: 11, y: 11, map: "World", set_offsets: [73, 0], set_xy: [12, 5] }
             ],
-            music: "dungeon1",
+            music: "town",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2536,6 +2632,9 @@ var config = {
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
             ],
             npcs: [
+                { type: "old_man", facing: "right", x: 11, y: 6, talk: function (script) {
+                    //TODO:
+                }}
             ]
         },
 
@@ -2548,7 +2647,7 @@ var config = {
             map_links: [
                 { x: 8, y: 6, map: "World", set_offsets: [100, 107] }
             ],
-            music: "dungeon1",
+            music: "town",
             layout: [
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -2567,6 +2666,9 @@ var config = {
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
             ],
             npcs: [
+                { type: "old_man", facing: "left", x: 12, y: 7, talk: function (script) {
+                    //TODO:
+                }}
             ]
         }
     }
