@@ -1,30 +1,4 @@
 var text = {
-    format: function (formatString, params) {
-        function escapeRegExp(string) {
-            return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-        }
-
-        function replaceAll(string, find, replace) {
-            return string.replace(new RegExp(escapeRegExp(find), 'g'), replace);
-        }
-
-        if (typeof params !== 'undefined') {
-            if (typeof params.player_name !== 'undefined') {
-                formatString = replaceAll(formatString, "<player_name>", params.player_name);
-            }
-            if (typeof params.enemy !== 'undefined') {
-                formatString = replaceAll(formatString, "<enemy>", params.enemy);
-            }
-            if (typeof params.number !== 'undefined') {
-                formatString = replaceAll(formatString, "<number>", params.number);
-            }
-            if (typeof params.spell !== 'undefined') {
-                formatString = replaceAll(formatString, "<spell>", params.spell);
-            }
-        }
-
-        return formatString;
-    },
     game_title: "Dragon Warrior",
     name_prompt: "What is thy name?",
     default_player_name: "Yuji Horii",
@@ -251,9 +225,9 @@ var text = {
         ],
         tantegel_throne_king3: [
             "I am greatly pleased that thou hast returned, <player_name>.",
-            "Before reaching thy next level of experience thou must gain <number of \nexperience>.",
-            "If thou dies I can bring thee back for another attempt without loss of thy \ndeeds to date.",
-            "Goodbye now, <player_name>.\nTake care and tempt not the Fates."
+            "Before reaching thy next level of experience thou must gain <number of experience>.",
+            "If thou dies I can bring thee back for another attempt without loss of thy deeds to date.",
+            "Goodbye now, <player_name>. Take care and tempt not the Fates."
         ],
         tantegel_throne_guard1: [
             "East of this castle is a town where armor, weapons, and many other items may be purchased.",

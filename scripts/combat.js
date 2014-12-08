@@ -1,4 +1,4 @@
-var combat = {
+Game.combat = {
 	enemy_ptr: null, // current enemy player is fighting
 	enemy_id: "",
 	enemy_max_hp: 0, // randomized at start of battle
@@ -91,7 +91,7 @@ var combat = {
 			this.gold_reward = this.enemy_ptr.gold;
 		}
 
-		add_text(text.format(text.combat.enemy.near, { enemy: this.enemy_id }));
+		Game.display_text(text.combat.enemy.near, { enemy: this.enemy_id });
 	},
 
 	// Draw functions
@@ -115,18 +115,16 @@ var combat = {
 
 		if (player.strength > (2 * enemy_strength)) {
 			if (rand3 <= 25) {
-				add_text(text.format(text.combat.enemy.run, { enemy: this.enemy_id }));
-				setTimeout(function() {
-					Game.change_state("exploration");
-				}, 500);
+				Game.display_text(text.combat.enemy.run, { enemy: this.enemy_id });
+				Game.change_state("exploration", 500);
 			}
 		}
 
 		if ((player.agility * rand1) < (enemy_agility * rand2 * 0.25)) {
-			add_text(text.format(text.combat.enemy.strike_first, { enemy: this.enemy_id, player_name: player.name }));
+			Game.display_text(text.combat.enemy.strike_first, { enemy: this.enemy_id, player_name: player.name });
 			this.player_turn = false;
 		} else {
-			add_text(text.combat.prompt);
+			Game.display_text(text.combat.prompt);
 		}
 
 		this.initiative_round = false;
@@ -137,14 +135,14 @@ var combat = {
 		    damage = 0;
 
 		if (this.player_turn === true) {
-			add_text(text.format(text.combat.player.attack, { player_name: player.name }));
+			Game.display_text(text.combat.player.attack, { player_name: player.name });
 			if (Game.random_number(1, 64) > this.enemy_ptr.dodge) {
 				hit = true;
 			}
 
 			if (hit) {
 				if (Game.random_number(1, 32) === 1 && this.enemy_ptr !== (38 || 39)) {
-					add_text(text.combat.player.hit_critical);
+					Game.display_text(text.combat.player.hit_critical);
 					damage = Math.floor(Game.random_number(player.attack_power / 2, player.attack_power));
 				} else {
 					damage = Math.floor(Game.random_number((player.attack_power - this.enemy_ptr.agility) / 4,
@@ -152,7 +150,7 @@ var combat = {
 				}
 
 				if (damage < 0) { damage = 0; }
-				add_text(text.format(text.combat.player.hit, { enemy: this.enemy_id, number: damage}));
+				Game.display_text(text.combat.player.hit, { enemy: this.enemy_id, number: damage});
 				this.enemy_current_hp -= damage;
 
 				if (this.enemy_current_hp <= 0) {
@@ -162,7 +160,7 @@ var combat = {
 					this.player_turn = false;
 				}
 			} else {
-				add_text(text.combat.enemy.dodge);
+				Game.display_text(text.combat.enemy.dodge);
 				this.player_turn = false;
 			}
 		}
@@ -194,57 +192,49 @@ var combat = {
 				modifier = 1;
 			}
 
-			add_text(text.format(text.combat.player.run, { player_name: player.name }));
+			Game.display_text(text.combat.player.run, { player_name: player.name });
 			this.player_turn = false;
 
 			if (this.enemy_status === "sleep") {
 				this.player_turn = true;
-				setTimeout(function() {
-					Game.change_state("exploration");
-				}, 500);
+				Game.change_state("exploration", 500);
 			}
 
-			if ((player.agility * rand1) <
-				(enemy_agility * rand2 * modifier)) {
-				add_text(text.combat.player.run_blocked);
+			if ((player.agility * rand1) < (enemy_agility * rand2 * modifier)) {
+				Game.display_text(text.combat.player.run_blocked);
 			} else {
 				this.player_turn = true;
-				setTimeout(function() {
-					Game.change_state("exploration");
-				}, 500);
+				Game.change_state("exploration", 500);
 			}
 		}
 	},
 
 	player_died: function() {
-		add_text(text.dead);
+		Game.display_text(text.dead);
 	},
 
 	victory: function() {
 		var current_level = player.level;
 
-		add_text(text.format(text.combat.victory.defeated, { enemy: this.enemy_id }));
+		Game.display_text(text.combat.victory.defeated, { enemy: this.enemy_id });
+		Game.display_text(text.combat.victory.gain_exp, { number: this.enemy_ptr.experience });
+		Game.display_text(text.combat.victory.gain_gold, { number: this.gold_reward });
 
-		add_text(text.format(text.combat.victory.gain_exp, { number: this.enemy_ptr.experience }));
 		player.add_experience(this.enemy_ptr.experience);
-
-		add_text(text.format(text.combat.victory.gain_gold, { number: this.gold_reward }));
 		player.add_gold(this.gold_reward);
-
 		player.load_player();
+
 		if (player.level === (current_level + 1)) {
 			this.player_level_up();
 		}
 
-		setTimeout(function() {
-			Game.change_state("exploration");
-		}, 1000);
+		Game.change_state("exploration", 1000);
 	},
 
 	player_level_up: function() {
-		add_text(text.combat.victory.next_level);
+		Game.display_text(text.combat.victory.next_level);
 		if (typeof config.levels[player.level - 1].spells_learned !== 'undefined') {
-			add_text(text.combat.victory.gain_spell);
+			Game.display_text(text.combat.victory.gain_spell);
 		}
 	},
 
@@ -275,7 +265,7 @@ var combat = {
 					if (Game.random_number(1, 4) <= this.enemy_ptr.special_probability[i]) {
 						special = this.enemy_ptr.special[i];
 						if (special === "breathe_fire" || special === "breathe_fire2") {
-							add_text(text.format(text.combat.enemy.fire, { enemy: this.enemy_id }));
+							Game.display_text(text.combat.enemy.fire, { enemy: this.enemy_id });
 
 							//Erdricks armor reduces damage by 1/3
 							if (special === "breathe_fire2") {
@@ -288,7 +278,7 @@ var combat = {
 							}
 
 							damage = Game.random_number(breath_min_dmg, breath_max_dmg);
-							add_text(text.format(text.combat.enemy.hit, { number: damage }));
+							Game.display_text(text.combat.enemy.hit, { number: damage });
 							player.lose_hp(damage);
 
 						} else {
@@ -303,7 +293,7 @@ var combat = {
 								continue;
 							}
 
-							add_text(text.format(text.combat.enemy.cast, { enemy: this.enemy_id, spell: text.spells[special] }));
+							Game.display_text(text.combat.enemy.cast, { enemy: this.enemy_id, spell: text.spells[special] });
 							//TODO: actually cast the spell
 						}
 
@@ -314,7 +304,7 @@ var combat = {
 
 			//Regular attack
 			if (!used_special) {
-				add_text(text.format(text.combat.enemy.attack, { enemy: this.enemy_id }));
+				Game.display_text(text.combat.enemy.attack, { enemy: this.enemy_id });
 
 				if (player.defense_power >= enemy_strength) {
 					damage = Math.floor(Game.random_number(0, ((enemy_strength + 4) / 6)));
@@ -323,7 +313,7 @@ var combat = {
 						((enemy_strength - (player.defense_power / 2)) / 2)));
 				}
 
-				add_text(text.format(text.combat.enemy.hit, { number: damage }));
+				Game.display_text(text.combat.enemy.hit, { number: damage });
 				player.lose_hp(damage);
 			}
 		}

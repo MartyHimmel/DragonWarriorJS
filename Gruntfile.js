@@ -31,6 +31,7 @@ module.exports = function(grunt) {
                     'scripts/config.js',
                     'scripts/text.js',
                     'scripts/game.js',
+                    'scripts/script.js',
                     'scripts/player.js',
                     'scripts/map_functions.js',
                     'scripts/audio.js',

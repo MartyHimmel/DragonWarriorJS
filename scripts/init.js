@@ -78,9 +78,9 @@ function display_output() {
         "player.offset_y = " + player.offset_y + "<br>" +
         "steps = " + player.steps + "<br>" +
         "current tile = " + player.current_tile + "<br>" +
-        "combat random = " + combat.random_num + "<br>" +
+        "combat random = " + Game.combat.random_num + "<br>" +
         "current zone = " + map.current_zone + "<br>" +
-        "player turn = " + combat.player_turn + "<br>";
+        "player turn = " + Game.combat.player_turn + "<br>";
 
     var npc_count = 0;
     if (typeof map.map_ptr.npcs !== 'undefined') {
@@ -97,10 +97,10 @@ function display_output() {
     // Commands
     if (Game.state === "combat") {
         getId('fight').onclick = function() {
-            combat.player_attack();
+            Game.combat.player_attack();
         };
         getId('run').onclick = function() {
-            combat.player_run();
+            Game.combat.player_run();
         };
     } else {
         getId('door').onclick = function() {

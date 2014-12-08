@@ -234,7 +234,7 @@ var player = {
 		}
 
 		if (this.steps > prev_steps) {
-			if (combat.random_encounter() === true) {
+			if (Game.combat.random_encounter() === true) {
 				Game.change_state("combat");
 			}
 			time = Date.now();
@@ -359,7 +359,7 @@ var player = {
 		}
 
 		if (character !== null && typeof character.talk === 'function') {
-			character.talk();
+			character.talk(Game.script);
 		}
 	},
 

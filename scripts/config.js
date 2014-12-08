@@ -94,13 +94,13 @@ var config = {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
-            effect: function() { combat.enemy_current_hp -= Game.random_number(5, 12); }
+            effect: function() { Game.combat.enemy_current_hp -= Game.random_number(5, 12); }
         },
         sleep: {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
-            effect: function() { combat.enemy_status = "sleep"; }
+            effect: function() { Game.combat.enemy_status = "sleep"; }
         },
         radiant: {
             show_in_combat: false,
@@ -116,7 +116,7 @@ var config = {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
-            effect: function() { combat.enemy_status = "stopspell"; }
+            effect: function() { Game.combat.enemy_status = "stopspell"; }
         },
         outside: {
             show_in_combat: false,
@@ -146,7 +146,7 @@ var config = {
             show_in_combat: true,
             show_in_explore: false,
             cost: 5,
-            effect: function() { combat.enemy_current_hp -= Game.random_number(58, 65); }
+            effect: function() { Game.combat.enemy_current_hp -= Game.random_number(58, 65); }
         }
     },
     enemies: [
@@ -1132,75 +1132,75 @@ var config = {
             ],
             npcs: [
                 //two by stairs
-                { type: "soldier", facing: "down", x: 19, y: 12, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier4" });
+                { type: "soldier", facing: "down", x: 19, y: 12, talk: function (script) {
+                    script.text("tantegel_soldier4");
                 }},
-                { type: "soldier", facing: "up", x: 19, y: 14, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier5" });
+                { type: "soldier", facing: "up", x: 19, y: 14, talk: function (script) {
+                    script.text("tantegel_soldier5");
                 }},
-                { type: "townsman", facing: "down", x: 22, y: 17, wanders: true, talk: function () {
-                    Game.process_script({ text: "tantegel_man1" });
+                { type: "townsman", facing: "down", x: 22, y: 17, wanders: true, talk: function (script) {
+                    script.text("tantegel_man1");
                 }},
-                { type: "townswoman", facing: "down", x: 19, y: 19, wanders: true, talk: function () {
+                { type: "townswoman", facing: "down", x: 19, y: 19, wanders: true, talk: function (script) {
                     //TODO: conditional if player rescues princess
-                    Game.process_script({ text: "tantegel_woman1" });
+                    script.text("tantegel_woman1");
                 }},
                 //guy by chest
-                { type: "soldier", facing: "down", x: 13, y: 18, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier6" });
+                { type: "soldier", facing: "down", x: 13, y: 18, talk: function (script) {
+                    script.text("tantegel_soldier6");
                 }},
-                { type: "townsman", facing: "down", x: 13, y: 14, talk: function () {
-                    Game.process_script({ text: "tantegel_man2" });
+                { type: "townsman", facing: "down", x: 13, y: 14, talk: function (script) {
+                    script.text("tantegel_man2");
                 }},
                 //guy by locked door towards top right
-                { type: "soldier", facing: "down", x: 30, y: 8, wanders: true, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier7" });
+                { type: "soldier", facing: "down", x: 30, y: 8, wanders: true, talk: function (script) {
+                    script.text("tantegel_soldier7");
                 }},
                 //wandering old man, other side of door
-                { type: "old_man", facing: "down", x: 27, y: 17, wanders: true, talk: function () {
-                    Game.process_script({ text: "tantagel_old_man2" });
+                { type: "old_man", facing: "down", x: 27, y: 17, wanders: true, talk: function (script) {
+                    script.text("tantagel_old_man2");
                 } },
                 //guards by old man that gives you MP
-                { type: "soldier", facing: "right", x: 26, y: 26, talk: function() {
+                { type: "soldier", facing: "right", x: 26, y: 26, talk: function (script) {
                     //TODO: conditional if player rescues princess
-                    Game.process_script({ text: "tantegel_soldier3" });
+                    script.text("tantegel_soldier3");
                 }},
-                { type: "soldier", facing: "down", x: 29, y: 24, wanders: true, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier2" });
+                { type: "soldier", facing: "down", x: 29, y: 24, wanders: true, talk: function (script) {
+                    script.text("tantegel_soldier2");
                 }},
                 //guy that gives you MP
-                { type: "old_man", facing: "left", x: 31, y: 32, talk: function () {
-                    Game.process_script({ text: "tantagel_old_man1" });
+                { type: "old_man", facing: "left", x: 31, y: 32, talk: function (script) {
+                    script.text("tantagel_old_man1");
                     player.current_mp = player.max_mp;
                 }},
                 //front door guards
-                { type: "soldier", facing: "right", x: 20, y: 33, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier1" });
+                { type: "soldier", facing: "right", x: 20, y: 33, talk: function (script) {
+                    script.text("tantegel_soldier1");
                 }},
-                { type: "soldier", facing: "left", x: 23, y: 33, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier1" });
+                { type: "soldier", facing: "left", x: 23, y: 33, talk: function (script) {
+                    script.text("tantegel_soldier1");
                 }},
                 //merchants near entrance
-                { type: "merchant", facing: "down", x: 17, y: 31, wanders: true, talk: function () {
-                    Game.process_script({ text: "tantegel_merchant2" });
+                { type: "merchant", facing: "down", x: 17, y: 31, wanders: true, talk: function (script) {
+                    script.text("tantegel_merchant2");
                 }},
-                { type: "merchant", facing: "down", x: 15, y: 27, wanders: true, talk: function () {
-                    Game.process_script({ text: "tantegel_merchant1" });
+                { type: "merchant", facing: "down", x: 15, y: 27, wanders: true, talk: function (script) {
+                    script.text("tantegel_merchant1");
                 }},
                 //guy that sells keys
                 { type: "merchant", facing: "down", x: 35, y: 7 },
-                { type: "solider_2", facing: "down", x: 36, y: 15, wanders: true, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier9" });
+                { type: "solider_2", facing: "down", x: 36, y: 15, wanders: true, talk: function (script) {
+                    script.text("tantegel_soldier9");
                 }},
-                { type: "townswoman", facing: "down", x: 38, y: 11, talk: function () {
-                    Game.process_script({ text: "tantegel_woman2" });
+                { type: "townswoman", facing: "down", x: 38, y: 11, talk: function (script) {
+                    script.text("tantegel_woman2");
                 }},
                 //by the barrier
-                { type: "soldier", facing: "up", x: 37, y: 21, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier8" });
+                { type: "soldier", facing: "up", x: 37, y: 21, talk: function (script) {
+                    script.text("tantegel_soldier8");
                 }},
-                { type: "solider_2", facing: "up", x: 35, y: 27, wanders: true, talk: function () {
-                    Game.process_script({ text: "tantegel_soldier10" });
+                { type: "solider_2", facing: "up", x: 35, y: 27, wanders: true, talk: function (script) {
+                    script.text("tantegel_soldier10");
                 }}
             ]
         },
@@ -1247,17 +1247,17 @@ var config = {
                 }}
             ],
             npcs: [
-                { type: "king", facing: "down", x: 11, y: 6, talk: function () {
-                    Game.process_script({ text: "tantegel_throne_king1" });
+                { type: "king", facing: "down", x: 11, y: 6, talk: function (script) {
+                    script.text("tantegel_throne_king1");
                     //TODO: proper menu
                 }},
-                { type: "soldier", facing: "right", x: 11, y: 9, talk: function () {
+                { type: "soldier", facing: "right", x: 11, y: 9, talk: function (script) {
                     //TODO: these are conditional
-                    Game.process_script({ text: "tantegel_throne_guard1" });
+                    script.text("tantegel_throne_guard1");
                 }},
-                { type: "soldier", facing: "left", x: 13, y: 9, talk: function () {
+                { type: "soldier", facing: "left", x: 13, y: 9, talk: function (script) {
                     //TODO: these are conditional
-                    Game.process_script({ text: "tantegel_throne_guard2" });
+                    script.text("tantegel_throne_guard2");
                 }},
                 { type: "soldier", facing: "down", x: 15, y: 7 },
                 { type: "princess", facing: "down", x: 14, y: 6 }
@@ -1292,9 +1292,9 @@ var config = {
                 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
             ],
             npcs: [
-                { type: "old_man", facing: "down", x: 11, y: 8, talk: function () {
+                { type: "old_man", facing: "down", x: 11, y: 8, talk: function (script) {
                     //TODO: conditional if you've already collected OR not collected OR not collected + have erdricks token
-                    Game.process_script({ text: "tantegel_basement_old_man1" });
+                    script.text("tantegel_basement_old_man1");
                 }}
             ]
         },
@@ -1363,73 +1363,73 @@ var config = {
             ],
             npcs: [
                 //greeter
-                { type: "townsman", facing: "down", x: 13, y: 20, talk: function () {
-                    Game.process_script({ text: "brecconary_man2" });
+                { type: "townsman", facing: "down", x: 13, y: 20, talk: function (script) {
+                    script.text("brecconary_man2");
                 }},
                 //inkeeper
-                { type: "merchant", facing: "left", x: 22, y: 28, talk: function () {
-                    Game.process_script({ text: "innkeeper1" });
+                { type: "merchant", facing: "left", x: 22, y: 28, talk: function (script) {
+                    script.text("innkeeper1");
                     //TODO: menu
                 }},
-                { type: "soldier", facing: "up", x: 22, y: 33, talk: function () {
-                    Game.process_script({ text: "brecconary_soldier4" });
+                { type: "soldier", facing: "up", x: 22, y: 33, talk: function (script) {
+                    script.text("brecconary_soldier4");
                 }},
-                { type: "solider_2", facing: "down", x: 15, y: 33, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_soldier1" });
+                { type: "solider_2", facing: "down", x: 15, y: 33, wanders: true, talk: function (script) {
+                    script.text("brecconary_soldier1");
                 }},
                 //armor/weapons store
-                { type: "townswoman", facing: "down", x: 16, y: 14, talk: function () {
-                    Game.process_script({ text: "brecconary_woman1" });
+                { type: "townswoman", facing: "down", x: 16, y: 14, talk: function (script) {
+                    script.text("brecconary_woman1");
                 }},
                 { type: "merchant", facing: "down", x: 17, y: 11 },
                 //wandering people
-                { type: "old_man", facing: "down", x: 23, y: 12, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_old_man1" });
+                { type: "old_man", facing: "down", x: 23, y: 12, wanders: true, talk: function (script) {
+                    script.text("brecconary_old_man1");
                 }},
-                { type: "solider_2", facing: "up", x: 24, y: 28, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_soldier2" });
+                { type: "solider_2", facing: "up", x: 24, y: 28, wanders: true, talk: function (script) {
+                    script.text("brecconary_soldier2");
                 }},
-                { type: "townsman", facing: "down", x: 22, y: 21, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_man1" });
+                { type: "townsman", facing: "down", x: 22, y: 21, wanders: true, talk: function (script) {
+                    script.text("brecconary_man1");
                 }},
-                { type: "merchant", facing: "down", x: 29, y: 17, wanders: true, talk: function () {
-                    Game.process_script({ text: "save_us" });
+                { type: "merchant", facing: "down", x: 29, y: 17, wanders: true, talk: function (script) {
+                    script.text("save_us");
                 }},
-                { type: "solider_2", facing: "down", x: 31, y: 26, wanders: true, talk: function () {
-                    Game.process_script({ text: "erdrick_proof" });
+                { type: "solider_2", facing: "down", x: 31, y: 26, wanders: true, talk: function (script) {
+                    script.text("erdrick_proof");
                 }},
-                { type: "townswoman", facing: "up", x: 28, y: 32, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_woman2" });
+                { type: "townswoman", facing: "up", x: 28, y: 32, wanders: true, talk: function (script) {
+                    script.text("brecconary_woman2");
                 }},
-                { type: "soldier", facing: "down", x: 36, y: 21, talk: function () {
-                    Game.process_script({ text: "brecconary_soldier6" });
+                { type: "soldier", facing: "down", x: 36, y: 21, talk: function (script) {
+                    script.text("brecconary_soldier6");
                 }},
                 //item store
-                { type: "merchant", facing: "left", x: 37, y: 32, wanders: true, talk: function () {
-                    Game.process_script({ text: "item_store1" });
+                { type: "merchant", facing: "left", x: 37, y: 32, wanders: true, talk: function (script) {
+                    script.text("item_store1");
                     //TODO: menu
                 }},
-                { type: "townsman", facing: "left", x: 32, y: 31, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_man3" });
+                { type: "townsman", facing: "left", x: 32, y: 31, wanders: true, talk: function (script) {
+                    script.text("brecconary_man3");
                 }},
-                { type: "townsman", facing: "down", x: 37, y: 29, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_man4" });
+                { type: "townsman", facing: "down", x: 37, y: 29, wanders: true, talk: function (script) {
+                    script.text("brecconary_man4");
                 }},
                 //"there are keys" guy and curse removing old man
-                { type: "townsman", facing: "down", x: 32, y: 17, talk: function () {
-                    Game.process_script({ text: "brecconary_man5" });
+                { type: "townsman", facing: "down", x: 32, y: 17, talk: function (script) {
+                    script.text("brecconary_man5");
                 }},
-                { type: "old_man", facing: "down", x: 36, y: 17, talk: function () {
+                { type: "old_man", facing: "down", x: 36, y: 17, talk: function (script) {
                     //TODO: check for cursed item
-                    Game.process_script({ text: "brecconary_old_man2" });
+                    script.text("brecconary_old_man2");
                 }},
                 //guy in the corner
-                { type: "solider_2", facing: "down", x: 40, y: 8, talk: function () {
-                    Game.process_script({ text: "brecconary_soldier5" });
+                { type: "solider_2", facing: "down", x: 40, y: 8, talk: function (script) {
+                    script.text("brecconary_soldier5");
                 }},
                 //fairy water
-                { type: "townswoman", facing: "left", x: 36, y: 11, wanders: true, talk: function () {
-                    Game.process_script({ text: "brecconary_woman3" });
+                { type: "townswoman", facing: "left", x: 36, y: 11, wanders: true, talk: function (script) {
+                    script.text("brecconary_woman3");
                     //TODO: menu
                 }}
             ]
@@ -1494,51 +1494,51 @@ var config = {
             ],
             npcs: [
                 //entrance area / wandering people
-                { type: "old_man", facing: "down", x: 32, y: 27, wanders: true, talk: function () {
-                    Game.process_script({ text: "kol_old_man3" });
+                { type: "old_man", facing: "down", x: 32, y: 27, wanders: true, talk: function (script) {
+                    script.text("kol_old_man3");
                 }},
-                { type: "townswoman", facing: "down", x: 23, y: 22, wanders: true, talk: function () {
-                    Game.process_script({ text: "save_us" });
+                { type: "townswoman", facing: "down", x: 23, y: 22, wanders: true, talk: function (script) {
+                    script.text("save_us");
                 }},
-                { type: "old_man", facing: "left", x: 32, y: 17, wanders: true, talk: function () {
-                    Game.process_script({ text: "kol_old_man4" });
+                { type: "old_man", facing: "left", x: 32, y: 17, wanders: true, talk: function (script) {
+                    script.text("kol_old_man4");
                 }},
-                { type: "solider_2", facing: "down", x: 32, y: 20, wanders: true, talk: function () {
-                    Game.process_script({ text: "kol_soldier3" });
+                { type: "solider_2", facing: "down", x: 32, y: 20, wanders: true, talk: function (script) {
+                    script.text("kol_soldier3");
                 }},
-                { type: "townsman", facing: "down", x: 25, y: 20, wanders: true, talk: function () {
-                    Game.process_script({ text: "kol_man1" });
+                { type: "townsman", facing: "down", x: 25, y: 20, wanders: true, talk: function (script) {
+                    script.text("kol_man1");
                 }},
-                { type: "soldier", facing: "down", x: 23, y: 17, wanders: true, talk: function () {
-                    Game.process_script({ text: "kol_soldier2" });
+                { type: "soldier", facing: "down", x: 23, y: 17, wanders: true, talk: function (script) {
+                    script.text("kol_soldier2");
                 }},
                 //weapons
                 { type: "merchant", facing: "left", x: 34, y: 20 },
                 //by inn/spring
-                { type: "townswoman", facing: "down", x: 24, y: 9, talk: function () {
-                    Game.process_script({ text: "kol_woman1" });
+                { type: "townswoman", facing: "down", x: 24, y: 9, talk: function (script) {
+                    script.text("kol_woman1");
                 }},
                 { type: "merchant", facing: "up", x: 31, y: 12 },
                 //behind door
-                { type: "townsman", facing: "right", x: 18, y: 20, wanders: true, talk: function () {
-                    Game.process_script({ text: "erdrick_proof" });
+                { type: "townsman", facing: "right", x: 18, y: 20, wanders: true, talk: function (script) {
+                    script.text("erdrick_proof");
                 }},
-                { type: "old_man", facing: "down", x: 14, y: 20, wanders: true, talk: function () {
-                    Game.process_script({ text: "kol_old_man1" });
+                { type: "old_man", facing: "down", x: 14, y: 20, wanders: true, talk: function (script) {
+                    script.text("kol_old_man1");
                     //TODO: yes/no menu
                 }},
-                { type: "merchant", facing: "down", x: 18, y: 26, wanders: true, talk: function () {
-                    Game.process_script({ text: "kol_merchant1" });
+                { type: "merchant", facing: "down", x: 18, y: 26, wanders: true, talk: function (script) {
+                    script.text("kol_merchant1");
                     //TODO: yes/no menu
                 }},
-                { type: "soldier", facing: "down", x: 13, y: 31, talk: function () {
-                    Game.process_script({ text: "kol_soldier1" });
+                { type: "soldier", facing: "down", x: 13, y: 31, talk: function (script) {
+                    script.text("kol_soldier1");
                 }},
                 { type: "merchant", facing: "left", x: 26, y: 29 },
                 //old man in booth at top left
-                { type: "old_man", facing: "down", x: 13, y: 9, talk: function () {
+                { type: "old_man", facing: "down", x: 13, y: 9, talk: function (script) {
                     //TODO: conditional on armor
-                    Game.process_script({ text: "kol_old_man2" });
+                    script.text("kol_old_man2");
                 }}
             ]
         },
@@ -1598,48 +1598,48 @@ var config = {
                 { id: "garinham_door2", x: 29, y: 17 }
             ],
             npcs: [
-                { type: "old_man", facing: "down", x: 14, y: 17, wanders: true, talk: function () {
-                    Game.process_script({ text: "garinham_old_man1" });
+                { type: "old_man", facing: "down", x: 14, y: 17, wanders: true, talk: function (script) {
+                    script.text("garinham_old_man1");
                 }},
-                { type: "old_man", facing: "right", x: 14, y: 24, talk: function () {
-                    Game.process_script({ text: "garinham_old_man2" });
+                { type: "old_man", facing: "right", x: 14, y: 24, talk: function (script) {
+                    script.text("garinham_old_man2");
                 }},
-                { type: "solider_2", facing: "up", x: 19, y: 24, wanders: true, talk: function () {
-                    Game.process_script({ text: "garinham_soldier1" });
+                { type: "solider_2", facing: "up", x: 19, y: 24, wanders: true, talk: function (script) {
+                    script.text("garinham_soldier1");
                 }},
-                { type: "townsman", facing: "right", x: 30, y: 20, wanders: true, talk: function () {
-                    Game.process_script({ text: "garinham_man1" });
+                { type: "townsman", facing: "right", x: 30, y: 20, wanders: true, talk: function (script) {
+                    script.text("garinham_man1");
                 }},
-                { type: "townswoman", facing: "down", x: 24, y: 20, wanders: true, talk: function () {
-                    Game.process_script({ text: "garinham_woman1" });
+                { type: "townswoman", facing: "down", x: 24, y: 20, wanders: true, talk: function (script) {
+                    script.text("garinham_woman1");
                 }},
                 //merchants
                 { type: "merchant", facing: "left", x: 17, y: 18 },
                 { type: "merchant", facing: "up", x: 22, y: 25 },
                 { type: "merchant", facing: "left", x: 29, y: 22 },
                 //behind the door
-                { type: "townswoman", facing: "down", x: 24, y: 11, wanders: true, talk: function () {
-                    Game.process_script({ text: "garinham_woman2" });
+                { type: "townswoman", facing: "down", x: 24, y: 11, wanders: true, talk: function (script) {
+                    script.text("garinham_woman2");
                 }},
-                { type: "townsman", facing: "down", x: 22, y: 14, wanders: true, talk: function () {
-                    Game.process_script({ text: "garinham_man2" });
+                { type: "townsman", facing: "down", x: 22, y: 14, wanders: true, talk: function (script) {
+                    script.text("garinham_man2");
                 }},
-                { type: "old_man", facing: "down", x: 24, y: 15, wanders: true, talk: function () {
-                    Game.process_script({ text: "garinham_old_man4" });
+                { type: "old_man", facing: "down", x: 24, y: 15, wanders: true, talk: function (script) {
+                    script.text("garinham_old_man4");
                 }},
-                { type: "merchant", facing: "down", x: 21, y: 13, talk: function () {
-                    Game.process_script({ text: "garinham_merchant1" });
+                { type: "merchant", facing: "down", x: 21, y: 13, talk: function (script) {
+                    script.text("garinham_merchant1");
                 }},
                 //behind door #2
-                { type: "soldier", facing: "right", x: 15, y: 12, talk: function () {
-                    Game.process_script({ text: "garinham_soldier2" });
+                { type: "soldier", facing: "right", x: 15, y: 12, talk: function (script) {
+                    script.text("garinham_soldier2");
                 }},
-                { type: "soldier", facing: "left", x: 17, y: 12, talk: function () {
-                    Game.process_script({ text: "garinham_soldier2" });
+                { type: "soldier", facing: "left", x: 17, y: 12, talk: function (script) {
+                    script.text("garinham_soldier2");
                 }},
                 //by stairs down to grave
-                { type: "old_man", facing: "down", x: 26, y: 8, wanders: true, talk: function () {
-                    Game.process_script({ text: "garinham_old_man3" });
+                { type: "old_man", facing: "down", x: 26, y: 8, wanders: true, talk: function (script) {
+                    script.text("garinham_old_man3");
                 }}
             ]
         },
