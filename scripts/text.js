@@ -202,9 +202,16 @@ var text = {
     script: {
         //Common
         innkeeper1: "Welcome to the traveler's Inn. Room and board is <number> GOLD per night. Dost thou want a room?",
+        innkeeper2: "Good night.",
+        innkeeper3: [
+            "Good morning. Thou seems to have spent a good night.",
+            "I shall see thee again."
+        ],
+        innkeeper4: "Okay. Good-bye, traveler.",
         weapons_armor1: "We deal in weapons and armor. Dost thou wish to buy anything today?",
         item_store1: "Welcome. We deal in tools. What can I do for thee?",
         key_sales1: "Magic keys! They will unlock any door. Dost thou wish to purchase one for <number> GOLD?",
+        key_sales2: "Here,take this key. Dost thou wish to purchase more?",
         fairy_water1: "Will thou buy some Fairy Water for <number> GOLD to keep the Dragonlord's minions away?",
         fairy_water2: "I thank thee. Won't thou buy one more bottle?",
         erdrick_proof: "Art thou the descendant of Erdrick? Hast thou any proof?",
@@ -344,32 +351,57 @@ var text = {
             "It is said that many have held Erdrick's armor.",
             "The last to have it was a fellow named Wynn."
         ],
+        cantlin_soldier3: [
+            "'Tis said that the Dragonlord hath claws that can cleave iron and fiery breath that can melt stone.",
+            "Dost thou still wish to go on?"
+        ],
+        cantlin_soldier4: "Thou art truly brave.",
+        cantlin_soldier5: "No one will say thou art afraid.",
         cantlin_merchant1: "Grandfather used to say that his friend, Wynn, had buried something of great value at the foot of a tree behind his shop.",
-    },
-    unknown: {
-        //stairs command is stupid; not worth coding it.
-        stairs_none: "There are no stairs here.",
-        //not sure if/where these are used (yet)
-        cast_blocked1: "The <enemy>'s spell hath been blocked.",
-        cast_blocked2: "<player_name>'s spell is blocked.",
-        enemy_happy: "<enemy> looks happy."
-        //unsorted
-        /*
+        cantlin_merchant2: "Come buy my radishes! They are fresh and cheap. Buy thy radishes today!",
+        cantlin_merchant3: "My Grandfather Wynn once had a shop on the east side of Hauksness.",
+        cantlin_woman1: "What shall I get for thy dinner?",
+        cantlin_woman2: "I know nothing.",
+        cantlin_man1: "I'm Nester. Hey, where am I? No, don't tell me!",
+        cantlin_old_man1: "'Tis said that Erdrick's sword could cleave steel.",
+        cantlin_old_man2: "To learn how proof may be obtained that thy ancestor was the great Erdrick, see a man in this very town.",
+        cantlin_old_man3: [
+            "Let us wish the warrior well!",
+            "May the light be thy strength!",
+            "Thou may go and search.",
+            "From Tantegel Castle travel 70 leagues to the south and 40 to the east."
+        ],
+        //Dragonlord
+        dragonlord1: [
+            "Welcome, <player_name>. I am the Dragonlord--King of Kings.",
+            "I have been waiting long for one such as thee.",
+            "I give thee now a chance to share this world and to rule half of it if thou will now stand beside me.",
+            "What sayest thou? Will the great warrior stand with me?"
+        ],
+        dragonlord2: "Really?",
+        dragonlord3: [
+            "Then half of this world is thine, half of the darkness, and....",
+            "If thou dies I can bring thee back for another attempt without loss of thy deeds to date.",
+            "Thy journey is over. Take now a long, long rest. Hahahaha...."
+        ],
+        dragonlord4: "Thou art a fool!"
+    }
+/*
+UNSORTED
+########
+"The <enemy>'s spell hath been blocked."
+"<player_name>'s spell is blocked."
+"<enemy> looks happy."
 <player_name> cannot yet use the spell.
 Thy body is being squeezed.
 The <item> is squeezing thy body.
 Thou cannot enter here.
 "Thou art strong enough!\nWhy can thou not defeat the Dragonlord?"
 "Good morning.\nThou hast had a good night's sleep I hope."
-"I shall see thee again."
-"Good morning.\nThou seems to have spent a good night."
-"Good night."
-"Okay.\nGood-bye, traveler."
 "All the best to thee."
 "I will see thee later."
 "Thou hast not enough money."
 "I am sorry, but I cannot sell thee anymore."
-"Here,take this key.\nDost thou wish to purchase more?"
 "I am sorry.\nA curse is upon thy body."
 "Thou hast no possessions."
 "Wilt thou sell anything else?"
@@ -396,23 +428,12 @@ Thou cannot enter here.
 "A word of advice."\n"Save thy money for more expensive armor."
 "Listen to what people say.\nIt can be of great help."
 "Hast thou seen Nester?\nI think he may need help."
-"Come buy my radishes! They are fresh and cheap.\nBuy thy radishes today!"
-"To learn how proof may be obtained that thy ancestor was the great Erdrick, \nsee a man in this very town."
-"'Tis said that Erdrick's sword could cleave steel."
-"What shall I get for thy dinner?"
-"I know nothing."
-"I'm Nester.\nHey, where am I? No, don't tell me!"
-"My Grandfather Wynn once had a shop on the east side of Hauksness."
-"'Tis said that the Dragonlord hath claws that can cleave iron and fiery breath \nthat can melt stone."
-"Dost thou still wish to go on?"
 "Go to the town of Cantlin."
 "I have heard that powerful enemies live there."
-"Thou art truly brave."
 "In this temple do the sun and rain meet."
 "Howard had it, but he went to Rimuldar and never returned."
 "To the south, I believe, there is a town called Rimuldar."
 "That is good."
-"No one will say thou art afraid."
 "Go to the south."
 "Where oh where can I find Princess Gwaelin?"
 "Tell King Lorik that the search for his daughter hath failed."
@@ -421,14 +442,11 @@ Thou cannot enter here.
 "Half a year now hath passed since the Princess was kidnapped by the enemy."\n"Never does the King speak of it, but he must be suffering much."
 "<player_name>, please save the Princess."
 "Oh, brave <player_name>."
-"I have been waiting long for one such as thee."
 "I will free thee from thy curse."
 "Now, go."
 "Though thou art as brave as thy ancestor, <player_name>, thou cannot defeat \nthe great Dragonlord with such weapons."
 "Thou shouldst come here again."
 "All true warriors wear a ring."
-"Thou may go and search."
-"From Tantegel Castle travel {07}{00} leagues to the south and {04}{00} to the \neast."
 "Thy bravery must be proven."
 "Thus, I propose a test."
 "There is a Silver Harp that beckons to the creatures of the Dragonlord."
@@ -455,12 +473,6 @@ Gwaelin then whispers:\n"Wait a moment, please.\nI would give a present to <play
 "When thou art finished preparing for thy departure, please see me.\nI shall wait."
 "Will thou take me to the castle?"
 "Take the Treasure Chest."
-"Welcome, <player_name>.\nI am the Dragonlord--King of Kings."
-"I give thee now a chance to share this world and to rule half of it if thou \nwill now stand beside me."
-"What sayest thou?\nWill the great warrior stand with me?"
-"Thou art a fool!"
-"Then half of this world is thine, half of the darkness, and...."
-Thy journey is over.\nTake now a long, long rest.\nHahahaha....
 Heed my voice,\n"<player_name>, for this is Gwaelin.
 To reach the next level thou must raise thy Experience{F0} by <number>.
 My hope is with thee.
@@ -483,7 +495,6 @@ The tablet reads as follows:
 "Thou hast failed and thou art cursed."
 "Leave at once!"
 "...."
-"Really?"
 "I am glad thou hast returned.
 All our hopes are riding on thee."
 "See me again when thy level has increased."
@@ -514,10 +525,14 @@ And thus the tale comes to an end....\nunless the dragons return again.
 "Dost thou wish to continue thy quest?"
 "Rest then for awhile."
 "Go <player_name>!"
-Please push RESET, hold it in, then turn off the POWER.
-If you turn the power off first, the Imperial Scroll of Honor containing your \ndeeds may be lost.
 Unfortunately, NO deeds were recorded on Imperial Scroll number <number>.
 CONGRATULATIONS\nTHOU HAST RESTORED PEACE UNTO THE WORLD\nBUT THERE ARE MANY ROADS YET TO TRAVEL\nMAY THE LIGHT SHINE UPON THEE DRAGON WARRIOR
+
+
+NOT NEEDED
+##########
+"There are no stairs here."
+Please push RESET, hold it in, then turn off the POWER.
+If you turn the power off first, the Imperial Scroll of Honor containing your \ndeeds may be lost.
 */
-    }
 };

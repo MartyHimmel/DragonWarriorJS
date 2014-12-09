@@ -1856,9 +1856,34 @@ var config = {
                 }},
                 //inn
                 { type: "merchant", facing: "down", x: 19, y: 8, talk: function (script) {
+                    script.text("innkeeper1");
                     //TODO: menu
                 }},
-                //locked store area
+                //shops left of inn
+                { type: "soldier", facing: "down", x: 16, y: 11, wanders: true, talk: function (script) {
+                    script.text("cantlin_soldier3");
+                    //TODO: yes/no menu
+                    //if yes: cantlin_soldier4
+                    //if no: cantlin_soldier5
+                }},
+                { type: "townsman", facing: "right", x: 13, y: 12, talk: function (script) {
+                    script.text("item_store1");
+                    //TODO: menu
+                }},
+                { type: "merchant", facing: "right", x: 13, y: 17, talk: function (script) {
+                    script.text("cantlin_merchant2");
+                }},
+                { type: "merchant", facing: "left", x: 18, y: 17, talk: function (script) {
+                    script.text("item_store1");
+                    //TODO: menu
+                }},
+                { type: "townswoman", facing: "right", x: 15, y: 18, wanders: true, talk: function (script) {
+                    script.text("cantlin_woman1");
+                }},
+                { type: "townswoman", facing: "left", x: 21, y: 20, wanders: true, talk: function (script) {
+                    script.text("cantlin_woman2");
+                }},
+                //locked store area on right
                 { type: "old_man", facing: "down", x: 38, y: 11, talk: function (script) {
                     script.text("key_sales1");
                     //TODO: menu
@@ -1869,11 +1894,34 @@ var config = {
                 }},
                 { type: "townswoman", facing: "left", x: 33, y: 18, talk: function (script) {
                     script.text("fairy_water1");
+                    //TODO: menu
                 }},
+                //below locked store area
                 { type: "merchant", facing: "right", x: 35, y: 20, wandering: true, talk: function (script) {
                     script.text("cantlin_merchant1");
                 }},
-                //TODO: not done yet.
+                { type: "townsman", facing: "right", x: 30, y: 20, wandering: true, talk: function (script) {
+                    script.text("cantlin_man1");
+                }},
+                //bottom right shops
+                { type: "old_man", facing: "down", x: 33, y: 27, talk: function (script) {
+                    script.text("cantlin_old_man1");
+                }},
+                { type: "merchant", facing: "left", x: 38, y: 31, talk: function (script) {
+                    script.text("weapons_armor1");
+                    //TODO: menu
+                }},
+                //middle shed area
+                { type: "old_man", facing: "down", x: 26, y: 21, talk: function (script) {
+                    script.text("cantlin_old_man2");
+                }},
+                { type: "old_man", facing: "down", x: 26, y: 33, wandering: true, talk: function (script) {
+                    script.text("cantlin_old_man3");
+                }},
+                //bottom left merchant
+                { type: "merchant", facing: "right", x: 15, y: 31, wandering: true, talk: function (script) {
+                    script.text("cantlin_merchant3");
+                }}
             ]
         },
 
@@ -2600,7 +2648,10 @@ var config = {
                 }}
             ],
             npcs: [
-                { type: "dragonlord", facing: "right", x: 17, y: 25 }
+                { type: "dragonlord", facing: "down", x: 17, y: 25, talk: function (script) {
+                    script.text("dragonlord1");
+                    //TODO: menu
+                }}
             ]
         },
 
