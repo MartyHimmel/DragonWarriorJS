@@ -1,10 +1,9 @@
 DragonWarriorJS
 ===============
 
-The purpose of this project is to learn JavaScript and Canvas by recreating
-the original NES Dragon Warrior. Given that purpose, this is a very rough
-code base with plenty of room for improvements (refactoring, optimizations,
-etc.). All in due time.
+Recreating the original NES Dragon Warrior using JavaScript
+
+##Files
 
 The "index.html" file loads all the scripts, testing elements, and the canvas.
 
@@ -18,14 +17,31 @@ The "scripts" folder contains all the game objects. Here is a brief description
 of each file:
 * audio.js - audio object, plays music and sound
 * combat.js - combat related functions (player attack, enemy attack, run, etc.)
-* enemies.js - enemy object, contains all enemy parameters (stats, attacks, etc.)
-* game.js - game loop, check input, draw assets, outputs test data
-* init.js - global functions and variables
-* items.js - weapon_list, armor_list, shield_list, and item objects - equipment
-    and item data
+* config.js - all configurable values:
+    * sprites
+    * level data
+    * weapons, armor, and items
+    * spell data
+    * enemy data
+    * map data (world, towns, dungeons)
+* game.js - game loop, rendering, script processing
+* init.js - initialize the game
 * map_functions.js - map object, map interaction functions
-* maps.js - maps object, contains data for each map (world, towns, dungeons)
-* npcs.js - npc object, functions for in game NPCs
 * player.js - player object, properties and functions for the player
-* spells.js - spells object, functions for character spells
+* text.js - all in-game displayed text
 
+##Grunt setup (optional)
+
+If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started guide](http://gruntjs.com/getting-started).
+
+Supported options:
+
+```bash
+grunt lint #check source for errors, etc
+grunt      #build a combined/minified "release" version of the project
+```
+
+##References
+* English text dump by [Blueberry Buttface](http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/54647)
+* Enemy stats by [x_loto](http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/69121)
+* Most formulas by [Ryan8bit](http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/61640)
