@@ -1,4 +1,12 @@
-var player = {
+import Game from './game.js';
+import combat from './combat.js';
+import config from './config.js';
+import map from './map.js';
+import script from './script.js';
+import text from './text.js';
+import { addOption } from './utils.js';
+
+export default {
 	name: "",
 
 	// Map collision tiles
@@ -26,7 +34,7 @@ var player = {
 	offset_x: 0,
 	offset_y: 0,
 
-	// Tile number at player's location - see map_functions.js for tile definitions
+	// Tile number at player's location - see map.js for tile definitions
 	current_tile: 0,
 
 	// movement speed - ms per step (1000 / movement = number of tiles moved per second)
@@ -159,16 +167,16 @@ var player = {
 	},
 
 	set_xy: function(x, y) {
-		this.x = x * tile_width;
-		this.y = y * tile_height;
+		this.x = x * config.tile_width;
+		this.y = y * config.tile_height;
 	},
 
 	// Movement and collision
 	// -------------------------------------------------------------------
 
 	move: function (direction) {
-		var x = player.offset_x + (player.x / tile_width),
-			y = player.offset_y + (player.y / tile_height),
+		var x = this.offset_x + (this.x / config.tile_width),
+			y = this.offset_y + (this.y / config.tile_height),
 			prev_steps = this.steps;
 
 		this.set_current_tile();
@@ -179,11 +187,11 @@ var player = {
 				this.character_state = "left";
 				this.draw_player();
 				if (this.will_collide(x-1, y) === false) {
-					if (delta_time - time > this.movement) {
-						if (this.offset_x > 0 && this.x === 12 * tile_width) {
+					if (config.delta_time - config.time > this.movement) {
+						if (this.offset_x > 0 && this.x === 12 * config.tile_width) {
 							this.offset_x -= 1;
 						} else {
-							this.x -= tile_width;
+							this.x -= config.tile_width;
 						}
 						this.steps++;
 					}
@@ -193,11 +201,11 @@ var player = {
 				this.character_state = "right";
 				this.draw_player();
 				if (this.will_collide(x+1, y) === false) {
-					if (delta_time - time > this.movement) {
-						if (this.offset_x < map.boundary_right && this.x === 12 * tile_width) {
+					if (config.delta_time - config.time > this.movement) {
+						if (this.offset_x < map.boundary_right && this.x === 12 * config.tile_width) {
 							this.offset_x += 1;
 						} else {
-							this.x += tile_width;
+							this.x += config.tile_width;
 						}
 						this.steps++;
 					}
@@ -207,11 +215,11 @@ var player = {
 				this.character_state = "up";
 				this.draw_player();
 				if (this.will_collide(x, y-1) === false) {
-					if (delta_time - time > this.movement) {
-						if (this.offset_y > 0 && this.y === 6 * tile_height) {
+					if (config.delta_time - config.time > this.movement) {
+						if (this.offset_y > 0 && this.y === 6 * config.tile_height) {
 							this.offset_y -= 1;
 						} else {
-							this.y -= tile_height;
+							this.y -= config.tile_height;
 						}
 						this.steps++;
 					}
@@ -221,11 +229,11 @@ var player = {
 				this.character_state = "down";
 				this.draw_player();
 				if (this.will_collide(x, y+1) === false) {
-					if (delta_time - time > this.movement) {
-						if (this.offset_y < map.boundary_bottom && this.y === 6 * tile_height) {
+					if (config.delta_time - config.time > this.movement) {
+						if (this.offset_y < map.boundary_bottom && this.y === 6 * config.tile_height) {
 							this.offset_y += 1;
 						} else {
-							this.y += tile_height;
+							this.y += config.tile_height;
 						}
 						this.steps++;
 					}
@@ -234,16 +242,16 @@ var player = {
 		}
 
 		if (this.steps > prev_steps) {
-			if (Game.combat.random_encounter() === true) {
+			if (combat.random_encounter() === true) {
 				Game.change_state("combat");
 			}
-			time = Date.now();
+			config.time = Date.now();
 		}
 	},
 
 	set_current_tile: function() {
-		this.current_tile = map.map_ptr.layout[(player.offset_x + (player.x / tile_width)) +
-				((player.offset_y + (player.y / tile_height)) * map.map_ptr.width)] - 1;
+		this.current_tile = map.map_ptr.layout[(this.offset_x + (this.x / config.tile_width)) +
+				((this.offset_y + (this.y / config.tile_height)) * map.map_ptr.width)] - 1;
 	},
 
 	will_collide: function (x, y) {
@@ -319,7 +327,7 @@ var player = {
 		Object.keys(this.spells).forEach(function (spellId) {
 			spell = self.spells[spellId];
 			if ((Game.state === "combat" && spell.show_in_combat) || (Game.state === "exploration" && spell.show_in_explore)) {
-				add_option(text.spells[spellId], text.spells[spellId], "spell");
+				addOption(text.spells[spellId], text.spells[spellId], "spell");
 			}
 		});
 	},
@@ -328,8 +336,8 @@ var player = {
 	// -------------------------------------------------------------------
 
 	door: function () {
-		var x = player.offset_x + (player.x / tile_width),
-			y = player.offset_y + (player.y / tile_height),
+		var x = this.offset_x + (this.x / config.tile_width),
+			y = this.offset_y + (this.y / config.tile_height),
 			door = null;
 
 		switch (this.character_state) {
@@ -341,14 +349,14 @@ var player = {
 
 		if (door !== null) {
 			//TODO: check for (and use) keys!
-			player.doors_opened.push(door.id);
+			this.doors_opened.push(door.id);
 			map.refresh_map();
 		}
 	},
 
 	talk: function () {
-		var x = player.offset_x + (player.x / tile_width),
-			y = player.offset_y + (player.y / tile_height),
+		var x = this.offset_x + (this.x / config.tile_width),
+			y = this.offset_y + (this.y / config.tile_height),
 			character = null;
 
 		switch (this.character_state) {
@@ -359,7 +367,7 @@ var player = {
 		}
 
 		if (character !== null && typeof character.talk === 'function') {
-			character.talk(Game.script);
+			character.talk(script);
 		}
 	},
 

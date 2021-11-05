@@ -1,4 +1,10 @@
-Game.combat = {
+import Game from './game.js';
+import config from './config.js';
+import map from './map.js';
+import player from './player.js';
+import text from './text.js';
+
+export default {
 	enemy_ptr: null, // current enemy player is fighting
 	enemy_id: "",
 	enemy_max_hp: 0, // randomized at start of battle

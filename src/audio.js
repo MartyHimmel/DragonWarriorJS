@@ -1,6 +1,8 @@
-var audio = {
-	"current_music": "",
-	"sound_effect": "",
+import map from './map.js';
+
+export default {
+	current_music: '',
+	sound_effect: '',
 
 	// used for background music
 	play_map_music: function() {

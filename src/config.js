@@ -1,30 +1,38 @@
-var config = {
+import Game from './game.js';
+import combat from './combat.js';
+import player from './player.js';
+
+export default {
+    tile_width: 32,
+    tile_height: 32,
+    time: Date.now(),
+    delta_time: Date.now(),
     sprites: {
-        characters: "assets/sprites/characters.png",
-        enemies: "assets/sprites/monsters.png",
-        tiles: "assets/sprites/tiles.png"
+        characters: 'assets/sprites/characters.png',
+        enemies: 'assets/sprites/monsters.png',
+        tiles: 'assets/sprites/tiles.png'
     },
     levels: [
         //TODO: needs to take this into account- http://www.gamefaqs.com/nes/563408-dragon-warrior/faqs/18342
         { max_hp: 15,  max_mp: 0,   strength: 4,   agility: 4,   required_exp: 0 },
         { max_hp: 22,  max_mp: 0,   strength: 5,   agility: 4,   required_exp: 7 },
-        { max_hp: 24,  max_mp: 5,   strength: 7,   agility: 6,   required_exp: 23,    spells_learned: ["heal"] },
-        { max_hp: 31,  max_mp: 16,  strength: 7,   agility: 8,   required_exp: 47,    spells_learned: ["hurt"] },
+        { max_hp: 24,  max_mp: 5,   strength: 7,   agility: 6,   required_exp: 23,    spells_learned: ['heal'] },
+        { max_hp: 31,  max_mp: 16,  strength: 7,   agility: 8,   required_exp: 47,    spells_learned: ['hurt'] },
         { max_hp: 35,  max_mp: 20,  strength: 12,  agility: 10,  required_exp: 110 },
         { max_hp: 38,  max_mp: 24,  strength: 16,  agility: 10,  required_exp: 220 },
-        { max_hp: 40,  max_mp: 26,  strength: 18,  agility: 17,  required_exp: 450,   spells_learned: ["sleep"] },
+        { max_hp: 40,  max_mp: 26,  strength: 18,  agility: 17,  required_exp: 450,   spells_learned: ['sleep'] },
         { max_hp: 46,  max_mp: 29,  strength: 22,  agility: 20,  required_exp: 800 },
-        { max_hp: 50,  max_mp: 36,  strength: 30,  agility: 22,  required_exp: 1300,  spells_learned: ["radiant"] },
-        { max_hp: 54,  max_mp: 40,  strength: 35,  agility: 31,  required_exp: 2000,  spells_learned: ["stopspell"] },
+        { max_hp: 50,  max_mp: 36,  strength: 30,  agility: 22,  required_exp: 1300,  spells_learned: ['radiant'] },
+        { max_hp: 54,  max_mp: 40,  strength: 35,  agility: 31,  required_exp: 2000,  spells_learned: ['stopspell'] },
         { max_hp: 62,  max_mp: 50,  strength: 40,  agility: 35,  required_exp: 2900 },
-        { max_hp: 63,  max_mp: 58,  strength: 48,  agility: 40,  required_exp: 4000,  spells_learned: ["outside"] },
-        { max_hp: 70,  max_mp: 64,  strength: 52,  agility: 48,  required_exp: 5500,  spells_learned: ["return"] },
+        { max_hp: 63,  max_mp: 58,  strength: 48,  agility: 40,  required_exp: 4000,  spells_learned: ['outside'] },
+        { max_hp: 70,  max_mp: 64,  strength: 52,  agility: 48,  required_exp: 5500,  spells_learned: ['return'] },
         { max_hp: 78,  max_mp: 70,  strength: 60,  agility: 55,  required_exp: 7500 },
-        { max_hp: 86,  max_mp: 72,  strength: 68,  agility: 64,  required_exp: 10000, spells_learned: ["repel"] },
+        { max_hp: 86,  max_mp: 72,  strength: 68,  agility: 64,  required_exp: 10000, spells_learned: ['repel'] },
         { max_hp: 92,  max_mp: 95,  strength: 72,  agility: 70,  required_exp: 13000 },
-        { max_hp: 100, max_mp: 100, strength: 72,  agility: 78,  required_exp: 16000, spells_learned: ["healmore"] },
+        { max_hp: 100, max_mp: 100, strength: 72,  agility: 78,  required_exp: 16000, spells_learned: ['healmore'] },
         { max_hp: 115, max_mp: 108, strength: 85,  agility: 84,  required_exp: 19000 },
-        { max_hp: 130, max_mp: 115, strength: 87,  agility: 86,  required_exp: 22000, spells_learned: ["hurtmore"] },
+        { max_hp: 130, max_mp: 115, strength: 87,  agility: 86,  required_exp: 22000, spells_learned: ['hurtmore'] },
         { max_hp: 138, max_mp: 128, strength: 92,  agility: 88,  required_exp: 26000 },
         { max_hp: 149, max_mp: 135, strength: 95,  agility: 90,  required_exp: 30000 },
         { max_hp: 158, max_mp: 146, strength: 97,  agility: 90,  required_exp: 34000 },
@@ -94,13 +102,13 @@ var config = {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
-            effect: function() { Game.combat.enemy_current_hp -= Game.random_number(5, 12); }
+            effect: function() { combat.enemy_current_hp -= Game.random_number(5, 12); }
         },
         sleep: {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
-            effect: function() { Game.combat.enemy_status = "sleep"; }
+            effect: function() { combat.enemy_status = 'sleep'; }
         },
         radiant: {
             show_in_combat: false,
@@ -116,7 +124,7 @@ var config = {
             show_in_combat: true,
             show_in_explore: false,
             cost: 2,
-            effect: function() { Game.combat.enemy_status = "stopspell"; }
+            effect: function() { combat.enemy_status = 'stopspell'; }
         },
         outside: {
             show_in_combat: false,
@@ -124,7 +132,7 @@ var config = {
             cost: 6,
             effect: function() { }
         },
-        "return": {
+        'return': {
             show_in_combat: false,
             show_in_explore: true,
             cost: 8,
@@ -146,7 +154,7 @@ var config = {
             show_in_combat: true,
             show_in_explore: false,
             cost: 5,
-            effect: function() { Game.combat.enemy_current_hp -= Game.random_number(58, 65); }
+            effect: function() { combat.enemy_current_hp -= Game.random_number(58, 65); }
         }
     },
     enemies: [

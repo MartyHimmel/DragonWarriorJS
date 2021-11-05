@@ -26,7 +26,7 @@ of each file:
     * map data (world, towns, dungeons)
 * game.js - game loop, rendering, script processing
 * init.js - initialize the game
-* map_functions.js - map object, map interaction functions
+* map.js - map object, map interaction functions
 * player.js - player object, properties and functions for the player
 * text.js - all in-game displayed text
 

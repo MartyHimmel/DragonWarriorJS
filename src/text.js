@@ -1,4 +1,4 @@
-var text = {
+export default {
     game_title: "Dragon Warrior",
     name_prompt: "What is thy name?",
     default_player_name: "Yuji Horii",

@@ -1,4 +1,7 @@
-Game.script = {
+import Game from './game.js';
+import text from './text.js';
+
+export default {
     text: function (string) {
         if (typeof string !== 'undefined') {
             if (typeof text.script[string] !== 'undefined') {
