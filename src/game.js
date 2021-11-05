@@ -14,13 +14,14 @@ https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.drawIm
 */
 
 const Game = {
-	state: "",
-	possible_states: ["exploration", "combat"],
+	state: '',
+	possible_states: ['exploration', 'combat'],
 	canvas: null,
 	context: null,
 	img_characters: null,
 	img_enemies: null,
 	img_tiles: null,
+	img_battle: null,
 
 	begin: function () {
 		var self = this,
@@ -37,21 +38,21 @@ const Game = {
 			map.check_location();
 			player.load_player();
 
-			if (self.state === "exploration") {
+			if (self.state === 'exploration') {
 				if (38 in keysDown) { // Player holding up
-					player.move("up");
+					player.move('up');
 				} else if (40 in keysDown) { // Player holding down
-					player.move("down");
+					player.move('down');
 				} else if (37 in keysDown) { // Player holding left
-					player.move("left");
+					player.move('left');
 				} else if (39 in keysDown) { // Player holding right
-					player.move("right");
+					player.move('right');
 				} else {
 					player.draw_player();
 				}
 			}
 
-			if (self.state === "combat") {
+			if (self.state === 'combat') {
 				combat.draw_screen();
 				self.draw_enemy(combat.enemy_ptr);
 				if (combat.initiative_round === true) {
@@ -65,14 +66,14 @@ const Game = {
 
 				if (88 in keysDown) { // Player presses 'x'
 					combat.enemy_ptr = null;
-					self.change_state("exploration");
+					self.change_state('exploration');
 				}
 			}
 		}
 
 		function main() {
 			requestAnimationFrame(main);
-			if (self.state === "exploration") {
+			if (self.state === 'exploration') {
 				draw();
 			}
 			update();
@@ -86,6 +87,8 @@ const Game = {
 			self.img_enemies.src = config.sprites.enemies;
 			self.img_tiles = new Image();
 			self.img_tiles.src = config.sprites.tiles;
+			self.img_battle = new Image();
+			self.img_battle.src = config.sprites.battle;
 		}
 
 		// Main game window
@@ -104,13 +107,17 @@ const Game = {
 
 		// Start the game!
 		player.name = prompt(text.name_prompt);
-		if (player.name === "") { player.name = text.default_player_name; }
+		if (player.name === '') { player.name = text.default_player_name; }
 		this.change_state("exploration");
 		map.load_map("World");
 		player.load_player();
 		player.set_current_tile();
 		this.display_text(text.welcome);
 		main();
+	},
+
+	drawEncounterBox() {
+
 	},
 
 	changeCommandSet() {
@@ -217,9 +224,7 @@ const Game = {
 	},
 
 	draw_npcs: function() {
-		var self = this,
-			i,
-			number_of_npcs;
+		let self = this;
 
 		//TODO: refactor this
 		function draw_npc (character_type, direction, x, y) {
@@ -326,12 +331,14 @@ const Game = {
 		}
 
 		if (typeof map.map_ptr.npcs !== 'undefined') {
-			number_of_npcs = map.map_ptr.npcs.length;
+			let number_of_npcs = map.map_ptr.npcs.length;
+
 			//TODO: replace with a visible flag, which checks player.rescued_princess.
 			if (map.current_map === "Tantegel2F" && player.rescued_princess === false) {
 				number_of_npcs--;
 			}
-			for (i=0; i<number_of_npcs; i++) {
+
+			for (let i = 0; i < number_of_npcs; i++) {
 				draw_npc(
 					map.map_ptr.npcs[i].type,
 					map.map_ptr.npcs[i].facing,

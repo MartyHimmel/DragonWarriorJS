@@ -104,9 +104,18 @@ export default {
 	// -------------------------------------------------------------------
 
 	draw_screen: function() {
-		Game.clear();
-		Game.context.fillStyle = "#FFFFFF";
-		Game.context.fillRect(0, 0, Game.canvas.width, Game.canvas.height);
+		if (config.maps[map.current_map].type === 'dungeon') {
+			Game.clear();
+			Game.context.fillStyle = "#FFFFFF";
+			Game.context.fillRect(0, 0, Game.canvas.width, Game.canvas.height);
+			return;
+		}
+
+		let screenX = (Game.canvas.width / 2) - (Game.img_battle.width / 2);
+		let screenY = (Game.canvas.height / 2) - (Game.img_battle.height / 2);
+
+		Game.context.drawImage(Game.img_battle, 0, 0, Game.img_battle.width, Game.img_battle.width,
+			screenX, screenY, Game.img_battle.width, Game.img_battle.width);
 	},
 
 	// Combat functions

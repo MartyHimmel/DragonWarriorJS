@@ -7,13 +7,13 @@ import text from './text.js';
 import { addOption } from './utils.js';
 
 export default {
-	name: "",
+	name: '',
 
 	// Map collision tiles
 	collide_tiles: [1, 2, 5, 9, 10, 11, 17, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
 
 	// Last direction the character was facing
-	character_state: "",
+	character_state: '',
 
 	// Flags
 	rescued_princess: false,
@@ -45,9 +45,9 @@ export default {
 	radiant_step_counter: 0,
 
 	// Equipment
-	weapon: "none",
-	armor: "none",
-	shield: "none",
+	weapon: 'none',
+	armor: 'none',
+	shield: 'none',
 	inventory: [],
 	spells: {},
 
@@ -62,7 +62,7 @@ export default {
 	attack_power: 0,
 	defense_power: 0,
 
-	status: "",
+	status: '',
 	spell_blocked: false,
 
 	experience: 0,
@@ -72,11 +72,8 @@ export default {
 	// -------------------------------------------------------------------
 
 	animate_player: function(frame1, frame2) {
-		if ((Date.now() % 1000) < 500) {
-			Game.draw_character(frame1, this.x, this.y);
-		} else {
-			Game.draw_character(frame2, this.x, this.y);
-		}
+		let drawFrame = ((Date.now() % 1000) < 500) ? frame1 : frame2;
+		Game.draw_character(drawFrame, this.x, this.y);
 	},
 
 	draw_player: function () {
@@ -182,11 +179,12 @@ export default {
 		this.set_current_tile();
 		map.set_zone();
 
+		this.character_state = direction;
+		this.draw_player();
+
 		switch (direction) {
-			case "left":
-				this.character_state = "left";
-				this.draw_player();
-				if (this.will_collide(x-1, y) === false) {
+			case 'left':
+				if (this.will_collide(x - 1, y) === false) {
 					if (config.delta_time - config.time > this.movement) {
 						if (this.offset_x > 0 && this.x === 12 * config.tile_width) {
 							this.offset_x -= 1;
@@ -197,10 +195,8 @@ export default {
 					}
 				}
 				break;
-			case "right":
-				this.character_state = "right";
-				this.draw_player();
-				if (this.will_collide(x+1, y) === false) {
+			case 'right':
+				if (this.will_collide(x + 1, y) === false) {
 					if (config.delta_time - config.time > this.movement) {
 						if (this.offset_x < map.boundary_right && this.x === 12 * config.tile_width) {
 							this.offset_x += 1;
@@ -211,10 +207,8 @@ export default {
 					}
 				}
 				break;
-			case "up":
-				this.character_state = "up";
-				this.draw_player();
-				if (this.will_collide(x, y-1) === false) {
+			case 'up':
+				if (this.will_collide(x, y - 1) === false) {
 					if (config.delta_time - config.time > this.movement) {
 						if (this.offset_y > 0 && this.y === 6 * config.tile_height) {
 							this.offset_y -= 1;
@@ -225,10 +219,8 @@ export default {
 					}
 				}
 				break;
-			case "down":
-				this.character_state = "down";
-				this.draw_player();
-				if (this.will_collide(x, y+1) === false) {
+			case 'down':
+				if (this.will_collide(x, y + 1) === false) {
 					if (config.delta_time - config.time > this.movement) {
 						if (this.offset_y < map.boundary_bottom && this.y === 6 * config.tile_height) {
 							this.offset_y += 1;
@@ -243,7 +235,8 @@ export default {
 
 		if (this.steps > prev_steps) {
 			if (combat.random_encounter() === true) {
-				Game.change_state("combat");
+				Game.change_state('combat');
+				Game.drawEncounterBox();
 			}
 			config.time = Date.now();
 		}

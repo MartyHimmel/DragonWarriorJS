@@ -8,6 +8,7 @@ export default {
     time: Date.now(),
     delta_time: Date.now(),
     sprites: {
+        battle: 'assets/sprites/battle.png',
         characters: 'assets/sprites/characters.png',
         enemies: 'assets/sprites/monsters.png',
         tiles: 'assets/sprites/tiles.png'
