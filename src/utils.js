@@ -1,4 +1,5 @@
 import Game from './game.js';
+import GameState from './state.js';
 import combat from './combat.js';
 import config from './config.js';
 import map from './map.js';
@@ -25,42 +26,42 @@ function addText(text) {
 
 // display stats, equipment, commands, and other options (side bars)
 function displayOutput() {
-    document.querySelector('#character_name').innerHTML = player.name;
-    document.querySelector('#level').innerHTML = player.level;
-    document.querySelector('#max_hp').innerHTML = player.max_hp;
-    document.querySelector('#current_hp').innerHTML = player.current_hp;
-    document.querySelector('#max_mp').innerHTML = player.max_mp;
-    document.querySelector('#current_mp').innerHTML = player.current_mp;
-    document.querySelector('#strength').innerHTML = player.strength;
-    document.querySelector('#agility').innerHTML = player.agility;
-    document.querySelector('#experience').innerHTML = player.experience;
-    document.querySelector('#gold').innerHTML = player.gold;
-    document.querySelector('#attack_power').innerHTML = player.attack_power;
-    document.querySelector('#defense_power').innerHTML = player.defense_power;
-    document.querySelector('#weapon').innerHTML = text.weapons[player.weapon];
-    document.querySelector('#armor').innerHTML = text.armors[player.armor];
-    document.querySelector('#shield').innerHTML = text.shields[player.shield];
+    document.querySelector('#character_name').innerHTML = GameState.player.name;
+    document.querySelector('#level').innerHTML = GameState.player.level;
+    document.querySelector('#max_hp').innerHTML = GameState.player.maxHp;
+    document.querySelector('#current_hp').innerHTML = GameState.player.currentHp;
+    document.querySelector('#max_mp').innerHTML = GameState.player.maxMp;
+    document.querySelector('#current_mp').innerHTML = GameState.player.currentMp;
+    document.querySelector('#strength').innerHTML = GameState.player.strength;
+    document.querySelector('#agility').innerHTML = GameState.player.agility;
+    document.querySelector('#experience').innerHTML = GameState.player.experience;
+    document.querySelector('#gold').innerHTML = GameState.player.gold;
+    document.querySelector('#attack_power').innerHTML = GameState.player.attackPower;
+    document.querySelector('#defense_power').innerHTML = GameState.player.defensePower;
+    document.querySelector('#weapon').innerHTML = text.weapons[GameState.player.weapon];
+    document.querySelector('#armor').innerHTML = text.armors[GameState.player.armor];
+    document.querySelector('#shield').innerHTML = text.shields[GameState.player.shield];
 
-    document.querySelector('#output').innerHTML = "player.x / 32 = " + player.x / config.tile_width + "<br>" +
-        "player.y / 32 = " + player.y / config.tile_height + "<br>" +
-        "player.offset_x = " + player.offset_x + "<br>" +
-        "player.offset_y = " + player.offset_y + "<br>" +
-        "steps = " + player.steps + "<br>" +
-        "current tile = " + player.current_tile + "<br>" +
-        "combat random = " + combat.random_num + "<br>" +
-        "current zone = " + map.current_zone + "<br>" +
-        "player turn = " + combat.player_turn + "<br>";
+    document.querySelector('#output').innerHTML = `player.x / 32 = ${player.x / config.tileWidth}<br>
+        player.y / 32 = ${player.y / config.tileHeight}<br>
+        player.offset_x = ${player.offset_x}<br>
+        player.offset_y = ${player.offset_y}<br>
+        steps = ${player.steps}<br>
+        current tile = ${player.current_tile}<br>
+        combat random = ${combat.random_num}<br>
+        current zone = ${map.current_zone}<br>
+        player turn = ${combat.player_turn}<br>`;
 
-    var npc_count = 0;
+    let npcCount = 0;
     if (typeof map.map_ptr.npcs !== 'undefined') {
-        npc_count = map.map_ptr.npcs.length;
+        npcCount = map.map_ptr.npcs.length;
     }
 
     document.querySelector('#output2').innerHTML = "Current Map = " + map.current_map + "<br>" +
         "Game State = " + Game.state + "<br>" +
-        "Number of NPCS = " + npc_count + "<br>" +
+        "Number of NPCS = " + npcCount + "<br>" +
         "<hr>" +
-        "Rescued Princess? = " + player.rescued_princess + "<br>" +
+        "Rescued Princess? = " + GameState.rescuedPrincess + "<br>" +
         "<hr>";
 
     // Commands
@@ -81,8 +82,18 @@ function displayOutput() {
     }
 }
 
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function deltaTime() {
+    return config.lastUpdateTime - config.lastMoveTime;
+}
+
 export {
     addOption,
     addText,
     displayOutput,
+    randomNumber,
+    deltaTime,
 };

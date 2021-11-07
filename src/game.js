@@ -1,3 +1,4 @@
+import GameState from './state.js';
 import config from './config.js';
 import combat from './combat.js';
 import map from './map.js';
@@ -14,38 +15,38 @@ https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.drawIm
 */
 
 const Game = {
-	state: '',
-	possible_states: ['exploration', 'combat'],
+	state: 'title',
+	possible_states: ['title', 'menu', 'exploration', 'combat'],
 	canvas: null,
 	context: null,
 	img_characters: null,
 	img_enemies: null,
 	img_tiles: null,
 	img_battle: null,
+	keysDown: {},
 
 	begin: function () {
-		var self = this,
-			keysDown = {};
+		var self = this;
 
 		function draw () {
 			self.clear();
-			map.draw_viewport(map.current_map, player.offset_x, player.offset_y);
+			map.drawViewport(map.current_map, player.offset_x, player.offset_y);
 			self.draw_npcs();
 		}
 
 		function update () {
-			config.delta_time = Date.now();
+			config.lastUpdateTime = Date.now();
 			map.check_location();
 			player.load_player();
 
 			if (self.state === 'exploration') {
-				if (38 in keysDown) { // Player holding up
+				if (38 in self.keysDown) { // Player holding up
 					player.move('up');
-				} else if (40 in keysDown) { // Player holding down
+				} else if (40 in self.keysDown) { // Player holding down
 					player.move('down');
-				} else if (37 in keysDown) { // Player holding left
+				} else if (37 in self.keysDown) { // Player holding left
 					player.move('left');
-				} else if (39 in keysDown) { // Player holding right
+				} else if (39 in self.keysDown) { // Player holding right
 					player.move('right');
 				} else {
 					player.draw_player();
@@ -64,7 +65,8 @@ const Game = {
 					}, 1000);
 				}
 
-				if (88 in keysDown) { // Player presses 'x'
+				// DEBUG shortcut
+				if (88 in self.keysDown) { // Player presses 'x'
 					combat.enemy_ptr = null;
 					self.change_state('exploration');
 				}
@@ -89,27 +91,29 @@ const Game = {
 			self.img_tiles.src = config.sprites.tiles;
 			self.img_battle = new Image();
 			self.img_battle.src = config.sprites.battle;
+			self.img_title = new Image();
+			self.img_title.src = config.sprites.title;
 		}
 
 		// Main game window
 		document.title = text.game_title;
-		this.canvas = document.getElementById("game");
-		this.context = this.canvas.getContext("2d");
+		this.canvas = document.getElementById('game');
+		this.context = this.canvas.getContext('2d');
 		load_images();
 
 		// Keyboard inputs
-		window.addEventListener("keydown", function(e) {
-			keysDown[e.keyCode] = true;
+		window.addEventListener('keydown', function(e) {
+			self.keysDown[e.keyCode] = true;
 		});
-		window.addEventListener("keyup", function(e) {
-			delete keysDown[e.keyCode];
+		window.addEventListener('keyup', function(e) {
+			delete self.keysDown[e.keyCode];
 		});
 
 		// Start the game!
-		player.name = prompt(text.name_prompt);
-		if (player.name === '') { player.name = text.default_player_name; }
-		this.change_state("exploration");
-		map.load_map("World");
+		GameState.player.name = prompt(text.name_prompt);
+		if (GameState.player.name === '') { GameState.player.name = text.default_player_name; }
+		this.change_state('exploration');
+		map.load_map('World');
 		player.load_player();
 		player.set_current_tile();
 		this.display_text(text.welcome);
@@ -145,20 +149,18 @@ const Game = {
 	},
 
 	change_state: function (input, delay) {
-		var self = this;
-
-		function set_state () {
-			self.state = input;
-			self.changeCommandSet();
-		}
-
 		if (this.possible_states.indexOf(input) > -1) {
 			if (typeof delay !== 'undefined') {
-				setTimeout(set_state, delay);
+				setTimeout(() => this.set_state(input), delay);
 			} else {
-				set_state();
+				this.set_state(input);
 			}
 		}
+	},
+
+	set_state (input) {
+		this.state = input;
+		this.changeCommandSet();
 	},
 
 	clear: function () {
@@ -196,16 +198,12 @@ const Game = {
 		addText(format(format_string, params));
 	},
 
-	random_number: function (min, max) {
-		return Math.floor(Math.random() * (max - min + 1)) + min;
-	},
-
 	// Animation and rendering
 	// -------------------------------------------------------------------
 
 	animate_npc: function(frame1, frame2, x, y) {
-		x = ((x-player.offset_x) * config.tile_width);
-		y = ((y-player.offset_y) * config.tile_height);
+		x = ((x-player.offset_x) * config.tileWidth);
+		y = ((y-player.offset_y) * config.tileHeight);
 
 		if ((Date.now() % 1000) < 500) {
 			this.draw_character(frame1, x, y);
@@ -216,11 +214,11 @@ const Game = {
 
 	// call frame from characters.png - starts with frame 0
 	draw_character: function (frame_number, pos_x, pos_y) {
-		var image_x = (frame_number % 16) * config.tile_width,
-		    image_y = Math.floor(frame_number / 16) * config.tile_height;
+		var image_x = (frame_number % 16) * config.tileWidth,
+		    image_y = Math.floor(frame_number / 16) * config.tileHeight;
 
-		this.context.drawImage(this.img_characters, image_x, image_y, config.tile_width, config.tile_height,
-			pos_x, pos_y, config.tile_width, config.tile_height);
+		this.context.drawImage(this.img_characters, image_x, image_y, config.tileWidth, config.tileHeight,
+			pos_x, pos_y, config.tileWidth, config.tileHeight);
 	},
 
 	draw_npcs: function() {
@@ -333,8 +331,8 @@ const Game = {
 		if (typeof map.map_ptr.npcs !== 'undefined') {
 			let number_of_npcs = map.map_ptr.npcs.length;
 
-			//TODO: replace with a visible flag, which checks player.rescued_princess.
-			if (map.current_map === "Tantegel2F" && player.rescued_princess === false) {
+			//TODO: replace with a visible flag, which checks GameState.rescuedPrincess.
+			if (map.current_map === "Tantegel2F" && !GameState.rescuedPrincess) {
 				number_of_npcs--;
 			}
 
@@ -364,11 +362,11 @@ const Game = {
 	// draw single tile frame from sprite sheet
 	draw_tile: function (x, y, frame_number) {
 		// find horizontal and vertical position of tile to be drawn
-		var pos_x = (frame_number % 12) * config.tile_width,
-		    pos_y = Math.floor(frame_number / 12) * config.tile_height;
+		var pos_x = (frame_number % 12) * config.tileWidth,
+		    pos_y = Math.floor(frame_number / 12) * config.tileHeight;
 
-		this.context.drawImage(this.img_tiles, pos_x, pos_y, config.tile_width, config.tile_height,
-			x, y, config.tile_width, config.tile_height);
+		this.context.drawImage(this.img_tiles, pos_x, pos_y, config.tileWidth, config.tileHeight,
+			x, y, config.tileWidth, config.tileHeight);
 	}
 };
 

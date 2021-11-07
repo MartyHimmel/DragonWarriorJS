@@ -1,4 +1,6 @@
+import Data from './data.js';
 import Game from './game.js';
+import GameState from './state.js';
 import config from './config.js';
 import player from './player.js';
 
@@ -8,8 +10,6 @@ References
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
 */
 export default {
-	vWidth: 25,
-	vHeight: 15,
 	x: 0,
 	y: 0,
 	current_map: '',
@@ -50,16 +50,16 @@ export default {
 		if (map_name === 'World') {
 			//reset door flags when leaving towns.
 			//TODO: don't reset all flags; some stay unlocked (e.g. throne room).
-			player.doors_opened = [];
+			GameState.doorsOpened = [];
 		}
 
 		player.steps = 0;
 		player.set_position(map_name);
 
 		this.current_map = map_name;
-		this.map_ptr = config.maps[this.current_map];
-		this.boundary_right = this.map_ptr.width - this.vWidth;
-		this.boundary_bottom = this.map_ptr.height - this.vHeight;
+		this.map_ptr = Data.maps[this.current_map];
+		this.boundary_right = this.map_ptr.width - config.screenTilesWide;
+		this.boundary_bottom = this.map_ptr.height - config.screenTileHigh;
 		this.background_music = this.map_ptr.music;
 
 		//audio.stop_music();
@@ -73,7 +73,7 @@ export default {
 
 		if (typeof this.map_ptr.doors !== 'undefined') {
 			this.map_ptr.doors.forEach(function (element, index, array) {
-				if (player.doors_opened.indexOf(element.id) > -1) {
+				if (GameState.doorsOpened.indexOf(element.id) > -1) {
 					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 4;
 				} else {
 					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 6;
@@ -83,7 +83,7 @@ export default {
 
 		if (typeof this.map_ptr.chests !== 'undefined') {
 			this.map_ptr.chests.forEach(function (element, index, array) {
-				if (player.chests_taken.indexOf(element.id) > -1) {
+				if (GameState.chestsOpened.indexOf(element.id) > -1) {
 					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 4;
 				} else {
 					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 5;
@@ -93,11 +93,9 @@ export default {
 	},
 
 	get_npc: function (x, y) {
-		var number_of_npcs, i;
-
 		if (typeof this.map_ptr.npcs !== 'undefined') {
-			number_of_npcs = this.map_ptr.npcs.length;
-			for (i=0; i<number_of_npcs; i++) {
+			let number_of_npcs = this.map_ptr.npcs.length;
+			for (let i = 0; i < number_of_npcs; i++) {
 				//TODO: consider visibility.
 				if (this.map_ptr.npcs[i].x === x && this.map_ptr.npcs[i].y === y) {
 					return this.map_ptr.npcs[i];
@@ -124,20 +122,18 @@ export default {
 		return null;
 	},
 
-	draw_viewport: function (map_name, offset_x, offset_y) {
-		var i,
-			vWidth = 25,
-			vHeight = 15;
+	drawViewport: function (map_name, offset_x, offset_y) {
+		const screenTileCount = config.screenTilesWide * config.screenTileHigh;
 
-		for (i=0; i<(vWidth * vHeight); i++) {
+		for (let i = 0; i < screenTileCount; i++) {
 			Game.draw_tile(this.x, this.y, this.map_ptr.layout[offset_x + (offset_y * this.map_ptr.width)] - 1);
-			this.x += config.tile_width;
+			this.x += config.tileWidth;
 			offset_x++;
-			if (this.x === vWidth * config.tile_width) {
+			if (this.x === config.screenTilesWide * config.tileWidth) {
 				this.x = 0;
-				this.y += config.tile_height;
+				this.y += config.tileHeight;
 				offset_y++;
-				offset_x -= vWidth;
+				offset_x -= config.screenTilesWide;
 			}
 		}
 
@@ -147,8 +143,8 @@ export default {
 	set_zone: function () {
 		if (this.current_map === 'World') {
 			// 16 tile square, break world into 8 x 8 grid
-			var x_coord = Math.floor(((player.x / config.tile_width) + (player.offset_x)) / 16),
-				y_coord = Math.floor(((player.y / config.tile_width) + (player.offset_y)) / 16),
+			var x_coord = Math.floor(((player.x / config.tileWidth) + (player.offset_x)) / 16),
+				y_coord = Math.floor(((player.y / config.tileWidth) + (player.offset_y)) / 16),
 			    zone_map = [
 					3,	3,	2,	2,	3,	5,	4,	5,
 					3,	2,	1,	2,	3,	3,	4,	5,
@@ -167,7 +163,7 @@ export default {
 	},
 
 	check_location: function () {
-		let map = config.maps[this.current_map];
+		let map = Data.maps[this.current_map];
 
 		if (typeof map.map_links !== 'undefined' && map.map_links instanceof Array) {
 			for (let i = 0; i < map.map_links.length; i++) {
@@ -176,8 +172,8 @@ export default {
 				if (player.steps === 0 ||
 					(typeof link.offset_x !== 'undefined' && player.offset_x !== link.offset_x) ||
 					(typeof link.offset_y !== 'undefined' && player.offset_y !== link.offset_y) ||
-					(typeof link.x !== 'undefined' && player.x !== (link.x * config.tile_width)) ||
-					(typeof link.y !== 'undefined' && player.y !== (link.y * config.tile_height)))
+					(typeof link.x !== 'undefined' && player.x !== (link.x * config.tileWidth)) ||
+					(typeof link.y !== 'undefined' && player.y !== (link.y * config.tileHeight)))
 				{
 					continue;
 				}

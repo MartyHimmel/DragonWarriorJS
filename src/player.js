@@ -1,30 +1,19 @@
+import Data from './data.js';
 import Game from './game.js';
+import GameState from './state.js';
 import combat from './combat.js';
 import config from './config.js';
 import map from './map.js';
 import script from './script.js';
 import text from './text.js';
-import { addOption } from './utils.js';
+import { addOption, deltaTime } from './utils.js';
 
 export default {
-	name: '',
-
 	// Map collision tiles
 	collide_tiles: [1, 2, 5, 9, 10, 11, 17, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
 
 	// Last direction the character was facing
-	character_state: '',
-
-	// Flags
-	rescued_princess: false,
-	carrying_princess: false,
-	created_rainbow_bridge: false,
-	green_dragon_is_alive: true,
-	golem_is_alive: true,
-	has_erdricks_armor: false,
-	has_erdricks_token: false,
-	doors_opened: [],
-	chests_taken: [],
+	facingDirection: '',
 
 	// Screen position
 	x: 0,
@@ -44,29 +33,8 @@ export default {
 	radiant_in_effect: false,
 	radiant_step_counter: 0,
 
-	// Equipment
-	weapon: 'none',
-	armor: 'none',
-	shield: 'none',
-	inventory: [],
-	spells: {},
-
-	// Stats
-	level: 1,
-	max_hp: 0,
-	current_hp: 15,
-	max_mp: 0,
-	current_mp: 0,
-	strength: 0,
-	agility: 0,
-	attack_power: 0,
-	defense_power: 0,
-
 	status: '',
 	spell_blocked: false,
-
-	experience: 0,
-	gold: 0,
 
 	// Draw player and animations
 	// -------------------------------------------------------------------
@@ -77,41 +45,41 @@ export default {
 	},
 
 	draw_player: function () {
-		switch (this.character_state) {
+		switch (this.facingDirection) {
 			case "left":
-				if (this.carrying_princess === true) {
+				if (GameState.carryingPrincess) {
 					this.animate_player(66, 67);
-				} else if (this.weapon === "none" && this.shield === "none") {
+				} else if (GameState.player.weapon === "none" && GameState.player.shield === "none") {
 					this.animate_player(2, 3);
-				} else if (this.weapon !== "none" && this.shield === "none") {
+				} else if (GameState.player.weapon !== "none" && GameState.player.shield === "none") {
 					this.animate_player(18, 19);
-				} else if (this.weapon === "none" && this.shield !== "none") {
+				} else if (GameState.player.weapon === "none" && GameState.player.shield !== "none") {
 					this.animate_player(34, 35);
 				} else {
 					this.animate_player(50, 51);
 				}
 				break;
 			case "right":
-				if (this.carrying_princess === true) {
+				if (GameState.carryingPrincess) {
 					this.animate_player(70, 71);
-				} else if (this.weapon === "none" && this.shield === "none") {
+				} else if (GameState.player.weapon === "none" && GameState.player.shield === "none") {
 					this.animate_player(6, 7);
-				} else if (this.weapon !== "none" && this.shield === "none") {
+				} else if (GameState.player.weapon !== "none" && GameState.player.shield === "none") {
 					this.animate_player(22, 23);
-				} else if (this.weapon === "none" && this.shield !== "none") {
+				} else if (GameState.player.weapon === "none" && GameState.player.shield !== "none") {
 					this.animate_player(38, 39);
 				} else {
 					this.animate_player(54, 55);
 				}
 				break;
 			case "up":
-				if (this.carrying_princess === true) {
+				if (GameState.carryingPrincess) {
 					this.animate_player(68, 69);
-				} else if (this.weapon === "none" && this.shield === "none") {
+				} else if (GameState.player.weapon === "none" && GameState.player.shield === "none") {
 					this.animate_player(4, 5);
-				} else if (this.weapon !== "none" && this.shield === "none") {
+				} else if (GameState.player.weapon !== "none" && GameState.player.shield === "none") {
 					this.animate_player(20, 21);
-				} else if (this.weapon === "none" && this.shield !== "none") {
+				} else if (GameState.player.weapon === "none" && GameState.player.shield !== "none") {
 					this.animate_player(36, 37);
 				} else {
 					this.animate_player(52, 53);
@@ -120,13 +88,13 @@ export default {
 			case "down":
 			/* falls through */
 			default:
-				if (this.carrying_princess === true) {
+				if (GameState.carryingPrincess) {
 					this.animate_player(64, 65);
-				} else if (this.weapon === "none" && this.shield === "none") {
+				} else if (GameState.player.weapon === "none" && GameState.player.shield === "none") {
 					this.animate_player(0, 1);
-				} else if (this.weapon !== "none" && this.shield === "none") {
+				} else if (GameState.player.weapon !== "none" && GameState.player.shield === "none") {
 					this.animate_player(16, 17);
-				} else if (this.weapon === "none" && this.shield !== "none") {
+				} else if (GameState.player.weapon === "none" && GameState.player.shield !== "none") {
 					this.animate_player(32, 33);
 				} else {
 					this.animate_player(48, 49);
@@ -139,7 +107,7 @@ export default {
 	// -------------------------------------------------------------------
 
 	set_position: function(map_name) {
-		var map = config.maps[map_name];
+		var map = Data.maps[map_name];
 
 		this.steps = 0;
 
@@ -164,32 +132,32 @@ export default {
 	},
 
 	set_xy: function(x, y) {
-		this.x = x * config.tile_width;
-		this.y = y * config.tile_height;
+		this.x = x * config.tileWidth;
+		this.y = y * config.tileHeight;
 	},
 
 	// Movement and collision
 	// -------------------------------------------------------------------
 
 	move: function (direction) {
-		var x = this.offset_x + (this.x / config.tile_width),
-			y = this.offset_y + (this.y / config.tile_height),
-			prev_steps = this.steps;
+		let x = this.offset_x + (this.x / config.tileWidth);
+		let y = this.offset_y + (this.y / config.tileHeight);
+		let prev_steps = this.steps;
 
 		this.set_current_tile();
 		map.set_zone();
 
-		this.character_state = direction;
+		this.facingDirection = direction;
 		this.draw_player();
 
 		switch (direction) {
 			case 'left':
 				if (this.will_collide(x - 1, y) === false) {
-					if (config.delta_time - config.time > this.movement) {
-						if (this.offset_x > 0 && this.x === 12 * config.tile_width) {
+					if (deltaTime() > this.movement) {
+						if (this.offset_x > 0 && this.x === 12 * config.tileWidth) {
 							this.offset_x -= 1;
 						} else {
-							this.x -= config.tile_width;
+							this.x -= config.tileWidth;
 						}
 						this.steps++;
 					}
@@ -197,11 +165,11 @@ export default {
 				break;
 			case 'right':
 				if (this.will_collide(x + 1, y) === false) {
-					if (config.delta_time - config.time > this.movement) {
-						if (this.offset_x < map.boundary_right && this.x === 12 * config.tile_width) {
+					if (deltaTime() > this.movement) {
+						if (this.offset_x < map.boundary_right && this.x === 12 * config.tileWidth) {
 							this.offset_x += 1;
 						} else {
-							this.x += config.tile_width;
+							this.x += config.tileWidth;
 						}
 						this.steps++;
 					}
@@ -209,11 +177,11 @@ export default {
 				break;
 			case 'up':
 				if (this.will_collide(x, y - 1) === false) {
-					if (config.delta_time - config.time > this.movement) {
-						if (this.offset_y > 0 && this.y === 6 * config.tile_height) {
+					if (deltaTime() > this.movement) {
+						if (this.offset_y > 0 && this.y === 6 * config.tileHeight) {
 							this.offset_y -= 1;
 						} else {
-							this.y -= config.tile_height;
+							this.y -= config.tileHeight;
 						}
 						this.steps++;
 					}
@@ -221,11 +189,11 @@ export default {
 				break;
 			case 'down':
 				if (this.will_collide(x, y + 1) === false) {
-					if (config.delta_time - config.time > this.movement) {
-						if (this.offset_y < map.boundary_bottom && this.y === 6 * config.tile_height) {
+					if (deltaTime() > this.movement) {
+						if (this.offset_y < map.boundary_bottom && this.y === 6 * config.tileHeight) {
 							this.offset_y += 1;
 						} else {
-							this.y += config.tile_height;
+							this.y += config.tileHeight;
 						}
 						this.steps++;
 					}
@@ -238,13 +206,13 @@ export default {
 				Game.change_state('combat');
 				Game.drawEncounterBox();
 			}
-			config.time = Date.now();
+			config.lastMoveTime = Date.now();
 		}
 	},
 
 	set_current_tile: function() {
-		this.current_tile = map.map_ptr.layout[(this.offset_x + (this.x / config.tile_width)) +
-				((this.offset_y + (this.y / config.tile_height)) * map.map_ptr.width)] - 1;
+		this.current_tile = map.map_ptr.layout[(this.offset_x + (this.x / config.tileWidth)) +
+				((this.offset_y + (this.y / config.tileHeight)) * map.map_ptr.width)] - 1;
 	},
 
 	will_collide: function (x, y) {
@@ -270,55 +238,56 @@ export default {
 	},
 
 	set_level: function() {
-		var i, j, level, spellId;
-		this.spells = {};
-		for (i=0; i<config.levels.length; i++) {
-			level = config.levels[i];
+		let i;
 
-			if (this.experience < level.required_exp) {
+		for (i = 0; i < Data.levels.length; i++) {
+			let level = Data.levels[i];
+
+			if (GameState.player.experience < level.required_exp) {
 				break;
 			}
 
-			if (typeof level.spells_learned !== 'undefined' && level.spells_learned instanceof Array) {
-				for (j=0; j<level.spells_learned.length; j++) {
-					spellId = level.spells_learned[j];
-					this.spells[spellId] = config.spells[spellId];
-				}
+			if (level.spells_learned) {
+				level.spells_learned.forEach(spellId => {
+					GameState.player.spells[spellId] = Data.spells[spellId];
+				});
 			}
 		}
-		this.level = i;
+
+		GameState.player.level = i;
 	},
 
 	set_max_hp: function() {
-		this.max_hp = config.levels[this.level - 1].max_hp;
+		GameState.player.maxHp = Data.levels[GameState.player.level - 1].max_hp;
 	},
 
 	set_max_mp: function() {
-		this.max_mp = config.levels[this.level - 1].max_mp;
+		GameState.player.maxMp = Data.levels[GameState.player.level - 1].max_mp;
 	},
 
 	set_strength: function() {
-		this.strength = config.levels[this.level - 1].strength;
+		GameState.player.strength = Data.levels[GameState.player.level - 1].strength;
 	},
 
 	set_agility: function() {
-		this.agility = config.levels[this.level - 1].agility;
+		GameState.player.agility = Data.levels[GameState.player.level - 1].agility;
 	},
 
 	set_attack_power: function() {
-		this.attack_power = this.strength + config.weapons[this.weapon].attack;
+		GameState.player.attackPower = GameState.player.strength + Data.weapons[GameState.player.weapon].attack;
 	},
 
 	set_defense_power: function() {
-		this.defense_power = Math.floor(this.agility / 2) + config.armors[this.armor].defense +
-			config.shields[this.shield].defense;
+		GameState.player.defensePower = Math.floor(GameState.player.agility / 2) +
+			Data.armors[GameState.player.armor].defense +
+			Data.shields[GameState.player.shield].defense;
 	},
 
 	set_spells: function() {
-		var self = this,
-		    spell;
-		Object.keys(this.spells).forEach(function (spellId) {
-			spell = self.spells[spellId];
+		var self = this;
+
+		Object.keys(GameState.player.spells).forEach(function (spellId) {
+			let spell = GameState.player.spells[spellId];
 			if ((Game.state === "combat" && spell.show_in_combat) || (Game.state === "exploration" && spell.show_in_explore)) {
 				addOption(text.spells[spellId], text.spells[spellId], "spell");
 			}
@@ -329,34 +298,34 @@ export default {
 	// -------------------------------------------------------------------
 
 	door: function () {
-		var x = this.offset_x + (this.x / config.tile_width),
-			y = this.offset_y + (this.y / config.tile_height),
+		var x = this.offset_x + (this.x / config.tileWidth),
+			y = this.offset_y + (this.y / config.tileHeight),
 			door = null;
 
-		switch (this.character_state) {
-			case "left":  door = map.get_door(x-1, y); break;
-			case "right": door = map.get_door(x+1, y); break;
-			case "up":    door = map.get_door(x, y-1); break;
-			case "down":  door = map.get_door(x, y+1); break;
+		switch (this.facingDirection) {
+			case "left":  door = map.get_door(x - 1, y); break;
+			case "right": door = map.get_door(x + 1, y); break;
+			case "up":    door = map.get_door(x, y - 1); break;
+			case "down":  door = map.get_door(x, y + 1); break;
 		}
 
 		if (door !== null) {
 			//TODO: check for (and use) keys!
-			this.doors_opened.push(door.id);
+			GameState.doorsOpened.push(door.id);
 			map.refresh_map();
 		}
 	},
 
 	talk: function () {
-		var x = this.offset_x + (this.x / config.tile_width),
-			y = this.offset_y + (this.y / config.tile_height),
+		var x = this.offset_x + (this.x / config.tileWidth),
+			y = this.offset_y + (this.y / config.tileHeight),
 			character = null;
 
-		switch (this.character_state) {
-			case "left":  character = map.get_npc(x-1, y); break;
-			case "right": character = map.get_npc(x+1, y); break;
-			case "up":    character = map.get_npc(x, y-1); break;
-			case "down":  character = map.get_npc(x, y+1); break;
+		switch (this.facingDirection) {
+			case "left":  character = map.get_npc(x - 1, y); break;
+			case "right": character = map.get_npc(x + 1, y); break;
+			case "up":    character = map.get_npc(x, y - 1); break;
+			case "down":  character = map.get_npc(x, y + 1); break;
 		}
 
 		if (character !== null && typeof character.talk === 'function') {
@@ -365,7 +334,7 @@ export default {
 	},
 
 	add_item: function(item) {
-		this.inventory.push(item);
+		GameState.player.inventory.push(item);
 	},
 
 	remove_item: function(item) {
@@ -376,51 +345,51 @@ export default {
 	// -------------------------------------------------------------------
 
 	gain_hp: function(amount) {
-		this.current_hp += amount;
-		if (this.current_hp > this.max_hp) {
-			this.current_hp = this.max_hp;
+		GameState.player.currentHp += amount;
+		if (GameState.player.currentHp > GameState.player.maxHp) {
+			GameState.player.currentHp = GameState.player.maxHp;
 		}
 	},
 
 	lose_hp: function(amount) {
-		this.current_hp -= amount;
-		if (this.current_hp < 0) {
-			this.current_hp = 0;
+		GameState.player.currentHp -= amount;
+		if (GameState.player.currentHp < 0) {
+			GameState.player.currentHp = 0;
 		}
 	},
 
 	gain_mp: function(amount) {
-		this.current_mp += amount;
-		if (this.current_mp > this.max_mp) {
-			this.current_mp = this.max_mp;
+		GameState.player.currentMp += amount;
+		if (GameState.player.currentMp > GameState.player.maxMp) {
+			GameState.player.currentMp = GameState.player.maxMp;
 		}
 	},
 
 	lose_mp: function(amount) {
-		this.current_mp -= amount;
-		if ( this.current_mp < 0) {
-			this.current_mp = 0;
+		GameState.player.currentMp -= amount;
+		if ( GameState.player.currentMp < 0) {
+			GameState.player.currentMp = 0;
 		}
 	},
 
 	add_experience: function(amount) {
-		this.experience += amount;
-		if (this.experience >= 65535) {
-			this.experience = 65535;
+		GameState.player.experience += amount;
+		if (GameState.player.experience >= 65535) {
+			GameState.player.experience = 65535;
 		}
 	},
 
 	add_gold: function(amount) {
-		this.gold += amount;
-		if (this.gold > 99999) {
-			this.gold = 99999;
+		GameState.player.gold += amount;
+		if (GameState.player.gold > 99999) {
+			GameState.player.gold = 99999;
 		}
 	},
 
 	remove_gold: function(amount) {
-		this.gold -= amount;
-		if (this.gold < 0) {
-			this.gold = 0;
+		GameState.player.gold -= amount;
+		if (GameState.player.gold < 0) {
+			GameState.player.gold = 0;
 		}
 	}
 };

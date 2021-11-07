@@ -1,6 +1,7 @@
+import Game from './game.js';
+import GameState from './state.js';
 import map from './map.js';
 import player from './player.js';
-import Game from './game.js';
 
 // Random test stuff
 // -------------------------------------------------------------------
@@ -10,23 +11,25 @@ document.querySelector('#add_exp').onclick = function() {
 };
 
 document.querySelector('#equip_club').onclick = function() {
-    player.weapon = "club";
-    player.shield = "none";
+    GameState.player.weapon = "club";
+    GameState.player.shield = "none";
 };
 
 document.querySelector('#equip_shield').onclick = function() {
-    player.weapon = "none";
-    player.shield = "leather_shield";
+    GameState.player.weapon = "none";
+    GameState.player.shield = "leather_shield";
 };
 
-document.querySelector('#equip_both').onclick = function() {
-    player.weapon = "erdricks_sword";
-    player.shield = "leather_shield";
+document.querySelector('#equip_best').onclick = function() {
+    GameState.player.weapon = "erdricks_sword";
+    GameState.player.armor = "erdricks_armor";
+    GameState.player.shield = "silver_shield";
 };
 
 document.querySelector('#equip_none').onclick = function() {
-    player.weapon = "none";
-    player.shield = "none";
+    GameState.player.weapon = "none";
+    GameState.player.armor = "none";
+    GameState.player.shield = "none";
 };
 
 document.querySelector('#move_to_map').onclick = function() {
