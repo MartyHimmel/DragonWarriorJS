@@ -6,7 +6,7 @@ import config from './config.js';
 import map from './map.js';
 import script from './script.js';
 import text from './text.js';
-import { addOption, deltaTime } from './utils.js';
+import { addOption } from './utils.js';
 
 export default {
 	// Map collision tiles
@@ -26,8 +26,8 @@ export default {
 	// Tile number at player's location - see map.js for tile definitions
 	current_tile: 0,
 
-	// movement speed - ms per step (1000 / movement = number of tiles moved per second)
-	movement: 150,
+	// movement speed - frames per step (60 / movement = number of tiles moved per second)
+	movement: 12,
 	steps: 0,
 	visibility: 0,
 	radiant_in_effect: false,
@@ -152,51 +152,43 @@ export default {
 
 		switch (direction) {
 			case 'left':
-				if (this.will_collide(x - 1, y) === false) {
-					if (deltaTime() > this.movement) {
-						if (this.offset_x > 0 && this.x === 12 * config.tileWidth) {
-							this.offset_x -= 1;
-						} else {
-							this.x -= config.tileWidth;
-						}
-						this.steps++;
+				if (!this.willCollide(x - 1, y) && this.canMove()) {
+					if (this.offset_x > 0 && this.x === 12 * config.tileWidth) {
+						this.offset_x -= 1;
+					} else {
+						this.x -= config.tileWidth;
 					}
+					this.steps++;
 				}
 				break;
 			case 'right':
-				if (this.will_collide(x + 1, y) === false) {
-					if (deltaTime() > this.movement) {
-						if (this.offset_x < map.boundary_right && this.x === 12 * config.tileWidth) {
-							this.offset_x += 1;
-						} else {
-							this.x += config.tileWidth;
-						}
-						this.steps++;
+				if (!this.willCollide(x + 1, y) && this.canMove()) {
+					if (this.offset_x < map.boundary_right && this.x === 12 * config.tileWidth) {
+						this.offset_x += 1;
+					} else {
+						this.x += config.tileWidth;
 					}
+					this.steps++;
 				}
 				break;
 			case 'up':
-				if (this.will_collide(x, y - 1) === false) {
-					if (deltaTime() > this.movement) {
-						if (this.offset_y > 0 && this.y === 6 * config.tileHeight) {
-							this.offset_y -= 1;
-						} else {
-							this.y -= config.tileHeight;
-						}
-						this.steps++;
+				if (!this.willCollide(x, y - 1) && this.canMove()) {
+					if (this.offset_y > 0 && this.y === 6 * config.tileHeight) {
+						this.offset_y -= 1;
+					} else {
+						this.y -= config.tileHeight;
 					}
+					this.steps++;
 				}
 				break;
 			case 'down':
-				if (this.will_collide(x, y + 1) === false) {
-					if (deltaTime() > this.movement) {
-						if (this.offset_y < map.boundary_bottom && this.y === 6 * config.tileHeight) {
-							this.offset_y += 1;
-						} else {
-							this.y += config.tileHeight;
-						}
-						this.steps++;
+				if (!this.willCollide(x, y + 1) && this.canMove()) {
+					if (this.offset_y < map.boundary_bottom && this.y === 6 * config.tileHeight) {
+						this.offset_y += 1;
+					} else {
+						this.y += config.tileHeight;
 					}
+					this.steps++;
 				}
 				break;
 		}
@@ -204,10 +196,12 @@ export default {
 		if (this.steps > prev_steps) {
 			if (combat.random_encounter() === true) {
 				Game.change_state('combat');
-				Game.drawEncounterBox();
 			}
-			config.lastMoveTime = Date.now();
 		}
+	},
+
+	canMove() {
+		return config.frameNumber % this.movement == 0;
 	},
 
 	set_current_tile: function() {
@@ -215,7 +209,7 @@ export default {
 				((this.offset_y + (this.y / config.tileHeight)) * map.map_ptr.width)] - 1;
 	},
 
-	will_collide: function (x, y) {
+	willCollide: function (x, y) {
 		var next_tile = map.map_ptr.layout[x + (y * map.map_ptr.width)] - 1;
 		if (this.collide_tiles.indexOf(next_tile) > -1 || map.get_npc(x, y) !== null) {
 			return true;

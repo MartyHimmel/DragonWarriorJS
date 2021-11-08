@@ -42,7 +42,8 @@ function displayOutput() {
     document.querySelector('#armor').innerHTML = text.armors[GameState.player.armor];
     document.querySelector('#shield').innerHTML = text.shields[GameState.player.shield];
 
-    document.querySelector('#output').innerHTML = `player.x / 32 = ${player.x / config.tileWidth}<br>
+    document.querySelector('#output').innerHTML = `frame: ${config.frameNumber}<br>
+        player.x / 32 = ${player.x / config.tileWidth}<br>
         player.y / 32 = ${player.y / config.tileHeight}<br>
         player.offset_x = ${player.offset_x}<br>
         player.offset_y = ${player.offset_y}<br>
@@ -72,7 +73,7 @@ function displayOutput() {
         document.querySelector('#run').onclick = function() {
             combat.player_run();
         };
-    } else {
+    } else if (Game.state === 'exploration') {
         document.querySelector('#door').onclick = function() {
             player.door();
         };
@@ -86,14 +87,9 @@ function randomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function deltaTime() {
-    return config.lastUpdateTime - config.lastMoveTime;
-}
-
 export {
     addOption,
     addText,
     displayOutput,
     randomNumber,
-    deltaTime,
 };

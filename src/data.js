@@ -6,6 +6,7 @@ import levels from './data/levels.js';
 import maps from './data/maps.js';
 import shields from './data/shields.js';
 import spells from './data/spells.js';
+import titleScreen from './data/title.js';
 import weapons from './data/weapons.js';
 
 export default {
@@ -17,5 +18,6 @@ export default {
     maps,
     shields,
     spells,
+    titleScreen,
     weapons,
 };

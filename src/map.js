@@ -1,6 +1,7 @@
 import Data from './data.js';
 import Game from './game.js';
 import GameState from './state.js';
+import audio from './audio.js';
 import config from './config.js';
 import player from './player.js';
 
@@ -62,8 +63,8 @@ export default {
 		this.boundary_bottom = this.map_ptr.height - config.screenTileHigh;
 		this.background_music = this.map_ptr.music;
 
-		//audio.stop_music();
-		//audio.play_map_music();
+		// audio.stop_music();
+		// audio.play_map_music();
 		this.refresh_map();
 	},
 

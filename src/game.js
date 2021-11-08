@@ -1,4 +1,6 @@
+import Data from './data.js';
 import GameState from './state.js';
+import TitleScreen from './title-screen.js';
 import config from './config.js';
 import combat from './combat.js';
 import map from './map.js';
@@ -15,7 +17,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.drawIm
 */
 
 const Game = {
-	state: 'title',
+	state: '',
 	possible_states: ['title', 'menu', 'exploration', 'combat'],
 	canvas: null,
 	context: null,
@@ -27,6 +29,41 @@ const Game = {
 
 	begin: function () {
 		var self = this;
+		let frameCount = 0;
+
+		function main() {
+			requestAnimationFrame(main);
+
+			config.frameNumber++;
+			if (config.frameNumber >= 60) {
+				config.frameNumber = 0;
+			}
+
+			if (self.state === 'title') {
+				frameCount++;
+				if (frameCount < 240) {
+					TitleScreen.drawTitle1();
+					if ('Enter' in self.keysDown) {
+						frameCount = 240;
+						delete self.keysDown['Enter'];
+					}
+				} else {
+					TitleScreen.drawTitle2();
+					if ('Enter' in self.keysDown) {
+						self.change_state('exploration');
+						self.startGame();
+					}
+				}
+				return;
+			}
+
+			if (self.state === 'exploration') {
+				draw();
+			}
+
+			update();
+			displayOutput();
+		}
 
 		function draw () {
 			self.clear();
@@ -35,18 +72,17 @@ const Game = {
 		}
 
 		function update () {
-			config.lastUpdateTime = Date.now();
 			map.check_location();
 			player.load_player();
 
 			if (self.state === 'exploration') {
-				if (38 in self.keysDown) { // Player holding up
+				if ('ArrowUp' in self.keysDown) {
 					player.move('up');
-				} else if (40 in self.keysDown) { // Player holding down
+				} else if ('ArrowDown' in self.keysDown) {
 					player.move('down');
-				} else if (37 in self.keysDown) { // Player holding left
+				} else if ('ArrowLeft' in self.keysDown) {
 					player.move('left');
-				} else if (39 in self.keysDown) { // Player holding right
+				} else if ('ArrowRight' in self.keysDown) {
 					player.move('right');
 				} else {
 					player.draw_player();
@@ -66,62 +102,52 @@ const Game = {
 				}
 
 				// DEBUG shortcut
-				if (88 in self.keysDown) { // Player presses 'x'
+				if ('KeyX' in self.keysDown) {
 					combat.enemy_ptr = null;
 					self.change_state('exploration');
 				}
 			}
 		}
 
-		function main() {
-			requestAnimationFrame(main);
-			if (self.state === 'exploration') {
-				draw();
-			}
-			update();
-			displayOutput();
-		}
-
-		function load_images() {
-			self.img_characters = new Image();
-			self.img_characters.src = config.sprites.characters;
-			self.img_enemies = new Image();
-			self.img_enemies.src = config.sprites.enemies;
-			self.img_tiles = new Image();
-			self.img_tiles.src = config.sprites.tiles;
-			self.img_battle = new Image();
-			self.img_battle.src = config.sprites.battle;
-			self.img_title = new Image();
-			self.img_title.src = config.sprites.title;
-		}
-
 		// Main game window
 		document.title = text.game_title;
 		this.canvas = document.getElementById('game');
 		this.context = this.canvas.getContext('2d');
-		load_images();
+		this.load_images();
 
 		// Keyboard inputs
-		window.addEventListener('keydown', function(e) {
-			self.keysDown[e.keyCode] = true;
+		window.addEventListener('keydown', e => {
+			this.keysDown[e.code] = true;
 		});
-		window.addEventListener('keyup', function(e) {
-			delete self.keysDown[e.keyCode];
+		window.addEventListener('keyup', e => {
+			delete this.keysDown[e.code];
 		});
 
 		// Start the game!
+		this.change_state('title');
+		main();
+	},
+
+	startGame() {
 		GameState.player.name = prompt(text.name_prompt);
 		if (GameState.player.name === '') { GameState.player.name = text.default_player_name; }
-		this.change_state('exploration');
 		map.load_map('World');
 		player.load_player();
 		player.set_current_tile();
 		this.display_text(text.welcome);
-		main();
 	},
 
-	drawEncounterBox() {
-
+	load_images() {
+		this.img_characters = new Image();
+		this.img_characters.src = config.sprites.characters;
+		this.img_enemies = new Image();
+		this.img_enemies.src = config.sprites.enemies;
+		this.img_tiles = new Image();
+		this.img_tiles.src = config.sprites.tiles;
+		this.img_battle = new Image();
+		this.img_battle.src = config.sprites.battle;
+		this.img_title = new Image();
+		this.img_title.src = config.sprites.title;
 	},
 
 	changeCommandSet() {
@@ -163,7 +189,7 @@ const Game = {
 		this.changeCommandSet();
 	},
 
-	clear: function () {
+	clear() {
 		return this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	},
 
