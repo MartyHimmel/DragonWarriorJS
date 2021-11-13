@@ -19,6 +19,23 @@ export default {
 	random_num: 0,
 	initiative_round: true,
 
+	handleState() {
+		this.draw_screen();
+		Game.draw_enemy(this.enemy_ptr);
+		if (this.initiative_round === true) {
+			this.initiative();
+		}
+		if (this.player_turn === false) {
+			setTimeout(() => this.enemy_attack(), 1000);
+		}
+
+		// DEBUG shortcut
+		if ('KeyX' in Game.keysDown) {
+			this.enemy_ptr = null;
+			Game.changeState('exploration');
+		}
+	},
+
 	// Check for random encounters at each step in player.move()
 	random_encounter: function() {
 		if (map.map_ptr.type === "world" || map.map_ptr.type === "dungeon") {
@@ -26,7 +43,7 @@ export default {
 				player.current_tile === 20) {
 				this.random_num = randomNumber(1, 8);
 				if (this.random_num === 1) {
-					this.random_enemy();
+					this.randomEnemy();
 					return true;
 				}
 			}
@@ -36,26 +53,26 @@ export default {
 				player.current_tile ===  21) {
 				this.random_num = randomNumber(1, 16);
 				if (this.random_num === 1) {
-					this.random_enemy();
+					this.randomEnemy();
 					return true;
 				}
 			}
 			if (player.current_tile === 14) {
 				this.random_num = randomNumber(1, 24);
 				if (this.random_num === 1) {
-					this.random_enemy();
+					this.randomEnemy();
 					return true;
 				}
 			}
 		}
 	},
 
-	random_enemy: function() {
+	randomEnemy() {
 		var rand = randomNumber(0, 4);
-		this.load_enemy(Data.enemyZones[map.current_zone][rand]);
+		this.loadEnemy(Data.enemyZones[map.current_zone][rand]);
 	},
 
-	load_enemy: function(id) {
+	loadEnemy(id) {
 		this.initiative_round = true;
 		this.enemy_ptr = Data.enemies[id];
 		this.enemy_id = text.enemies[this.enemy_ptr.id];
@@ -89,11 +106,11 @@ export default {
 			return;
 		}
 
-		let screenX = (Game.canvas.width / 2) - (Game.img_battle.width / 2);
-		let screenY = (Game.canvas.height / 2) - (Game.img_battle.height / 2);
+		let screenX = (Game.canvas.width / 2) - (Game.imgBattle.width / 2);
+		let screenY = (Game.canvas.height / 2) - (Game.imgBattle.height / 2);
 
-		Game.context.drawImage(Game.img_battle, 0, 0, Game.img_battle.width, Game.img_battle.width,
-			screenX, screenY, Game.img_battle.width, Game.img_battle.width);
+		Game.context.drawImage(Game.imgBattle, 0, 0, Game.imgBattle.width, Game.imgBattle.width,
+			screenX, screenY, Game.imgBattle.width, Game.imgBattle.width);
 	},
 
 	// Combat functions
@@ -109,7 +126,7 @@ export default {
 		if (GameState.player.strength > (2 * enemy_strength)) {
 			if (rand3 <= 25) {
 				Game.display_text(text.combat.enemy.run, { enemy: this.enemy_id });
-				Game.change_state("exploration", 500);
+				Game.changeState('exploration', 500);
 			}
 		}
 
@@ -190,14 +207,14 @@ export default {
 
 			if (this.enemy_status === "sleep") {
 				this.player_turn = true;
-				Game.change_state("exploration", 500);
+				Game.changeState('exploration', 500);
 			}
 
 			if ((GameState.player.agility * rand1) < (enemy_agility * rand2 * modifier)) {
 				Game.display_text(text.combat.player.run_blocked);
 			} else {
 				this.player_turn = true;
-				Game.change_state("exploration", 500);
+				Game.changeState('exploration', 500);
 			}
 		}
 	},
@@ -221,7 +238,7 @@ export default {
 			this.player_level_up();
 		}
 
-		Game.change_state("exploration", 1000);
+		Game.changeState('exploration', 1000);
 	},
 
 	player_level_up: function() {
@@ -254,7 +271,7 @@ export default {
 				this.enemy_ptr.special_probability instanceof Array &&
 				this.enemy_ptr.special.length === this.enemy_ptr.special_probability.length) {
 
-				for (i=0; i< this.enemy_ptr.special.length; i++) {
+				for (i = 0; i < this.enemy_ptr.special.length; i++) {
 					if (randomNumber(1, 4) <= this.enemy_ptr.special_probability[i]) {
 						special = this.enemy_ptr.special[i];
 						if (special === "breathe_fire" || special === "breathe_fire2") {

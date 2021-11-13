@@ -41,7 +41,7 @@ export default {
 
 	animate_player: function(frame1, frame2) {
 		let drawFrame = ((Date.now() % 1000) < 500) ? frame1 : frame2;
-		Game.draw_character(drawFrame, this.x, this.y);
+		Game.drawCharacter(drawFrame, this.x, this.y);
 	},
 
 	draw_player: function () {
@@ -195,13 +195,13 @@ export default {
 
 		if (this.steps > prev_steps) {
 			if (combat.random_encounter() === true) {
-				Game.change_state('combat');
+				Game.changeState('combat');
 			}
 		}
 	},
 
 	canMove() {
-		return config.frameNumber % this.movement == 0;
+		return Game.frameNumber % this.movement == 0;
 	},
 
 	set_current_tile: function() {

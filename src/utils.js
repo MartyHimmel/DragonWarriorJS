@@ -34,15 +34,13 @@ function displayOutput() {
     document.querySelector('#current_mp').innerHTML = GameState.player.currentMp;
     document.querySelector('#strength').innerHTML = GameState.player.strength;
     document.querySelector('#agility').innerHTML = GameState.player.agility;
-    document.querySelector('#experience').innerHTML = GameState.player.experience;
-    document.querySelector('#gold').innerHTML = GameState.player.gold;
     document.querySelector('#attack_power').innerHTML = GameState.player.attackPower;
     document.querySelector('#defense_power').innerHTML = GameState.player.defensePower;
     document.querySelector('#weapon').innerHTML = text.weapons[GameState.player.weapon];
     document.querySelector('#armor').innerHTML = text.armors[GameState.player.armor];
     document.querySelector('#shield').innerHTML = text.shields[GameState.player.shield];
 
-    document.querySelector('#output').innerHTML = `frame: ${config.frameNumber}<br>
+    document.querySelector('#output').innerHTML = `frame: ${Game.frameNumber}<br>
         player.x / 32 = ${player.x / config.tileWidth}<br>
         player.y / 32 = ${player.y / config.tileHeight}<br>
         player.offset_x = ${player.offset_x}<br>

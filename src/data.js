@@ -4,6 +4,7 @@ import enemyZones from './data/enemy-zones.js';
 import items from './data/items.js';
 import levels from './data/levels.js';
 import maps from './data/maps.js';
+import menus from './data/menus.js';
 import shields from './data/shields.js';
 import spells from './data/spells.js';
 import titleScreen from './data/title.js';
@@ -16,6 +17,7 @@ export default {
     items,
     levels,
     maps,
+    menus,
     shields,
     spells,
     titleScreen,

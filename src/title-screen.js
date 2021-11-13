@@ -2,42 +2,59 @@ import Data from './data.js';
 import Game from './game.js';
 
 export default {
+    frameCount: 0,
     starFrameCount: 0,
 
+    handleState() {
+        if (this.frameCount < 240) {
+            this.frameCount++;
+            this.drawTitle1();
+
+            if ('Enter' in Game.keysDown) {
+                this.frameCount = 240;
+                delete Game.keysDown['Enter'];
+            }
+        } else {
+            this.drawTitle2();
+
+            if ('Enter' in Game.keysDown) {
+                Game.changeState('exploration');
+                Game.startGame();
+            }
+        }
+    },
+
     drawTitle1() {
-        const leftEdge = (Game.canvas.width - Data.titleScreen.screen1.width) / 2;
+        const posX = (Game.canvas.width - Data.titleScreen.screen1.width) / 2;
+        this.clearScreen();
+        this.drawTitleFrame(Data.titleScreen.screen1, posX, 0);
+    },
+
+    clearScreen() {
         Game.clear();
         Game.context.fillStyle = 'rgb(0, 0, 0)';
         Game.context.fillRect(0, 0, Game.canvas.width, Game.canvas.height);
+    },
+
+    drawTitleFrame(frameData, x, y) {
         Game.context.drawImage(
-            Game.img_title,
-            Data.titleScreen.screen1.x,
-            Data.titleScreen.screen1.y,
-            Data.titleScreen.screen1.width,
-            Data.titleScreen.screen1.height,
-            leftEdge,
-            0,
-            Data.titleScreen.screen1.width,
-            Data.titleScreen.screen1.height
+            Game.imgTitle,
+            frameData.x,
+            frameData.y,
+            frameData.width,
+            frameData.height,
+            x,
+            y,
+            frameData.width,
+            frameData.height
         );
     },
 
     drawTitle2() {
-        const leftEdge = (Game.canvas.width - Data.titleScreen.screen2.width) / 2;
-        Game.clear();
-        Game.context.fillStyle = 'rgb(0, 0, 0)';
-        Game.context.fillRect(0, 0, Game.canvas.width, Game.canvas.height);
-        Game.context.drawImage(
-            Game.img_title,
-            Data.titleScreen.screen2.x,
-            Data.titleScreen.screen2.y,
-            Data.titleScreen.screen2.width,
-            Data.titleScreen.screen2.height,
-            leftEdge,
-            0,
-            Data.titleScreen.screen2.width,
-            Data.titleScreen.screen2.height
-        );
+        const posX = (Game.canvas.width - Data.titleScreen.screen2.width) / 2;
+        this.clearScreen();
+        this.drawTitleFrame(Data.titleScreen.screen2, posX, 0);
+
         this.starFrameCount++;
         if (this.starFrameCount >= 240) {
             this.starFrameCount = 0;
@@ -56,6 +73,7 @@ export default {
                     this.drawTitleStar(index);
                 }
             });
+
             frame.long.forEach(longFrame => {
                 if (this.starFrameCountBetween(longFrame, longFrame + 3)) {
                     this.drawTitleStar(index);
@@ -68,21 +86,13 @@ export default {
         return this.starFrameCount >= min && this.starFrameCount <= max;
     },
 
-    drawTitleStar(frame) {
+    drawTitleStar(frameIndex) {
+        const starCenterX = 378;
+        const starCenterY = 175;
+        const targetFrame = Data.titleScreen.star[frameIndex];
         const leftEdge = (Game.canvas.width - Data.titleScreen.screen2.width) / 2;
-        const posX = leftEdge + 378 - Math.round(Data.titleScreen.star[frame].width / 2);
-        const posY = 175 - Math.round(Data.titleScreen.star[frame].height / 2);
-
-        Game.context.drawImage(
-            Game.img_title,
-            Data.titleScreen.star[frame].x,
-            Data.titleScreen.star[frame].y,
-            Data.titleScreen.star[frame].width,
-            Data.titleScreen.star[frame].height,
-            posX,
-            posY,
-            Data.titleScreen.star[frame].width,
-            Data.titleScreen.star[frame].height
-        );
+        const posX = leftEdge + starCenterX - Math.round(targetFrame.width / 2);
+        const posY = starCenterY - Math.round(targetFrame.height / 2);
+        this.drawTitleFrame(targetFrame, posX, posY);
     },
 }

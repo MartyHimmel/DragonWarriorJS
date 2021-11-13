@@ -1,4 +1,5 @@
 import Data from './data.js';
+import Exploration from './exploration.js';
 import GameState from './state.js';
 import TitleScreen from './title-screen.js';
 import config from './config.js';
@@ -18,102 +19,27 @@ https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.drawIm
 
 const Game = {
 	state: '',
-	possible_states: ['title', 'menu', 'exploration', 'combat'],
+	possibleStates: ['title', 'menu', 'exploration', 'combat'],
 	canvas: null,
 	context: null,
-	img_characters: null,
-	img_enemies: null,
-	img_tiles: null,
-	img_battle: null,
+	imgCharacters: null,
+	imgEnemies: null,
+	imgTiles: null,
+	imgBattle: null,
+	imgMenu: null,
+	imgFont: null,
 	keysDown: {},
+	frameNumber: 0,
+	idleFrames: 0,
 
 	begin: function () {
 		var self = this;
-		let frameCount = 0;
-
-		function main() {
-			requestAnimationFrame(main);
-
-			config.frameNumber++;
-			if (config.frameNumber >= 60) {
-				config.frameNumber = 0;
-			}
-
-			if (self.state === 'title') {
-				frameCount++;
-				if (frameCount < 240) {
-					TitleScreen.drawTitle1();
-					if ('Enter' in self.keysDown) {
-						frameCount = 240;
-						delete self.keysDown['Enter'];
-					}
-				} else {
-					TitleScreen.drawTitle2();
-					if ('Enter' in self.keysDown) {
-						self.change_state('exploration');
-						self.startGame();
-					}
-				}
-				return;
-			}
-
-			if (self.state === 'exploration') {
-				draw();
-			}
-
-			update();
-			displayOutput();
-		}
-
-		function draw () {
-			self.clear();
-			map.drawViewport(map.current_map, player.offset_x, player.offset_y);
-			self.draw_npcs();
-		}
-
-		function update () {
-			map.check_location();
-			player.load_player();
-
-			if (self.state === 'exploration') {
-				if ('ArrowUp' in self.keysDown) {
-					player.move('up');
-				} else if ('ArrowDown' in self.keysDown) {
-					player.move('down');
-				} else if ('ArrowLeft' in self.keysDown) {
-					player.move('left');
-				} else if ('ArrowRight' in self.keysDown) {
-					player.move('right');
-				} else {
-					player.draw_player();
-				}
-			}
-
-			if (self.state === 'combat') {
-				combat.draw_screen();
-				self.draw_enemy(combat.enemy_ptr);
-				if (combat.initiative_round === true) {
-					combat.initiative();
-				}
-				if (combat.player_turn === false) {
-					setTimeout(function() {
-						combat.enemy_attack();
-					}, 1000);
-				}
-
-				// DEBUG shortcut
-				if ('KeyX' in self.keysDown) {
-					combat.enemy_ptr = null;
-					self.change_state('exploration');
-				}
-			}
-		}
 
 		// Main game window
 		document.title = text.game_title;
 		this.canvas = document.getElementById('game');
 		this.context = this.canvas.getContext('2d');
-		this.load_images();
+		this.loadImages();
 
 		// Keyboard inputs
 		window.addEventListener('keydown', e => {
@@ -124,8 +50,38 @@ const Game = {
 		});
 
 		// Start the game!
-		this.change_state('title');
-		main();
+		this.changeState('title');
+		this.main();
+	},
+
+	main() {
+		requestAnimationFrame(this.main.bind(this));
+
+		this.frameNumber++;
+		if (this.frameNumber >= 60) {
+			this.frameNumber = 0;
+		}
+
+		if (this.state === 'title') {
+			TitleScreen.handleState();
+			return;
+		}
+
+		if (this.state === 'exploration') {
+			Exploration.handleState();
+		}
+
+		this.update();
+		displayOutput();
+	},
+
+	update() {
+		map.check_location();
+		player.load_player();
+
+		if (this.state === 'combat') {
+			combat.handleState();
+		}
 	},
 
 	startGame() {
@@ -137,17 +93,21 @@ const Game = {
 		this.display_text(text.welcome);
 	},
 
-	load_images() {
-		this.img_characters = new Image();
-		this.img_characters.src = config.sprites.characters;
-		this.img_enemies = new Image();
-		this.img_enemies.src = config.sprites.enemies;
-		this.img_tiles = new Image();
-		this.img_tiles.src = config.sprites.tiles;
-		this.img_battle = new Image();
-		this.img_battle.src = config.sprites.battle;
-		this.img_title = new Image();
-		this.img_title.src = config.sprites.title;
+	loadImages() {
+		this.imgCharacters = new Image();
+		this.imgCharacters.src = config.sprites.characters;
+		this.imgEnemies = new Image();
+		this.imgEnemies.src = config.sprites.enemies;
+		this.imgTiles = new Image();
+		this.imgTiles.src = config.sprites.tiles;
+		this.imgBattle = new Image();
+		this.imgBattle.src = config.sprites.battle;
+		this.imgTitle = new Image();
+		this.imgTitle.src = config.sprites.title;
+		this.imgMenu = new Image();
+		this.imgMenu.src = config.sprites.menu;
+		this.imgFont = new Image();
+		this.imgFont.src = config.sprites.font;
 	},
 
 	changeCommandSet() {
@@ -174,18 +134,20 @@ const Game = {
 		}
 	},
 
-	change_state: function (input, delay) {
-		if (this.possible_states.indexOf(input) > -1) {
-			if (typeof delay !== 'undefined') {
-				setTimeout(() => this.set_state(input), delay);
-			} else {
-				this.set_state(input);
-			}
+	changeState(newState, delay = 0) {
+		if (!this.possibleStates.includes(newState)) {
+			return;
+		}
+
+		if (delay > 0) {
+			setTimeout(() => this.setState(newState), delay);
+		} else {
+			this.setState(newState);
 		}
 	},
 
-	set_state (input) {
-		this.state = input;
+	setState(newState) {
+		this.state = newState;
 		this.changeCommandSet();
 	},
 
@@ -227,129 +189,126 @@ const Game = {
 	// Animation and rendering
 	// -------------------------------------------------------------------
 
-	animate_npc: function(frame1, frame2, x, y) {
-		x = ((x-player.offset_x) * config.tileWidth);
-		y = ((y-player.offset_y) * config.tileHeight);
+	animateNPC: function(frame1, frame2, x, y) {
+		x = (x - player.offset_x) * config.tileWidth;
+		y = (y - player.offset_y) * config.tileHeight;
 
-		if ((Date.now() % 1000) < 500) {
-			this.draw_character(frame1, x, y);
-		} else {
-			this.draw_character(frame2, x, y);
-		}
+		const drawFrame = ((this.frameNumber % 60) < 30) ? frame1 : frame2;
+		this.drawCharacter(drawFrame, x, y);
 	},
 
 	// call frame from characters.png - starts with frame 0
-	draw_character: function (frame_number, pos_x, pos_y) {
+	drawCharacter: function (frame_number, pos_x, pos_y) {
 		var image_x = (frame_number % 16) * config.tileWidth,
 		    image_y = Math.floor(frame_number / 16) * config.tileHeight;
 
-		this.context.drawImage(this.img_characters, image_x, image_y, config.tileWidth, config.tileHeight,
+		this.context.drawImage(this.imgCharacters, image_x, image_y, config.tileWidth, config.tileHeight,
 			pos_x, pos_y, config.tileWidth, config.tileHeight);
 	},
 
-	draw_npcs: function() {
+	drawNPCs: function() {
 		let self = this;
 
 		//TODO: refactor this
-		function draw_npc (character_type, direction, x, y) {
-			switch (character_type) {
+		function drawNPC(characterType, direction, x, y) {
+			switch (characterType) {
 				case "princess":
 					if (direction === "down") {
-						self.animate_npc(80, 81, x, y);
+						self.animateNPC(80, 81, x, y);
 					} else if (direction === "left") {
-						self.animate_npc(82, 83, x, y);
+						self.animateNPC(82, 83, x, y);
 					} else if (direction === "up") {
-						self.animate_npc(84, 85, x, y);
+						self.animateNPC(84, 85, x, y);
 					} else if (direction === "right") {
-						self.animate_npc(86, 87, x, y);
+						self.animateNPC(86, 87, x, y);
 					}
 					break;
 				case "soldier":
 					if (direction === "down") {
-						self.animate_npc(96, 97, x, y);
+						self.animateNPC(96, 97, x, y);
 					} else if (direction === "left") {
-						self.animate_npc(98, 99, x, y);
+						self.animateNPC(98, 99, x, y);
 					} else if (direction === "up") {
-						self.animate_npc(100, 101, x, y);
+						self.animateNPC(100, 101, x, y);
 					} else if (direction === "right") {
-						self.animate_npc(102, 103, x, y);
+						self.animateNPC(102, 103, x, y);
 					}
 					break;
 				case "townsman":
 					if (direction === "down") {
-						self.animate_npc(8, 9, x, y);
+						self.animateNPC(8, 9, x, y);
 					} else if (direction === "left") {
-						self.animate_npc(10, 11, x, y);
+						self.animateNPC(10, 11, x, y);
 					} else if (direction === "up") {
-						self.animate_npc(12, 13, x, y);
+						self.animateNPC(12, 13, x, y);
 					} else if (direction === "right") {
-						self.animate_npc(14, 15, x, y);
+						self.animateNPC(14, 15, x, y);
 					}
 					break;
 				case "townswoman":
 					if (direction === "down") {
-						self.animate_npc(24, 25, x, y);
+						self.animateNPC(24, 25, x, y);
 					} else if (direction === "left") {
-						self.animate_npc(26, 27, x, y);
+						self.animateNPC(26, 27, x, y);
 					} else if (direction === "up") {
-						self.animate_npc(28, 29, x, y);
+						self.animateNPC(28, 29, x, y);
 					} else if (direction === "right") {
-						self.animate_npc(30, 31, x, y);
+						self.animateNPC(30, 31, x, y);
 					}
 					break;
 				case "old_man":
 					if (direction === "down") {
-						self.animate_npc(40, 41, x, y);
+						self.animateNPC(40, 41, x, y);
 					} else if (direction === "left") {
-						self.animate_npc(42, 43, x, y);
+						self.animateNPC(42, 43, x, y);
 					} else if (direction === "up") {
-						self.animate_npc(44, 45, x, y);
+						self.animateNPC(44, 45, x, y);
 					} else if (direction === "right") {
-						self.animate_npc(46, 47, x, y);
+						self.animateNPC(46, 47, x, y);
 					}
 					break;
 				case "merchant":
 					if (direction === "down") {
-						self.animate_npc(56, 57, x, y);
+						self.animateNPC(56, 57, x, y);
 					} else if (direction === "left") {
-						self.animate_npc(58, 59, x, y);
+						self.animateNPC(58, 59, x, y);
 					} else if (direction === "up") {
-						self.animate_npc(60, 61, x, y);
+						self.animateNPC(60, 61, x, y);
 					} else if (direction === "right") {
-						self.animate_npc(62, 63, x, y);
+						self.animateNPC(62, 63, x, y);
 					}
 					break;
 				case "solider_2":
 					if (direction === "down") {
-						self.animate_npc(72, 73, x, y);
+						self.animateNPC(72, 73, x, y);
 					} else if (direction === "left") {
-						self.animate_npc(74, 75, x, y);
+						self.animateNPC(74, 75, x, y);
 					} else if (direction === "up") {
-						self.animate_npc(76, 77, x, y);
+						self.animateNPC(76, 77, x, y);
 					} else if (direction === "right") {
-						self.animate_npc(78, 79, x, y);
+						self.animateNPC(78, 79, x, y);
 					}
 					break;
 				case "dragonlord":
 					if (direction === "down") {
-						self.animate_npc(88, 89, x, y);
+						self.animateNPC(88, 89, x, y);
 					} else if (direction === "left") {
-						self.animate_npc(90, 91, x, y);
+						self.animateNPC(90, 91, x, y);
 					} else if (direction === "up") {
-						self.animate_npc(92, 93, x, y);
+						self.animateNPC(92, 93, x, y);
 					} else if (direction === "right") {
-						self.animate_npc(94, 95, x, y);
+						self.animateNPC(94, 95, x, y);
 					}
 					break;
 				case "trumpeteer":
 					if (direction === "left") {
-						self.animate_npc(105, 105, x, y);
+						self.animateNPC(105, 105, x, y);
 					} else if (direction === "right") {
-						self.animate_npc(104, 104, x, y);
+						self.animateNPC(104, 104, x, y);
 					}
 					break;
 				case "king":
-					self.animate_npc(106, 107, x, y);
+					self.animateNPC(106, 107, x, y);
 					break;
 			}
 		}
@@ -363,7 +322,7 @@ const Game = {
 			}
 
 			for (let i = 0; i < number_of_npcs; i++) {
-				draw_npc(
+				drawNPC(
 					map.map_ptr.npcs[i].type,
 					map.map_ptr.npcs[i].facing,
 					map.map_ptr.npcs[i].x,
@@ -381,7 +340,7 @@ const Game = {
 		    pos_x = (this.canvas.width / 2) - tile_width,
 		    pos_y = (this.canvas.height / 2) - tile_height;
 
-		this.context.drawImage(this.img_enemies, tile_x, tile_y, tile_width, tile_height,
+		this.context.drawImage(this.imgEnemies, tile_x, tile_y, tile_width, tile_height,
 			pos_x, pos_y, tile_width * 2, tile_height *2);
 	},
 
@@ -391,9 +350,9 @@ const Game = {
 		var pos_x = (frame_number % 12) * config.tileWidth,
 		    pos_y = Math.floor(frame_number / 12) * config.tileHeight;
 
-		this.context.drawImage(this.img_tiles, pos_x, pos_y, config.tileWidth, config.tileHeight,
+		this.context.drawImage(this.imgTiles, pos_x, pos_y, config.tileWidth, config.tileHeight,
 			x, y, config.tileWidth, config.tileHeight);
-	}
+	},
 };
 
 export default Game;
