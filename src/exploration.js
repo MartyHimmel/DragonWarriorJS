@@ -1,13 +1,15 @@
+import Data from './data.js';
 import Game from './game.js';
+import Menu from './menu.js';
 import map from './map.js';
-import menu from './menu.js';
 import player from './player.js';
 
 export default {
     handleState() {
-        this.drawMap();
-
-        if ('ArrowUp' in Game.keysDown) {
+        if ('Enter' in Game.keysDown) {
+            Game.idleFrames = 0;
+            Game.openMenu('exploration');
+        } else if ('ArrowUp' in Game.keysDown) {
             Game.idleFrames = 0;
             player.move('up');
         } else if ('ArrowDown' in Game.keysDown) {
@@ -25,13 +27,7 @@ export default {
         }
 
         if (Game.idleFrames > 180) {
-            menu.drawQuickStatBox();
+            Menu.drawQuickStatBox();
         }
-    },
-
-    drawMap() {
-        Game.clear();
-        map.drawViewport(map.current_map, player.offset_x, player.offset_y);
-        Game.drawNPCs();
     },
 };

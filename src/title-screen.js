@@ -19,6 +19,7 @@ export default {
 
             if ('Enter' in Game.keysDown) {
                 Game.changeState('exploration');
+                delete Game.keysDown['Enter'];
                 Game.startGame();
             }
         }

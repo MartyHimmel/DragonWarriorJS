@@ -1,6 +1,7 @@
 import Data from './data.js';
 import Game from './game.js';
 import GameState from './state.js';
+import Menu from './menu.js';
 import combat from './combat.js';
 import config from './config.js';
 import map from './map.js';
@@ -310,21 +311,33 @@ export default {
 		}
 	},
 
-	talk: function () {
-		var x = this.offset_x + (this.x / config.tileWidth),
-			y = this.offset_y + (this.y / config.tileHeight),
-			character = null;
+	talk() {
+		const x = this.offset_x + (this.x / config.tileWidth);
+		const y = this.offset_y + (this.y / config.tileHeight);
+		let character = null;
 
 		switch (this.facingDirection) {
-			case "left":  character = map.get_npc(x - 1, y); break;
-			case "right": character = map.get_npc(x + 1, y); break;
-			case "up":    character = map.get_npc(x, y - 1); break;
-			case "down":  character = map.get_npc(x, y + 1); break;
+			case 'left':
+				character = map.get_npc(x - 1, y);
+				break;
+			case 'right':
+				character = map.get_npc(x + 1, y);
+				break;
+			case 'up':
+				character = map.get_npc(x, y - 1);
+				break;
+			case 'down':
+				character = map.get_npc(x, y + 1);
+				break;
 		}
 
-		if (character !== null && typeof character.talk === 'function') {
+		Menu.openOutputWindow();
+		if (character && typeof character.talk === 'function') {
 			character.talk(script);
+		} else {
+			Menu.addText(text.menu.talk_none);
 		}
+		Menu.resetMenu();
 	},
 
 	add_item: function(item) {

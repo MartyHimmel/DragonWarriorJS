@@ -1,13 +1,14 @@
 import Data from './data.js';
 import Exploration from './exploration.js';
 import GameState from './state.js';
+import Menu from './menu.js';
 import TitleScreen from './title-screen.js';
 import config from './config.js';
 import combat from './combat.js';
 import map from './map.js';
 import player from './player.js';
 import text from './text.js';
-import { addText, displayOutput } from './utils.js';
+import { displayOutput } from './utils.js';
 
 /*
 References
@@ -67,22 +68,27 @@ const Game = {
 			return;
 		}
 
+		map.check_location();
+		player.load_player();
+		this.drawMap();
+
 		if (this.state === 'exploration') {
 			Exploration.handleState();
+		} else if (this.state === 'menu') {
+			player.draw_player();
+			Menu.handleState();
+		} else if (this.state === 'combat') {
+			combat.handleState();
 		}
 
-		this.update();
 		displayOutput();
 	},
 
-	update() {
-		map.check_location();
-		player.load_player();
-
-		if (this.state === 'combat') {
-			combat.handleState();
-		}
-	},
+	drawMap() {
+        Game.clear();
+        map.drawViewport(map.current_map, player.offset_x, player.offset_y);
+        Game.drawNPCs();
+    },
 
 	startGame() {
 		GameState.player.name = prompt(text.name_prompt);
@@ -90,7 +96,6 @@ const Game = {
 		map.load_map('World');
 		player.load_player();
 		player.set_current_tile();
-		this.display_text(text.welcome);
 	},
 
 	loadImages() {
@@ -183,7 +188,7 @@ const Game = {
 	        return format_string;
 	    }
 
-		addText(format(format_string, params));
+		Menu.addText(format(format_string, params));
 	},
 
 	// Animation and rendering
@@ -352,6 +357,12 @@ const Game = {
 
 		this.context.drawImage(this.imgTiles, pos_x, pos_y, config.tileWidth, config.tileHeight,
 			x, y, config.tileWidth, config.tileHeight);
+	},
+
+	openMenu(type) {
+		Menu.currentMenu = type;
+		this.changeState('menu');
+		this.keysDown = {};
 	},
 };
 

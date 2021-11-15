@@ -17,13 +17,6 @@ function addOption(name, value, list_id) {
     }
 }
 
-function addText(text) {
-    setTimeout(function() {
-        document.querySelector('#dialog').innerHTML += text + "\n";
-        document.querySelector('#dialog').scrollTop = document.querySelector('#dialog').scrollHeight;
-    }, 500);
-}
-
 // display stats, equipment, commands, and other options (side bars)
 function displayOutput() {
     document.querySelector('#character_name').innerHTML = GameState.player.name;
@@ -87,7 +80,6 @@ function randomNumber(min, max) {
 
 export {
     addOption,
-    addText,
     displayOutput,
     randomNumber,
 };

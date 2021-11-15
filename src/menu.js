@@ -1,29 +1,76 @@
+import config from './config.js';
 import Data from './data.js';
 import Game from './game.js';
-import config from './config.js';
+import Player from './player.js';
 
 export default {
-    handleState() {
+    charactersPerLine: (Data.menus.output.width - 2) * 2,
+    outputText: [],
+    selectedOptionIndex: 0,
+    currentMenu: '',
+    showText: false,
 
+    handleState() {
+        switch(this.currentMenu) {
+            case 'exploration':
+                this.drawQuickStatBox();
+                this.drawExplorationMenu();
+                break;
+            default:
+                this.drawOutputWindow();
+                break;
+        }
+
+        const currentOptionIndexIsEven = (this.selectedOptionIndex % 2 == 0);
+
+        if ('Escape' in Game.keysDown || ('Enter' in Game.keysDown && !this.currentMenu)) {
+            this.resetMenu();
+            this.closeOutputWindow();
+            Game.changeState('exploration');
+        } else if ('Enter' in Game.keysDown) {
+            if (this.currentMenu) {
+                Data.menus[this.currentMenu].options[this.selectedOptionIndex].action(Player);
+            }
+        } else if ('ArrowUp' in Game.keysDown && this.nextSelectionInRange(-2)) {
+            this.selectedOptionIndex -= 2;
+        } else if ('ArrowDown' in Game.keysDown && this.nextSelectionInRange(2)) {
+            this.selectedOptionIndex += 2;
+        } else if ('ArrowLeft' in Game.keysDown && this.nextSelectionInRange(-1) && !currentOptionIndexIsEven) {
+            this.selectedOptionIndex -= 1;
+        } else if ('ArrowRight' in Game.keysDown && this.nextSelectionInRange(1) && currentOptionIndexIsEven) {
+            this.selectedOptionIndex += 1;
+        }
+
+        this.drawArrow();
+        Game.keysDown = {};
+
+        if (this.showText && this.outputText.length) {
+            this.drawOutputWindow();
+        }
+    },
+
+    nextSelectionInRange(indexDelta) {
+        const nextIndex = this.selectedOptionIndex + indexDelta;
+        return nextIndex >= 0 && nextIndex < Data.menus[this.currentMenu].options.length;
     },
 
     drawQuickStatBox() {
-        const menu = Data.menus.quickStat;
-        const leftEdge = 3 * config.tileWidth;
-        const topEdge = 2 * config.tileHeight;
-
-        this.drawBorder(menu, leftEdge, topEdge);
-        menu.text.forEach(textData => {
-            const x = leftEdge + (textData.x * config.tileWidth);
-            const y = topEdge + (textData.y * config.tileHeight);
-            this.displayText(textData, x, y);
-        });
+        this.drawMenu(Data.menus.quickStat);
     },
 
-    drawBorder(menu, x, y) {
+    drawMenu(menu) {
+        this.drawBorder(menu);
+        if (menu.text) {
+            this.drawMenuText(menu);
+        } else {
+            this.drawOutputText();
+        }
+    },
+
+    drawBorder(menu) {
         menu.layout.forEach((frame, index) => {
-            const posX = (index % menu.width) * config.tileWidth + x;
-            const posY = Math.floor(index / menu.width) * config.tileHeight + y;
+            const posX = (menu.x + index % menu.width) * config.tileWidth;
+            const posY = Math.floor(menu.y + index / menu.width) * config.tileHeight;
 
             this.drawFrame(frame, posX, posY);
         });
@@ -35,6 +82,14 @@ export default {
 
         Game.context.drawImage(Game.imgMenu, imgX, imgY, config.tileWidth, config.tileHeight,
             posX, posY, config.tileWidth, config.tileHeight);
+    },
+
+    drawMenuText(menu) {
+        menu.text.forEach(textData => {
+            const x = (menu.x * config.tileWidth) + (textData.x * config.tileWidth);
+            const y = (menu.y * config.tileHeight) + (textData.y * config.tileHeight);
+            this.displayText(textData, x, y);
+        });
     },
 
     displayText(textData, x, y) {
@@ -52,11 +107,37 @@ export default {
                 posX = x - (index * config.fontWidth);
             }
 
-            this.displayCharacter(character, posX, y);
+            this.displayTextCharacter(character, posX, y);
         });
     },
 
-    displayCharacter(character, posX, posY) {
+    addText(text) {
+        let words = text.split(' ');
+        let line = '';
+        words.forEach(word => {
+            if (line.length + word.length + 1 > this.charactersPerLine) {
+                this.outputText.push(line);
+                line = '';
+            }
+
+            line += word + ' ';
+        });
+        this.outputText.push(line);
+        this.outputText = this.outputText.slice(Math.max(this.outputText.length - 5, 0));
+    },
+
+    drawOutputText() {
+        this.outputText.forEach((line, lineIndex) => {
+            for (let i = 0; i < line.length; i++) {
+                const baseX = (Data.menus.output.x + (i / 2) + 0.5) % this.charactersPerLine;
+                const baseY = Data.menus.output.y + 0.5 + lineIndex;
+
+                this.displayTextCharacter(line[i], baseX * config.tileWidth, baseY * config.tileHeight);
+            }
+        });
+    },
+
+    displayTextCharacter(character, posX, posY) {
         if (!Data.menus.characters.includes(character)) {
             character = ' ';
         }
@@ -66,5 +147,48 @@ export default {
         let imgY = Math.floor(characterIndex / 13) * config.fontHeight;
         Game.context.drawImage(Game.imgFont, imgX, imgY, config.fontWidth, config.fontHeight,
             posX, posY, config.fontWidth, config.fontHeight);
-    }
+    },
+
+    drawExplorationMenu() {
+        this.drawMenu(Data.menus.exploration);
+    },
+
+    drawArrow() {
+        if (!this.currentMenu || Game.frameNumber < 30) {
+            return;
+        }
+
+        const imgX = Data.menus.arrow.x * config.fontWidth;
+        const imgY = Data.menus.arrow.y * config.fontHeight;
+
+        const currentMenu = Data.menus[this.currentMenu];
+        const posX = (currentMenu.x + currentMenu.options[this.selectedOptionIndex].arrowX) * config.tileWidth;
+        const posY = (currentMenu.y + currentMenu.options[this.selectedOptionIndex].arrowY) * config.tileHeight;
+
+        Game.context.drawImage(Game.imgFont, imgX, imgY, config.fontWidth, config.fontHeight,
+            posX, posY, config.fontWidth, config.fontHeight);
+    },
+
+    resetMenu() {
+        this.currentMenu = '';
+        this.selectedOptionIndex = 0;
+    },
+
+    clearOutputText() {
+        this.outputText = [];
+    },
+
+    drawOutputWindow() {
+        this.drawMenu(Data.menus.output);
+    },
+
+    openOutputWindow() {
+        this.showText = true;
+        this.drawOutputWindow();
+    },
+
+    closeOutputWindow() {
+        this.showText = false;
+        this.clearOutputText();
+    },
 };

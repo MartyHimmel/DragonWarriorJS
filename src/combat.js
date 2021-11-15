@@ -3,6 +3,7 @@ import Game from './game.js';
 import GameState from './state.js';
 import config from './config.js';
 import map from './map.js';
+import Menu from './menu.js';
 import player from './player.js';
 import text from './text.js';
 import { randomNumber } from './utils.js';
@@ -20,8 +21,11 @@ export default {
 	initiative_round: true,
 
 	handleState() {
-		this.draw_screen();
+		this.drawScreen();
 		Game.draw_enemy(this.enemy_ptr);
+		Menu.drawOutputWindow();
+		Menu.drawQuickStatBox();
+
 		if (this.initiative_round === true) {
 			this.initiative();
 		}
@@ -33,6 +37,7 @@ export default {
 		if ('KeyX' in Game.keysDown) {
 			this.enemy_ptr = null;
 			Game.changeState('exploration');
+			Menu.clearOutputText();
 		}
 	},
 
@@ -98,7 +103,7 @@ export default {
 	// Draw functions
 	// -------------------------------------------------------------------
 
-	draw_screen: function() {
+	drawScreen: function() {
 		if (Data.maps[map.current_map].type === 'dungeon') {
 			Game.clear();
 			Game.context.fillStyle = "#FFFFFF";
