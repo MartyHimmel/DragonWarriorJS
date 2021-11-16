@@ -364,6 +364,10 @@ const Game = {
 		this.changeState('menu');
 		this.keysDown = {};
 	},
+
+	frameInRange(min, max) {
+		return this.frameNumber >= min && this.frameNumber <= max;
+	},
 };
 
 export default Game;

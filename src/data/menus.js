@@ -1,4 +1,5 @@
 import GameState from '../state.js';
+import text from '../text.js';
 
 export default {
     characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,""\'\'?!*&()-:; ',
@@ -35,8 +36,6 @@ export default {
         height: 5,
         x: 8,
         y: 1,
-        arrowStartX: 8.5,
-        arrowStartY: 2,
         layout: [
             0, 1, 4, 4, 4, 4, 1, 2,
             3, 4, 4, 4, 4, 4, 4, 5,
@@ -76,6 +75,7 @@ export default {
                 arrowY: 2,
                 name: 'status',
                 action: player => {
+                    player.displayStatusMenu();
                 }
             },
             {
@@ -97,6 +97,7 @@ export default {
                 arrowY: 3,
                 name: 'door',
                 action: player => {
+                    player.door();
                 }
             },
             {
@@ -126,6 +127,50 @@ export default {
             3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
             3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5,
             6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8,
+        ],
+    },
+    status: {
+        width: 10,
+        height: 11,
+        x: 7,
+        y: 2,
+        layout: [
+            0, 1, 1, 1, 1, 1, 1, 1, 1, 2,
+            3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+            3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+            3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+            3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+            3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+            3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+            3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+            3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+            3, 4, 4, 4, 4, 4, 4, 4, 4, 5,
+            6, 7, 7, 7, 7, 7, 7, 7, 7, 8,
+        ],
+        text: [
+            { x: 5.5, y: 0.5, align: 'right', display() { return 'NAME:'; } },
+            { x: 5.5, y: 0.5, align: 'left',  display() { return GameState.player.name.substr(0, 8); } },
+            { x: 8,   y: 1.5, align: 'right', display() { return 'STRENGTH:'; } },
+            { x: 9.5, y: 1.5, align: 'right', display() { return GameState.player.strength.toString(); } },
+            { x: 8,   y: 2.5, align: 'right', display() { return 'AGILITY:'; } },
+            { x: 9.5, y: 2.5, align: 'right', display() { return GameState.player.agility.toString(); } },
+            { x: 8,   y: 3.5, align: 'right', display() { return 'MAXIMUM HP:'; } },
+            { x: 9.5, y: 3.5, align: 'right', display() { return GameState.player.maxHp.toString(); } },
+            { x: 8,   y: 4.5, align: 'right', display() { return 'MAXIMUM MP:'; } },
+            { x: 9.5, y: 4.5, align: 'right', display() { return GameState.player.maxMp.toString(); } },
+            { x: 8,   y: 5.5, align: 'right', display() { return 'ATTACK POWER:'; } },
+            { x: 9.5, y: 5.5, align: 'right', display() { return GameState.player.attackPower.toString(); } },
+            { x: 8,   y: 6.5, align: 'right', display() { return 'DEFENSE POWER:'; } },
+            { x: 9.5, y: 6.5, align: 'right', display() { return GameState.player.defensePower.toString(); } },
+            { x: 5,   y: 7.5, align: 'right', display() { return 'WEAPON:'; } },
+            { x: 5,   y: 7.5, align: 'left',  display() { return text.weapons[GameState.player.weapon].split(' ')[0]; } },
+            { x: 5,   y: 8  , align: 'left',  display() { return text.weapons[GameState.player.weapon].split(' ')[1] || ''; } },
+            { x: 5,   y: 8.5, align: 'right', display() { return 'ARMOR:'; } },
+            { x: 5,   y: 8.5, align: 'left',  display() { return text.armors[GameState.player.armor].split(' ')[0]; } },
+            { x: 5,   y: 9,   align: 'left',  display() { return text.armors[GameState.player.armor].split(' ')[1] || ''; } },
+            { x: 5,   y: 9.5, align: 'right', display() { return 'SHIELD:'; } },
+            { x: 5,   y: 9.5, align: 'left',  display() { return text.shields[GameState.player.shield].split(' ')[0]; } },
+            { x: 5,   y: 10,  align: 'left',  display() { return text.shields[GameState.player.shield].split(' ')[1] || ''; } },
         ],
     },
 };

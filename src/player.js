@@ -292,16 +292,16 @@ export default {
 	// Item management
 	// -------------------------------------------------------------------
 
-	door: function () {
-		var x = this.offset_x + (this.x / config.tileWidth),
-			y = this.offset_y + (this.y / config.tileHeight),
-			door = null;
+	door() {
+		const x = this.offset_x + (this.x / config.tileWidth);
+		const y = this.offset_y + (this.y / config.tileHeight);
+		let door = null;
 
 		switch (this.facingDirection) {
-			case "left":  door = map.get_door(x - 1, y); break;
-			case "right": door = map.get_door(x + 1, y); break;
-			case "up":    door = map.get_door(x, y - 1); break;
-			case "down":  door = map.get_door(x, y + 1); break;
+			case 'left':  door = map.get_door(x - 1, y); break;
+			case 'right': door = map.get_door(x + 1, y); break;
+			case 'up':    door = map.get_door(x, y - 1); break;
+			case 'down':  door = map.get_door(x, y + 1); break;
 		}
 
 		if (door !== null) {
@@ -317,27 +317,25 @@ export default {
 		let character = null;
 
 		switch (this.facingDirection) {
-			case 'left':
-				character = map.get_npc(x - 1, y);
-				break;
-			case 'right':
-				character = map.get_npc(x + 1, y);
-				break;
-			case 'up':
-				character = map.get_npc(x, y - 1);
-				break;
-			case 'down':
-				character = map.get_npc(x, y + 1);
-				break;
+			case 'left':  character = map.get_npc(x - 1, y); break;
+			case 'right': character = map.get_npc(x + 1, y); break;
+			case 'up':    character = map.get_npc(x, y - 1); break;
+			case 'down':  character = map.get_npc(x, y + 1); break;
 		}
 
 		Menu.openOutputWindow();
+
 		if (character && typeof character.talk === 'function') {
 			character.talk(script);
 		} else {
 			Menu.addText(text.menu.talk_none);
 		}
+
 		Menu.resetMenu();
+	},
+
+	displayStatusMenu() {
+		Game.openMenu('status');
 	},
 
 	add_item: function(item) {

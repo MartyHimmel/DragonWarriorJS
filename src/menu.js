@@ -16,6 +16,11 @@ export default {
                 this.drawQuickStatBox();
                 this.drawExplorationMenu();
                 break;
+            case 'status':
+                this.drawQuickStatBox();
+                this.drawExplorationMenu();
+                this.drawStatusMenu();
+                break;
             default:
                 this.drawOutputWindow();
                 break;
@@ -23,25 +28,28 @@ export default {
 
         const currentOptionIndexIsEven = (this.selectedOptionIndex % 2 == 0);
 
-        if ('Escape' in Game.keysDown || ('Enter' in Game.keysDown && !this.currentMenu)) {
+        if ('Escape' in Game.keysDown || ('Enter' in Game.keysDown && this.isLastWindow())) {
             this.resetMenu();
             this.closeOutputWindow();
             Game.changeState('exploration');
-        } else if ('Enter' in Game.keysDown) {
-            if (this.currentMenu) {
-                Data.menus[this.currentMenu].options[this.selectedOptionIndex].action(Player);
-            }
-        } else if ('ArrowUp' in Game.keysDown && this.nextSelectionInRange(-2)) {
-            this.selectedOptionIndex -= 2;
-        } else if ('ArrowDown' in Game.keysDown && this.nextSelectionInRange(2)) {
-            this.selectedOptionIndex += 2;
-        } else if ('ArrowLeft' in Game.keysDown && this.nextSelectionInRange(-1) && !currentOptionIndexIsEven) {
-            this.selectedOptionIndex -= 1;
-        } else if ('ArrowRight' in Game.keysDown && this.nextSelectionInRange(1) && currentOptionIndexIsEven) {
-            this.selectedOptionIndex += 1;
         }
 
-        this.drawArrow();
+        if (!this.isLastWindow()) {
+            if ('Enter' in Game.keysDown) {
+                Data.menus[this.currentMenu].options[this.selectedOptionIndex].action(Player);
+            } else if ('ArrowUp' in Game.keysDown && this.nextSelectionInRange(-2)) {
+                this.selectedOptionIndex -= 2;
+            } else if ('ArrowDown' in Game.keysDown && this.nextSelectionInRange(2)) {
+                this.selectedOptionIndex += 2;
+            } else if ('ArrowLeft' in Game.keysDown && this.nextSelectionInRange(-1) && !currentOptionIndexIsEven) {
+                this.selectedOptionIndex -= 1;
+            } else if ('ArrowRight' in Game.keysDown && this.nextSelectionInRange(1) && currentOptionIndexIsEven) {
+                this.selectedOptionIndex += 1;
+            }
+
+            this.drawArrow();
+        }
+
         Game.keysDown = {};
 
         if (this.showText && this.outputText.length) {
@@ -153,8 +161,13 @@ export default {
         this.drawMenu(Data.menus.exploration);
     },
 
+    isLastWindow() {
+        const menus = ['', 'status'];
+        return menus.includes(this.currentMenu);
+    },
+
     drawArrow() {
-        if (!this.currentMenu || Game.frameNumber < 30) {
+        if (this.isLastWindow() || Game.frameInRange(0, 14) || Game.frameInRange(30, 44)) {
             return;
         }
 
@@ -190,5 +203,9 @@ export default {
     closeOutputWindow() {
         this.showText = false;
         this.clearOutputText();
+    },
+
+    drawStatusMenu() {
+        this.drawMenu(Data.menus.status);
     },
 };

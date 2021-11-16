@@ -107,12 +107,11 @@ export default {
 		return null;
 	},
 
-	get_door: function (x, y) {
-		var number_of_doors, i;
-
+	get_door(x, y) {
 		if (typeof this.map_ptr.doors !== 'undefined') {
-			number_of_doors = this.map_ptr.doors.length;
-			for (i=0; i<number_of_doors; i++) {
+			let numberOfDoors = this.map_ptr.doors.length;
+
+			for (let i = 0; i < numberOfDoors; i++) {
 				//TODO: only consider if not already opened.
 				if (this.map_ptr.doors[i].x === x && this.map_ptr.doors[i].y === y) {
 					return this.map_ptr.doors[i];
