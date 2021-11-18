@@ -7,7 +7,6 @@ import config from './config.js';
 import map from './map.js';
 import script from './script.js';
 import text from './text.js';
-import { addOption } from './utils.js';
 
 export default {
 	// Map collision tiles
@@ -197,6 +196,7 @@ export default {
 		if (this.steps > prev_steps) {
 			if (combat.random_encounter() === true) {
 				Game.changeState('combat');
+				Menu.open('combat', combat);
 			}
 		}
 	},
@@ -283,9 +283,7 @@ export default {
 
 		Object.keys(GameState.player.spells).forEach(function (spellId) {
 			let spell = GameState.player.spells[spellId];
-			if ((Game.state === "combat" && spell.show_in_combat) || (Game.state === "exploration" && spell.show_in_explore)) {
-				addOption(text.spells[spellId], text.spells[spellId], "spell");
-			}
+
 		});
 	},
 
@@ -335,7 +333,7 @@ export default {
 	},
 
 	displayStatusMenu() {
-		Game.openMenu('status');
+		Menu.open('status');
 	},
 
 	add_item: function(item) {

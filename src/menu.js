@@ -9,6 +9,7 @@ export default {
     selectedOptionIndex: 0,
     currentMenu: '',
     showText: false,
+    actionTarget: null,
 
     handleState() {
         switch(this.currentMenu) {
@@ -20,6 +21,15 @@ export default {
                 this.drawQuickStatBox();
                 this.drawExplorationMenu();
                 this.drawStatusMenu();
+                break;
+            case 'combat':
+                this.drawQuickStatBox();
+                this.drawCombatMenu();
+                this.drawOutputWindow();
+                break;
+            case 'action':
+                this.drawQuickStatBox();
+                this.drawOutputWindow();
                 break;
             default:
                 this.drawOutputWindow();
@@ -36,7 +46,7 @@ export default {
 
         if (!this.isLastWindow()) {
             if ('Enter' in Game.keysDown) {
-                Data.menus[this.currentMenu].options[this.selectedOptionIndex].action(Player);
+                Data.menus[this.currentMenu].options[this.selectedOptionIndex].action(this.actionTarget);
             } else if ('ArrowUp' in Game.keysDown && this.nextSelectionInRange(-2)) {
                 this.selectedOptionIndex -= 2;
             } else if ('ArrowDown' in Game.keysDown && this.nextSelectionInRange(2)) {
@@ -207,5 +217,26 @@ export default {
 
     drawStatusMenu() {
         this.drawMenu(Data.menus.status);
+    },
+
+    drawCombatMenu() {
+        this.drawMenu(Data.menus.combat);
+    },
+
+    open(type, target = null) {
+        this.currentMenu = type;
+        this.actionTarget = target;
+        Game.keysDown = {};
+    },
+
+    change(type) {
+        this.currentMenu = type;
+        Game.keysDown = {};
+    },
+
+    close() {
+        this.currentMenu = '';
+        this.actionTarget = null;
+        Game.keysDown = {};
     },
 };

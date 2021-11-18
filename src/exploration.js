@@ -8,7 +8,8 @@ export default {
     handleState() {
         if ('Enter' in Game.keysDown) {
             Game.idleFrames = 0;
-            Game.openMenu('exploration');
+            Game.changeState('menu');
+            Menu.open('exploration', player);
         } else if ('ArrowUp' in Game.keysDown) {
             Game.idleFrames = 0;
             player.move('up');

@@ -23,21 +23,13 @@ export default {
 	handleState() {
 		this.drawScreen();
 		Game.draw_enemy(this.enemy_ptr);
-		Menu.drawOutputWindow();
-		Menu.drawQuickStatBox();
+		Menu.handleState();
 
 		if (this.initiative_round === true) {
 			this.initiative();
 		}
 		if (this.player_turn === false) {
 			setTimeout(() => this.enemy_attack(), 1000);
-		}
-
-		// DEBUG shortcut
-		if ('KeyX' in Game.keysDown) {
-			this.enemy_ptr = null;
-			Game.changeState('exploration');
-			Menu.clearOutputText();
 		}
 	},
 
@@ -145,9 +137,9 @@ export default {
 		this.initiative_round = false;
 	},
 
-	player_attack: function() {
-		var hit = false,
-		    damage = 0;
+	playerAttack() {
+		let hit = false;
+		let damage = 0;
 
 		if (this.player_turn === true) {
 			Game.display_text(text.combat.player.attack, { player_name: GameState.player.name });
@@ -155,27 +147,28 @@ export default {
 				hit = true;
 			}
 
-			if (hit) {
-				if (randomNumber(1, 32) === 1 && this.enemy_ptr !== (38 || 39)) {
-					Game.display_text(text.combat.player.hit_critical);
-					damage = Math.floor(randomNumber(GameState.player.attackPower / 2, GameState.player.attackPower));
-				} else {
-					damage = Math.floor(randomNumber((GameState.player.attackPower - this.enemy_ptr.agility) / 4,
-						(GameState.player.attackPower - this.enemy_ptr.agility) / 2));
-				}
-
-				if (damage < 0) { damage = 0; }
-				Game.display_text(text.combat.player.hit, { enemy: this.enemy_id, number: damage});
-				this.enemy_current_hp -= damage;
-
-				if (this.enemy_current_hp <= 0) {
-					this.player_turn = true;
-					this.victory();
-				} else {
-					this.player_turn = false;
-				}
-			} else {
+			if (!hit) {
 				Game.display_text(text.combat.enemy.dodge);
+				this.player_turn = false;
+				return;
+			}
+
+			if (randomNumber(1, 32) === 1 && this.enemy_ptr !== (38 || 39)) {
+				Game.display_text(text.combat.player.hit_critical);
+				damage = Math.floor(randomNumber(GameState.player.attackPower / 2, GameState.player.attackPower));
+			} else {
+				damage = Math.floor(randomNumber((GameState.player.attackPower - this.enemy_ptr.agility) / 4,
+					(GameState.player.attackPower - this.enemy_ptr.agility) / 2));
+			}
+
+			if (damage < 0) { damage = 0; }
+			Game.display_text(text.combat.player.hit, { enemy: this.enemy_id, number: damage});
+			this.enemy_current_hp -= damage;
+
+			if (this.enemy_current_hp <= 0) {
+				this.player_turn = true;
+				this.victory();
+			} else {
 				this.player_turn = false;
 			}
 		}
@@ -189,7 +182,8 @@ export default {
 
 	},
 
-	player_run: function() {
+	playerRun: function() {
+		Menu.change('action');
 		if (this.player_turn === true) {
 			var modifier = 0,
 			    rand1 = randomNumber(0, 255),
@@ -217,9 +211,11 @@ export default {
 
 			if ((GameState.player.agility * rand1) < (enemy_agility * rand2 * modifier)) {
 				Game.display_text(text.combat.player.run_blocked);
+				Menu.change('combat');
 			} else {
 				this.player_turn = true;
 				Game.changeState('exploration', 500);
+				Menu.close();
 			}
 		}
 	},

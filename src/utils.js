@@ -6,33 +6,8 @@ import map from './map.js';
 import player from './player.js';
 import text from './text.js';
 
-function addOption(name, value, list_id) {
-    var option_to_add = document.createElement('option');
-    option_to_add.id = name;
-    option_to_add.text = name;
-    option_to_add.value = value;
-
-    if (document.getElementById(list_id).namedItem(name) === null) {
-        document.getElementById(list_id).add(option_to_add);
-    }
-}
-
 // display stats, equipment, commands, and other options (side bars)
 function displayOutput() {
-    document.querySelector('#character_name').innerHTML = GameState.player.name;
-    document.querySelector('#level').innerHTML = GameState.player.level;
-    document.querySelector('#max_hp').innerHTML = GameState.player.maxHp;
-    document.querySelector('#current_hp').innerHTML = GameState.player.currentHp;
-    document.querySelector('#max_mp').innerHTML = GameState.player.maxMp;
-    document.querySelector('#current_mp').innerHTML = GameState.player.currentMp;
-    document.querySelector('#strength').innerHTML = GameState.player.strength;
-    document.querySelector('#agility').innerHTML = GameState.player.agility;
-    document.querySelector('#attack_power').innerHTML = GameState.player.attackPower;
-    document.querySelector('#defense_power').innerHTML = GameState.player.defensePower;
-    document.querySelector('#weapon').innerHTML = text.weapons[GameState.player.weapon];
-    document.querySelector('#armor').innerHTML = text.armors[GameState.player.armor];
-    document.querySelector('#shield').innerHTML = text.shields[GameState.player.shield];
-
     document.querySelector('#output').innerHTML = `frame: ${Game.frameNumber}<br>
         player.x / 32 = ${player.x / config.tileWidth}<br>
         player.y / 32 = ${player.y / config.tileHeight}<br>
@@ -53,25 +28,7 @@ function displayOutput() {
         "Game State = " + Game.state + "<br>" +
         "Number of NPCS = " + npcCount + "<br>" +
         "<hr>" +
-        "Rescued Princess? = " + GameState.rescuedPrincess + "<br>" +
-        "<hr>";
-
-    // Commands
-    if (Game.state === "combat") {
-        document.querySelector('#fight').onclick = function() {
-            combat.player_attack();
-        };
-        document.querySelector('#run').onclick = function() {
-            combat.player_run();
-        };
-    } else if (Game.state === 'exploration') {
-        document.querySelector('#door').onclick = function() {
-            player.door();
-        };
-        document.querySelector('#talk').onclick = function() {
-            player.talk();
-        };
-    }
+        "Rescued Princess? = " + GameState.rescuedPrincess + "<br>";
 }
 
 function randomNumber(min, max) {
@@ -79,7 +36,6 @@ function randomNumber(min, max) {
 }
 
 export {
-    addOption,
     displayOutput,
     randomNumber,
 };

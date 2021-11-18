@@ -2,7 +2,7 @@ import GameState from '../state.js';
 import text from '../text.js';
 
 export default {
-    characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,""\'\'?!*&()-:; ',
+    characters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,\u201C\u201D\u2018\u2019?!*&()-:; ',
     arrow: { x: 0, y: 6 },
     quickStat: {
         width: 4,
@@ -171,6 +171,56 @@ export default {
             { x: 5,   y: 9.5, align: 'right', display() { return 'SHIELD:'; } },
             { x: 5,   y: 9.5, align: 'left',  display() { return text.shields[GameState.player.shield].split(' ')[0]; } },
             { x: 5,   y: 10,  align: 'left',  display() { return text.shields[GameState.player.shield].split(' ')[1] || ''; } },
+        ],
+    },
+    combat: {
+        width: 8,
+        height: 3,
+        x: 8,
+        y: 1,
+        layout: [
+            0, 1, 4, 4, 4, 4, 1, 2,
+            3, 4, 4, 4, 4, 4, 4, 5,
+            6, 7, 7, 7, 7, 7, 7, 8,
+        ],
+        text: [
+            { x: 2,  y: 0, align: 'left',  display() { return 'COMMAND'; } },
+            { x: 1,  y: 1, align: 'left',  display() { return 'FIGHT'; } },
+            { x: 5,  y: 1, align: 'left',  display() { return 'SPELL'; } },
+            { x: 1,  y: 2, align: 'left',  display() { return 'RUN'; } },
+            { x: 5,  y: 2, align: 'left',  display() { return 'ITEM'; } },
+        ],
+        options: [
+            {
+                arrowX: 0.5,
+                arrowY: 1,
+                name: 'fight',
+                action: combat => {
+                    combat.playerAttack();
+                }
+            },
+            {
+                arrowX: 4.5,
+                arrowY: 1,
+                name: 'spell',
+                action: combat => {
+                }
+            },
+            {
+                arrowX: 0.5,
+                arrowY: 2,
+                name: 'run',
+                action: combat => {
+                    combat.playerRun();
+                }
+            },
+            {
+                arrowX: 4.5,
+                arrowY: 2,
+                name: 'item',
+                action: combat => {
+                }
+            },
         ],
     },
 };

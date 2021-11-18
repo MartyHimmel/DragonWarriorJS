@@ -1,3 +1,4 @@
+import Data from './data.js';
 import Game from './game.js';
 import GameState from './state.js';
 import map from './map.js';
@@ -31,6 +32,13 @@ document.querySelector('#equip_none').onclick = function() {
     GameState.player.armor = "none";
     GameState.player.shield = "none";
 };
+
+Object.keys(Data.maps).forEach(map => {
+    let option = document.createElement('option');
+    option.value = map;
+    option.textContent = map;
+    document.querySelector('#map_name').append(option);
+});
 
 document.querySelector('#move_to_map').onclick = function() {
     map.load_map(document.querySelector('#map_name').value);

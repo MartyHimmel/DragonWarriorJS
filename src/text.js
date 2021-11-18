@@ -12,7 +12,7 @@ export default {
         hand_axe: "Hand Axe",
         broad_sword: "Broad Sword",
         flame_sword: "Flame Sword",
-        erdricks_sword: "Erdrick's Sword"
+        erdricks_sword: "Erdrick\u2019s Sword"
     },
     armors: {
         none: "None",
@@ -22,7 +22,7 @@ export default {
         half_plate: "Half Plate",
         full_plate: "Full Plate",
         magic_armor: "Magic Armor",
-        erdricks_armor: "Erdrick's Armor"
+        erdricks_armor: "Erdrick\u2019s Armor"
     },
     shields: {
         none: "None",
@@ -34,7 +34,7 @@ export default {
         herb: "Herb",
         torch: "Torch",
         magic_key: "Magic Key",
-        dragon_scale: "Dragon's Scale",
+        dragon_scale: "Dragon\u2019s Scale",
         fairy_water: "Fairy Water",
         wyvern_wings: "Wings",
         cursed_belt: "Cursed Belt",
@@ -44,11 +44,11 @@ export default {
         stones_of_sunlight: "Stones of Sunlight",
         staff_of_rain: "Staff of Rain",
         rainbow_drop: "Rainbow Drop",
-        erdricks_tablet: "Erdrick's Tablet",
-        erdricks_token: "Erdrick's Token",
+        erdricks_tablet: "Erdrick\u2019s Tablet",
+        erdricks_token: "Erdrick\u2019s Token",
         ball_of_light: "Ball of Light",
-        fighters_ring: "Fighter's Ring",
-        gwaelins_love: "Gwaelin's Love"
+        fighters_ring: "Fighter\u2019s Ring",
+        gwaelins_love: "Gwaelin\u2019s Love"
     },
     spells: {
         heal: "Heal",
@@ -110,7 +110,7 @@ export default {
         player: {
             attack: "<player_name> attacks!",
             hit_critical: "Excellent move!",
-            hit: "The <enemy>'s Hit Points have been reduced by <number>.",
+            hit: "The <enemy>\u2019s Hit Points have been reduced by <number>.",
             miss: "The attack failed and there was no loss of Hit Points!",
             run: "<player_name> started to run away.",
             run_blocked: "But was blocked in front.",
@@ -173,10 +173,10 @@ export default {
             wings_blocked: "The Wings of the Wyvern cannot be used here.",
             scale: "<player_name> donned the scale of the dragon.",
             scale_twice: "Thou art already wearing the scale of the dragon.",
-            flute: "<player_name> blew the Fairies' Flute.",
+            flute: "<player_name> blew the Fairies\u2019 Flute.",
             flute_golem: "Quietly Golem closes his eyes and settles into sleep.",
-            ring: "<player_name> put on the Fighter's Ring.",
-            ring_twice: "<player_name> adjusted the position of the Fighter's Ring.",
+            ring: "<player_name> put on the Fighter\u2019s Ring.",
+            ring_twice: "<player_name> adjusted the position of the Fighter\u2019s Ring.",
             harp: "<player_name> played a sweet melody on the harp.",
             rainbow_drop: "<player_name> held the Rainbow Drop toward the sky. But no rainbow appeared here.",
             torch_blocked: "A torch can be used only in dark places.",
@@ -201,7 +201,7 @@ export default {
     },
     script: {
         //Common
-        innkeeper1: "Welcome to the traveler's Inn. Room and board is <number> GOLD per night. Dost thou want a room?",
+        innkeeper1: "Welcome to the traveler\u2019s Inn. Room and board is <number> GOLD per night. Dost thou want a room?",
         innkeeper2: "Good night.",
         innkeeper3: [
             "Good morning. Thou seems to have spent a good night.",
@@ -212,8 +212,8 @@ export default {
         item_store1: "Welcome. We deal in tools. What can I do for thee?",
         key_sales1: "Magic keys! They will unlock any door. Dost thou wish to purchase one for <number> GOLD?",
         key_sales2: "Here,take this key. Dost thou wish to purchase more?",
-        fairy_water1: "Will thou buy some Fairy Water for <number> GOLD to keep the Dragonlord's minions away?",
-        fairy_water2: "I thank thee. Won't thou buy one more bottle?",
+        fairy_water1: "Will thou buy some Fairy Water for <number> GOLD to keep the Dragonlord\u2019s minions away?",
+        fairy_water2: "I thank thee. Won\u2019t thou buy one more bottle?",
         erdrick_proof: "Art thou the descendant of Erdrick? Hast thou any proof?",
         save_us: "Please, save us from the minions of the Dragonlord.",
         //Tantegel (throne room)
@@ -260,18 +260,18 @@ export default {
         tantegel_soldier9: "I am looking for the castle cellar. I heard it is not easily found.",
         tantegel_soldier10: "In Garinham, look for the grave of Garin. Thou must push on a wall of darkness there.",
         tantegel_merchant1: "We are merchants who have traveled much in this land. Many of our colleagues have been killed by servants of the Dragonlord.",
-        tantegel_merchant2: "Rumor has it that entire towns have been destroyed by the Dragonlord's servants.",
-        tantagel_old_man1: "<player_name>'s coming was foretold by legend. May the light shine upon this brave warrior.",
+        tantegel_merchant2: "Rumor has it that entire towns have been destroyed by the Dragonlord\u2019s servants.",
+        tantagel_old_man1: "<player_name>\u2019s coming was foretold by legend. May the light shine upon this brave warrior.",
         tantagel_old_man2: [
             "Let us wish the warrior well!",
             "May the light be thy strength!"
         ],
-        tantegel_man1: "There was a time when Brecconary was a paradise. Then the Dragonlord's minions came.",
+        tantegel_man1: "There was a time when Brecconary was a paradise. Then the Dragonlord\u2019s minions came.",
         tantegel_man2: "To become strong enough to face future trials thou must first battle many foes.",
         tantegel_woman1: "Thank you for saving the Princess.",
         tantegel_woman2: [
             "When the sun and rain meet, a Rainbow Bridge shall appear.",
-            "It's a legend."
+            "It\u2019s a legend."
         ],
         //Tantegel basement
         tantegel_basement_old_man1: "Thou hast no business here. Go away.",
@@ -288,7 +288,7 @@ export default {
         brecconary_woman2: "No, I am not Princess Gwaelin.",
         brecconary_old_man1: "Watch thy Hit Points when in the Poisonous Marsh.",
         brecconary_old_man2: "If thou art cursed, come again.",
-        brecconary_soldier1: "Some say that Garin's grave is home to a Silver Harp.",
+        brecconary_soldier1: "Some say that Garin\u2019s grave is home to a Silver Harp.",
         brecconary_soldier2: [
             "Many have been the warriors who have perished on this quest.",
             "But for thee I wish success, <player_name>."
@@ -305,8 +305,8 @@ export default {
         kol_old_man3: "This is the village of Kol.",
         kol_old_man4: "In legends it is said that fairies know how to put Golem to sleep.",
         kol_soldier1: "Rimuldar is the place to buy keys.",
-        kol_soldier2: "Golem is afraid of the music of the flute, so 'tis said.",
-        kol_soldier3: "East of Hauksness there is a town, 'tis said, where one may purchase weapons of extraordinary quality.",
+        kol_soldier2: "Golem is afraid of the music of the flute, so \u2019tis said.",
+        kol_soldier3: "East of Hauksness there is a town, \u2019tis said, where one may purchase weapons of extraordinary quality.",
         kol_merchant1: "Hast thou been to the southern island?",
         kol_woman1: "This bath cures rheumatism.",
         kol_man1: [
@@ -317,9 +317,9 @@ export default {
         garinham_old_man1: "Garin, a wandering minstrel of legendary fame, is said to have built this town.",
         garinham_old_man2: "Many believe that Princess Gwaelin is hidden away in a cave.",
         garinham_old_man3: "The harp attracts enemies. Stay away from the grave in Garinham.",
-        garinham_old_man4: "They say that Erdrick's armor was hidden long ago.",
+        garinham_old_man4: "They say that Erdrick\u2019s armor was hidden long ago.",
         garinham_soldier1: "I have heard of one named Nester. Dost thou know such a one?",
-        garinham_soldier2: "I'm too busy. Ask the other guard.",
+        garinham_soldier2: "I\u2019m too busy. Ask the other guard.",
         garinham_woman1: "Welcome to Garinham. May thy stay be a peaceful one.",
         garinham_woman2: "I hate people! Go! Leave me!",
         garinham_man1: "It is said that the Princess was kidnapped and taken eastward.",
@@ -329,7 +329,7 @@ export default {
         rimuldar_woman1: "Who art thou? Leave at once or I will call my friends.",
         rimuldar_woman2: "No, I have no tomatoes. I have no tomatoes today.",
         rimuldar_woman3: "Before long the enemy will arrive.",
-        rimuldar_woman4: "Orwick is late again. I'm starving.",
+        rimuldar_woman4: "Orwick is late again. I\u2019m starving.",
         rimuldar_soldier1: "The scales of the Dragonlord are as hard as steel.",
         rimuldar_soldier2: "You are <player_name>? It has been long since last we met.",
         rimuldar_soldier3: "Is that a wedding ring? Thou seems too young to be married.",
@@ -341,18 +341,18 @@ export default {
         rimuldar_old_man1: "Good day,I am Howard. Four steps south of the bath in Kol thou shalt find a magic item.",
         rimuldar_old_man2: [
             "Over the western part of this island Erdrick created a rainbow.",
-            "'Tis also said that he entered the darkness from a hidden entrance in the room of the Dragonlord."
+            "\u2019Tis also said that he entered the darkness from a hidden entrance in the room of the Dragonlord."
         ],
         rimuldar_old_man3: "This is a magic place. Hast thou found a magic temple?",
         rimuldar_merchant1: "Welcome!",
         //Cantlin
         cantlin_soldier1: "Welcome to Cantlin, the castle town.",
         cantlin_soldier2: [
-            "It is said that many have held Erdrick's armor.",
+            "It is said that many have held Erdrick\u2019s armor.",
             "The last to have it was a fellow named Wynn."
         ],
         cantlin_soldier3: [
-            "'Tis said that the Dragonlord hath claws that can cleave iron and fiery breath that can melt stone.",
+            "\u2019Tis said that the Dragonlord hath claws that can cleave iron and fiery breath that can melt stone.",
             "Dost thou still wish to go on?"
         ],
         cantlin_soldier4: "Thou art truly brave.",
@@ -362,8 +362,8 @@ export default {
         cantlin_merchant3: "My Grandfather Wynn once had a shop on the east side of Hauksness.",
         cantlin_woman1: "What shall I get for thy dinner?",
         cantlin_woman2: "I know nothing.",
-        cantlin_man1: "I'm Nester. Hey, where am I? No, don't tell me!",
-        cantlin_old_man1: "'Tis said that Erdrick's sword could cleave steel.",
+        cantlin_man1: "I\u2019m Nester. Hey, where am I? No, don\u2019t tell me!",
+        cantlin_old_man1: "\u2019Tis said that Erdrick\u2019s sword could cleave steel.",
         cantlin_old_man2: "To learn how proof may be obtained that thy ancestor was the great Erdrick, see a man in this very town.",
         cantlin_old_man3: [
             "Let us wish the warrior well!",
@@ -386,18 +386,19 @@ export default {
         ],
         dragonlord4: "Thou art a fool!"
     }
+};
 /*
 UNSORTED
 ########
-"The <enemy>'s spell hath been blocked."
-"<player_name>'s spell is blocked."
+"The <enemy>\u2019s spell hath been blocked."
+"<player_name>\u2019s spell is blocked."
 "<enemy> looks happy."
 <player_name> cannot yet use the spell.
 Thy body is being squeezed.
 The <item> is squeezing thy body.
 Thou cannot enter here.
 "Thou art strong enough!\nWhy can thou not defeat the Dragonlord?"
-"Good morning.\nThou hast had a good night's sleep I hope."
+"Good morning.\nThou hast had a good night\u2019s sleep I hope."
 "All the best to thee."
 "I will see thee later."
 "Thou hast not enough money."
@@ -415,7 +416,7 @@ Thou cannot enter here.
 "Thou hast not enough money."
 "The <item>?\nThank you very much."
 "What dost thou want?"
-"Oh, yes?\nThat's too bad."
+"Oh, yes?\nThat\u2019s too bad."
 "Is that Okay.?"
 "The <item>?"
 "Then I will buy thy <item> for <number> GOLD."
@@ -459,7 +460,7 @@ Thou cannot enter here.
 "I am Gwaelin, daughter of Lorik."
 "But thou must."
 Princess Gwaelin embraces thee.
-"I'm so happy!"
+"I\u2019m so happy!"
 "Forever shall I be grateful for the gift of my daughter returned to her home, \n<player_name>.\nAccept my thanks."
 "Now, Gwaelin, come to my side."
 Gwaelin then whispers:\n"Wait a moment, please.\nI would give a present to <player_name>."
@@ -520,7 +521,7 @@ Gwaelin said:\n"Please, wait."
 "Thou hast brought us peace, again."
 "Come now, King Lorik awaits."
 And thus the tale comes to an end....\nunless the dragons return again.
-"Will thou tell me now of thy deeds so they won't be forgotten?"
+"Will thou tell me now of thy deeds so they won\u2019t be forgotten?"
 "Thy deeds have been recorded on the Imperial Scrolls of Honor."
 "Dost thou wish to continue thy quest?"
 "Rest then for awhile."
@@ -528,11 +529,4 @@ And thus the tale comes to an end....\nunless the dragons return again.
 Unfortunately, NO deeds were recorded on Imperial Scroll number <number>.
 CONGRATULATIONS\nTHOU HAST RESTORED PEACE UNTO THE WORLD\nBUT THERE ARE MANY ROADS YET TO TRAVEL\nMAY THE LIGHT SHINE UPON THEE DRAGON WARRIOR
 
-
-NOT NEEDED
-##########
-"There are no stairs here."
-Please push RESET, hold it in, then turn off the POWER.
-If you turn the power off first, the Imperial Scroll of Honor containing your \ndeeds may be lost.
 */
-};

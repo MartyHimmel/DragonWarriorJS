@@ -79,6 +79,7 @@ const Game = {
 			Menu.handleState();
 		} else if (this.state === 'combat') {
 			combat.handleState();
+			Menu.handleState();
 		}
 
 		displayOutput();
@@ -115,45 +116,16 @@ const Game = {
 		this.imgFont.src = config.sprites.font;
 	},
 
-	changeCommandSet() {
-		if (Game.state === 'exploration') {
-			document.querySelector('#commands').innerHTML = `
-				<input type="button" id="talk" value="Talk">
-				<input type="button" id="door" value="Door"><br>
-				<input type="button" id="search" value="Search">
-				<input type="button" id="take" value="Take"><br>
-				<select id="spell" size="6"></select>
-				<select id="item" size="6"></select><br>
-				<input type="button" id="cast_spell" value="Cast">
-				<input type="button" id="use_item" value="Use">`;
-		}
-
-		if (Game.state === 'combat') {
-			document.querySelector('#commands').innerHTML = `
-				<input type="button" id="fight" value="Fight">
-				<input type="button" id="run" value="Run"><br>
-				<select id="spell" size="6"></select>
-				<select id="item" size="6"></select>
-				<input type="button" id="cast_spell" value="Cast">
-				<input type="button" id="use_item" value="Use">`;
-		}
-	},
-
 	changeState(newState, delay = 0) {
 		if (!this.possibleStates.includes(newState)) {
 			return;
 		}
 
 		if (delay > 0) {
-			setTimeout(() => this.setState(newState), delay);
+			setTimeout(() => this.state = newState, delay);
 		} else {
-			this.setState(newState);
+			this.state = newState;
 		}
-	},
-
-	setState(newState) {
-		this.state = newState;
-		this.changeCommandSet();
 	},
 
 	clear() {
@@ -352,17 +324,11 @@ const Game = {
 	// draw single tile frame from sprite sheet
 	draw_tile: function (x, y, frame_number) {
 		// find horizontal and vertical position of tile to be drawn
-		var pos_x = (frame_number % 12) * config.tileWidth,
-		    pos_y = Math.floor(frame_number / 12) * config.tileHeight;
+		let pos_x = (frame_number % 12) * config.tileWidth;
+		let pos_y = Math.floor(frame_number / 12) * config.tileHeight;
 
 		this.context.drawImage(this.imgTiles, pos_x, pos_y, config.tileWidth, config.tileHeight,
 			x, y, config.tileWidth, config.tileHeight);
-	},
-
-	openMenu(type) {
-		Menu.currentMenu = type;
-		this.changeState('menu');
-		this.keysDown = {};
 	},
 
 	frameInRange(min, max) {
