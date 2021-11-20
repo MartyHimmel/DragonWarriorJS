@@ -10,7 +10,7 @@ export default {
         x: 3,
         y: 2,
         layout: [
-            0, 4, 4, 2,
+            0, 1, 1, 2,
             3, 4, 4, 5,
             3, 4, 4, 5,
             3, 4, 4, 5,
@@ -37,7 +37,7 @@ export default {
         x: 8,
         y: 1,
         layout: [
-            0, 1, 4, 4, 4, 4, 1, 2,
+            0, 1, 1, 1, 1, 1, 1, 2,
             3, 4, 4, 4, 4, 4, 4, 5,
             3, 4, 4, 4, 4, 4, 4, 5,
             3, 4, 4, 4, 4, 4, 4, 5,
@@ -90,6 +90,7 @@ export default {
                 arrowY: 3,
                 name: 'stairs',
                 action: player => {
+                    player.stairs();
                 }
             },
             {
@@ -179,7 +180,7 @@ export default {
         x: 8,
         y: 1,
         layout: [
-            0, 1, 4, 4, 4, 4, 1, 2,
+            0, 1, 1, 1, 1, 1, 1, 2,
             3, 4, 4, 4, 4, 4, 4, 5,
             6, 7, 7, 7, 7, 7, 7, 8,
         ],
@@ -195,7 +196,7 @@ export default {
                 arrowX: 0.5,
                 arrowY: 1,
                 name: 'fight',
-                action: combat => {
+                action(combat) {
                     combat.playerAttack();
                 }
             },
@@ -203,14 +204,14 @@ export default {
                 arrowX: 4.5,
                 arrowY: 1,
                 name: 'spell',
-                action: combat => {
+                action(combat) {
                 }
             },
             {
                 arrowX: 0.5,
                 arrowY: 2,
                 name: 'run',
-                action: combat => {
+                action(combat) {
                     combat.playerRun();
                 }
             },
@@ -218,7 +219,7 @@ export default {
                 arrowX: 4.5,
                 arrowY: 2,
                 name: 'item',
-                action: combat => {
+                action(combat) {
                 }
             },
         ],

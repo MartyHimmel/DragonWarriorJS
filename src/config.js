@@ -1,10 +1,13 @@
 export default {
     screenTilesWide: 25,
     screenTileHigh: 15,
+    offsetX: 12,
+    offsetY: 6,
     tileWidth: 32,
     tileHeight: 32,
     fontWidth: 16,
     fontHeight: 16,
+    movementSpeed: 12,
     sprites: {
         battle: 'assets/sprites/battle.png',
         characters: 'assets/sprites/characters.png',

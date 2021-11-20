@@ -9,12 +9,10 @@ import text from './text.js';
 // display stats, equipment, commands, and other options (side bars)
 function displayOutput() {
     document.querySelector('#output').innerHTML = `frame: ${Game.frameNumber}<br>
-        player.x / 32 = ${player.x / config.tileWidth}<br>
-        player.y / 32 = ${player.y / config.tileHeight}<br>
-        player.offset_x = ${player.offset_x}<br>
-        player.offset_y = ${player.offset_y}<br>
+        player.x = ${player.x}<br>
+        player.y = ${player.y}<br>
         steps = ${player.steps}<br>
-        current tile = ${player.current_tile}<br>
+        current tile = ${player.currentTile}<br>
         combat random = ${combat.random_num}<br>
         current zone = ${map.current_zone}<br>
         player turn = ${combat.player_turn}<br>`;

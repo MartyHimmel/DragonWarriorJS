@@ -36,25 +36,25 @@ export default {
 	// Check for random encounters at each step in player.move()
 	random_encounter: function() {
 		if (map.map_ptr.type === "world" || map.map_ptr.type === "dungeon") {
-			if (player.current_tile === 16 ||
-				player.current_tile === 20) {
+			if (player.currentTile === 16 ||
+				player.currentTile === 20) {
 				this.random_num = randomNumber(1, 8);
 				if (this.random_num === 1) {
 					this.randomEnemy();
 					return true;
 				}
 			}
-			if (player.current_tile === 3 ||
-				player.current_tile === 8 ||
-				player.current_tile === 15 ||
-				player.current_tile ===  21) {
+			if (player.currentTile === 3 ||
+				player.currentTile === 8 ||
+				player.currentTile === 15 ||
+				player.currentTile ===  21) {
 				this.random_num = randomNumber(1, 16);
 				if (this.random_num === 1) {
 					this.randomEnemy();
 					return true;
 				}
 			}
-			if (player.current_tile === 14) {
+			if (player.currentTile === 14) {
 				this.random_num = randomNumber(1, 24);
 				if (this.random_num === 1) {
 					this.randomEnemy();

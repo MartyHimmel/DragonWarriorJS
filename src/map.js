@@ -15,8 +15,6 @@ export default {
 	y: 0,
 	current_map: '',
 	map_ptr: null,
-	boundary_right: '',
-	boundary_bottom: '',
 	current_zone: 0,
 	background_music: '',
 
@@ -47,7 +45,7 @@ export default {
 	// 24 water
 	// 25 - 35 coastline
 
-	load_map: function (map_name) {
+	loadMap(map_name) {
 		if (map_name === 'World') {
 			//reset door flags when leaving towns.
 			//TODO: don't reset all flags; some stay unlocked (e.g. throne room).
@@ -55,39 +53,35 @@ export default {
 		}
 
 		player.steps = 0;
-		player.set_position(map_name);
+		player.setPosition(map_name);
 
 		this.current_map = map_name;
 		this.map_ptr = Data.maps[this.current_map];
-		this.boundary_right = this.map_ptr.width - config.screenTilesWide;
-		this.boundary_bottom = this.map_ptr.height - config.screenTileHigh;
 		this.background_music = this.map_ptr.music;
 
 		// audio.stop_music();
 		// audio.play_map_music();
-		this.refresh_map();
+		this.refreshMap();
 	},
 
 	// refresh status of doors/treasure chests
-	refresh_map: function () {
-		var self = this;
-
+	refreshMap() {
 		if (typeof this.map_ptr.doors !== 'undefined') {
-			this.map_ptr.doors.forEach(function (element, index, array) {
+			this.map_ptr.doors.forEach((element, index, array) => {
 				if (GameState.doorsOpened.indexOf(element.id) > -1) {
-					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 4;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 4;
 				} else {
-					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 6;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 6;
 				}
 			});
 		}
 
 		if (typeof this.map_ptr.chests !== 'undefined') {
-			this.map_ptr.chests.forEach(function (element, index, array) {
+			this.map_ptr.chests.forEach((element, index, array) => {
 				if (GameState.chestsOpened.indexOf(element.id) > -1) {
-					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 4;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 4;
 				} else {
-					self.map_ptr.layout[element.x + (element.y * self.map_ptr.width)] = 5;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 5;
 				}
 			});
 		}
@@ -122,39 +116,43 @@ export default {
 		return null;
 	},
 
-	drawViewport: function (map_name, offset_x, offset_y) {
+	drawViewport(map_name, posX, posY) {
+		// Center on screen
+		posX = posX - config.offsetX;
+		posY = posY - config.offsetY;
+
 		const screenTileCount = config.screenTilesWide * config.screenTileHigh;
 
 		for (let i = 0; i < screenTileCount; i++) {
-			Game.draw_tile(this.x, this.y, this.map_ptr.layout[offset_x + (offset_y * this.map_ptr.width)] - 1);
+			Game.draw_tile(this.x, this.y, this.map_ptr.layout[posX + (posY * this.map_ptr.width)] - 1);
 			this.x += config.tileWidth;
-			offset_x++;
+			posX++;
 			if (this.x === config.screenTilesWide * config.tileWidth) {
 				this.x = 0;
 				this.y += config.tileHeight;
-				offset_y++;
-				offset_x -= config.screenTilesWide;
+				posY++;
+				posX -= config.screenTilesWide;
 			}
 		}
 
 		this.y = 0;
 	},
 
-	set_zone: function () {
+	setZone: function () {
 		if (this.current_map === 'World') {
 			// 16 tile square, break world into 8 x 8 grid
-			var x_coord = Math.floor(((player.x / config.tileWidth) + (player.offset_x)) / 16),
-				y_coord = Math.floor(((player.y / config.tileWidth) + (player.offset_y)) / 16),
-			    zone_map = [
-					3,	3,	2,	2,	3,	5,	4,	5,
-					3,	2,	1,	2,	3,	3,	4,	5,
-					4,	1,	0,	0,	1,	3,	4,	5,
-					5,	1,	1,	12,	9,	6,	6,	6,
-					5,	5,	4,	12,	12,	7,	7,	7,
-					10,	9,	8,	12,	12,	12,	8,	7,
-					10,	10,	11,	12,	13,	13,	9,	8,
-					11,	11,	12,	13,	13,	12,	9,	9,
-				];
+			const x_coord = Math.floor(player.x / 16);
+			const y_coord = Math.floor(player.y / 16);
+			const zone_map = [
+				3,	3,	2,	2,	3,	5,	4,	5,
+				3,	2,	1,	2,	3,	3,	4,	5,
+				4,	1,	0,	0,	1,	3,	4,	5,
+				5,	1,	1,	12,	9,	6,	6,	6,
+				5,	5,	4,	12,	12,	7,	7,	7,
+				10,	9,	8,	12,	12,	12,	8,	7,
+				10,	10,	11,	12,	13,	13,	9,	8,
+				11,	11,	12,	13,	13,	12,	9,	9,
+			];
 			this.current_zone = zone_map[x_coord + (y_coord * 8)];
 		}
 		if (this.map_ptr.type === 'dungeon') {
@@ -170,22 +168,16 @@ export default {
 				let link = map.map_links[i];
 
 				if (player.steps === 0 ||
-					(typeof link.offset_x !== 'undefined' && player.offset_x !== link.offset_x) ||
-					(typeof link.offset_y !== 'undefined' && player.offset_y !== link.offset_y) ||
-					(typeof link.x !== 'undefined' && player.x !== (link.x * config.tileWidth)) ||
-					(typeof link.y !== 'undefined' && player.y !== (link.y * config.tileHeight)))
+					(typeof link.x !== 'undefined' && player.x !== link.x) ||
+					(typeof link.y !== 'undefined' && player.y !== link.y))
 				{
 					continue;
 				}
 
-				this.load_map(link.map);
+				this.loadMap(link.map);
 
-				if (typeof link.set_offsets !== 'undefined' && link.set_offsets instanceof Array && link.set_offsets.length === 2) {
-					player.set_offsets(link.set_offsets[0], link.set_offsets[1]);
-				}
-
-				if (typeof link.set_xy !== 'undefined' && link.set_xy instanceof Array && link.set_xy.length === 2) {
-					player.set_xy(link.set_xy[0], link.set_xy[1]);
+				if (typeof link.moveTo !== 'undefined' && link.moveTo instanceof Array && link.moveTo.length === 2) {
+					player.setXY(link.moveTo[0], link.moveTo[1]);
 				}
 			}
 		}

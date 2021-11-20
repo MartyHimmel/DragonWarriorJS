@@ -34,9 +34,7 @@ const Game = {
 	idleFrames: 0,
 
 	begin: function () {
-		var self = this;
-
-		// Main game window
+		// Setup
 		document.title = text.game_title;
 		this.canvas = document.getElementById('game');
 		this.context = this.canvas.getContext('2d');
@@ -53,50 +51,6 @@ const Game = {
 		// Start the game!
 		this.changeState('title');
 		this.main();
-	},
-
-	main() {
-		requestAnimationFrame(this.main.bind(this));
-
-		this.frameNumber++;
-		if (this.frameNumber >= 60) {
-			this.frameNumber = 0;
-		}
-
-		if (this.state === 'title') {
-			TitleScreen.handleState();
-			return;
-		}
-
-		map.check_location();
-		player.load_player();
-		this.drawMap();
-
-		if (this.state === 'exploration') {
-			Exploration.handleState();
-		} else if (this.state === 'menu') {
-			player.draw_player();
-			Menu.handleState();
-		} else if (this.state === 'combat') {
-			combat.handleState();
-			Menu.handleState();
-		}
-
-		displayOutput();
-	},
-
-	drawMap() {
-        Game.clear();
-        map.drawViewport(map.current_map, player.offset_x, player.offset_y);
-        Game.drawNPCs();
-    },
-
-	startGame() {
-		GameState.player.name = prompt(text.name_prompt);
-		if (GameState.player.name === '') { GameState.player.name = text.default_player_name; }
-		map.load_map('World');
-		player.load_player();
-		player.set_current_tile();
 	},
 
 	loadImages() {
@@ -126,6 +80,53 @@ const Game = {
 		} else {
 			this.state = newState;
 		}
+	},
+
+	main() {
+		requestAnimationFrame(this.main.bind(this));
+		this.tick();
+
+		if (this.state === 'title') {
+			TitleScreen.handleState();
+			return;
+		}
+
+		map.check_location();
+		player.load_player();
+		this.drawMap();
+
+		if (this.state === 'exploration') {
+			Exploration.handleState();
+		} else if (this.state === 'menu') {
+			player.drawPlayer();
+			Menu.handleState();
+		} else if (this.state === 'combat') {
+			combat.handleState();
+			Menu.handleState();
+		}
+
+		displayOutput();
+	},
+
+	tick() {
+		this.frameNumber++;
+		if (this.frameNumber >= 60) {
+			this.frameNumber = 0;
+		}
+	},
+
+	drawMap() {
+        Game.clear();
+        map.drawViewport(map.current_map, player.x, player.y);
+        Game.drawNPCs();
+    },
+
+	startGame() {
+		GameState.player.name = prompt(text.name_prompt);
+		if (GameState.player.name === '') { GameState.player.name = text.default_player_name; }
+		map.loadMap('World');
+		player.load_player();
+		player.setCurrentTile();
 	},
 
 	clear() {
@@ -166,24 +167,24 @@ const Game = {
 	// Animation and rendering
 	// -------------------------------------------------------------------
 
-	animateNPC: function(frame1, frame2, x, y) {
-		x = (x - player.offset_x) * config.tileWidth;
-		y = (y - player.offset_y) * config.tileHeight;
+	animateNPC(frame1, frame2, x, y) {
+		x = (x - player.x + config.offsetX) * config.tileWidth;
+		y = (y - player.y + config.offsetY) * config.tileHeight;
 
-		const drawFrame = ((this.frameNumber % 60) < 30) ? frame1 : frame2;
+		const drawFrame = (this.frameNumber < 30) ? frame1 : frame2;
 		this.drawCharacter(drawFrame, x, y);
 	},
 
 	// call frame from characters.png - starts with frame 0
-	drawCharacter: function (frame_number, pos_x, pos_y) {
-		var image_x = (frame_number % 16) * config.tileWidth,
-		    image_y = Math.floor(frame_number / 16) * config.tileHeight;
+	drawCharacter(frame_number, posX, posY) {
+		const imageX = (frame_number % 16) * config.tileWidth;
+		const imageY = Math.floor(frame_number / 16) * config.tileHeight;
 
-		this.context.drawImage(this.imgCharacters, image_x, image_y, config.tileWidth, config.tileHeight,
-			pos_x, pos_y, config.tileWidth, config.tileHeight);
+		this.context.drawImage(this.imgCharacters, imageX, imageY, config.tileWidth, config.tileHeight,
+			posX, posY, config.tileWidth, config.tileHeight);
 	},
 
-	drawNPCs: function() {
+	drawNPCs() {
 		let self = this;
 
 		//TODO: refactor this
@@ -309,7 +310,7 @@ const Game = {
 		}
 	},
 
-	draw_enemy: function (enemy) {
+	draw_enemy(enemy) {
 		var tile_x = enemy.x,
 		    tile_y = enemy.y,
 		    tile_width = enemy.width,
@@ -322,12 +323,12 @@ const Game = {
 	},
 
 	// draw single tile frame from sprite sheet
-	draw_tile: function (x, y, frame_number) {
+	draw_tile(x, y, frame_number) {
 		// find horizontal and vertical position of tile to be drawn
-		let pos_x = (frame_number % 12) * config.tileWidth;
-		let pos_y = Math.floor(frame_number / 12) * config.tileHeight;
+		const posX = (frame_number % 12) * config.tileWidth;
+		const posY = Math.floor(frame_number / 12) * config.tileHeight;
 
-		this.context.drawImage(this.imgTiles, pos_x, pos_y, config.tileWidth, config.tileHeight,
+		this.context.drawImage(this.imgTiles, posX, posY, config.tileWidth, config.tileHeight,
 			x, y, config.tileWidth, config.tileHeight);
 	},
 

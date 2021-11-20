@@ -3,16 +3,16 @@ import text from './text.js';
 
 export default {
     text: function (string) {
-        if (typeof string !== 'undefined') {
-            if (typeof text.script[string] !== 'undefined') {
-                if (text.script[string] instanceof Array) {
-                    text.script[string].forEach(function (element, index, array) {
-                        Game.display_text(element);
-                    });
-                } else {
-                    Game.display_text(text.script[string]);
-                }
-            }
+        if (!string || !text.script[string]) {
+            return;
+        }
+
+        if (text.script[string] instanceof Array) {
+            text.script[string].forEach((element, index, array) => {
+                Game.display_text(element);
+            });
+        } else {
+            Game.display_text(text.script[string]);
         }
     },
 

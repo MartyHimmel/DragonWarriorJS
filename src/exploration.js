@@ -24,7 +24,7 @@ export default {
             player.move('right');
         } else {
             Game.idleFrames++;
-            player.draw_player();
+            player.drawPlayer();
         }
 
         if (Game.idleFrames > 180) {

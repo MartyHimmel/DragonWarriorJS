@@ -41,7 +41,7 @@ Object.keys(Data.maps).forEach(map => {
 });
 
 document.querySelector('#move_to_map').onclick = function() {
-    map.load_map(document.querySelector('#map_name').value);
+    map.loadMap(document.querySelector('#map_name').value);
 };
 
 Game.begin();
