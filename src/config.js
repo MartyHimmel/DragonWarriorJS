@@ -1,4 +1,6 @@
 export default {
+    canvasWidth: 800,
+    canvasHeight: 480,
     screenTilesWide: 25,
     screenTileHigh: 15,
     offsetX: 12,

@@ -8,6 +8,12 @@ import map from './map.js';
 import script from './script.js';
 import text from './text.js';
 
+const stairTiles = [
+	Data.mapTiles.STAIRS_UP,
+	Data.mapTiles.STAIRS_DOWN,
+	Data.mapTiles.STAIRS_DOWN_GRASS,
+];
+
 export default {
 	// Map collision tiles
 	collide_tiles: [1, 2, 5, 9, 10, 11, 17, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
@@ -114,7 +120,7 @@ export default {
 	// Movement and collision
 	// -------------------------------------------------------------------
 
-	move: function (direction) {
+	move(direction) {
 		let x = this.x;
 		let y = this.y;
 		let prev_steps = this.steps;
@@ -270,7 +276,7 @@ export default {
 	},
 
 	stairs() {
-		if ([6, 7].includes(this.currentTile)) {
+		if (stairTiles.includes(this.currentTile)) {
 
 		}
 	},
@@ -304,6 +310,22 @@ export default {
 
 	displayStatusMenu() {
 		Menu.open('status');
+	},
+
+	fieldSpells() {
+
+	},
+
+	displayItemsMenu() {
+
+	},
+
+	search() {
+
+	},
+
+	take() {
+
 	},
 
 	add_item: function(item) {

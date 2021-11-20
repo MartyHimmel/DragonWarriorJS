@@ -55,66 +55,14 @@ export default {
             { x: 5,  y: 4, align: 'left',  display() { return 'TAKE'; } },
         ],
         options: [
-            {
-                arrowX: 0.5,
-                arrowY: 1,
-                name: 'talk',
-                action: player => {
-                    player.talk();
-                }
-            },
-            {
-                arrowX: 4.5,
-                arrowY: 1,
-                name: 'spell',
-                action: player => {
-                }
-            },
-            {
-                arrowX: 0.5,
-                arrowY: 2,
-                name: 'status',
-                action: player => {
-                    player.displayStatusMenu();
-                }
-            },
-            {
-                arrowX: 4.5,
-                arrowY: 2,
-                name: 'item',
-                action: player => {
-                }
-            },
-            {
-                arrowX: 0.5,
-                arrowY: 3,
-                name: 'stairs',
-                action: player => {
-                    player.stairs();
-                }
-            },
-            {
-                arrowX: 4.5,
-                arrowY: 3,
-                name: 'door',
-                action: player => {
-                    player.door();
-                }
-            },
-            {
-                arrowX: 0.5,
-                arrowY: 4,
-                name: 'search',
-                action: player => {
-                }
-            },
-            {
-                arrowX: 4.5,
-                arrowY: 4,
-                name: 'take',
-                action: player => {
-                }
-            },
+            { arrowX: 0.5, arrowY: 1, name: 'talk',   action(player) { player.talk(); } },
+            { arrowX: 4.5, arrowY: 1, name: 'spell',  action(player) { player.fieldSpells(); } },
+            { arrowX: 0.5, arrowY: 2, name: 'status', action(player) { player.displayStatusMenu(); } },
+            { arrowX: 4.5, arrowY: 2, name: 'item',   action(player) { player.displayItemsMenu(); } },
+            { arrowX: 0.5, arrowY: 3, name: 'stairs', action(player) { player.stairs(); } },
+            { arrowX: 4.5, arrowY: 3, name: 'door',   action(player) { player.door(); } },
+            { arrowX: 0.5, arrowY: 4, name: 'search', action(player) { player.search(); } },
+            { arrowX: 4.5, arrowY: 4, name: 'take',   action(player) { player.take(); } },
         ],
     },
     output: {
@@ -192,36 +140,10 @@ export default {
             { x: 5,  y: 2, align: 'left',  display() { return 'ITEM'; } },
         ],
         options: [
-            {
-                arrowX: 0.5,
-                arrowY: 1,
-                name: 'fight',
-                action(combat) {
-                    combat.playerAttack();
-                }
-            },
-            {
-                arrowX: 4.5,
-                arrowY: 1,
-                name: 'spell',
-                action(combat) {
-                }
-            },
-            {
-                arrowX: 0.5,
-                arrowY: 2,
-                name: 'run',
-                action(combat) {
-                    combat.playerRun();
-                }
-            },
-            {
-                arrowX: 4.5,
-                arrowY: 2,
-                name: 'item',
-                action(combat) {
-                }
-            },
+            { arrowX: 0.5, arrowY: 1, name: 'fight', action(combat) { combat.playerAttack(); } },
+            { arrowX: 4.5, arrowY: 1, name: 'spell', action(combat) { combat.displaySpellList(); } },
+            { arrowX: 0.5, arrowY: 2, name: 'run',   action(combat) { combat.playerRun(); } },
+            { arrowX: 4.5, arrowY: 2, name: 'item',  action(combat) { combat.displayItemsMenu(); } },
         ],
     },
 };

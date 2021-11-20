@@ -37,6 +37,8 @@ const Game = {
 		// Setup
 		document.title = text.game_title;
 		this.canvas = document.getElementById('game');
+		this.canvas.width = config.canvasWidth;
+		this.canvas.height = config.canvasHeight;
 		this.context = this.canvas.getContext('2d');
 		this.loadImages();
 
@@ -91,7 +93,7 @@ const Game = {
 			return;
 		}
 
-		map.check_location();
+		map.checkLocation();
 		player.load_player();
 		this.drawMap();
 

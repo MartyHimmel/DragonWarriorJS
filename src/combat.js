@@ -34,7 +34,7 @@ export default {
 	},
 
 	// Check for random encounters at each step in player.move()
-	random_encounter: function() {
+	random_encounter() {
 		if (map.map_ptr.type === "world" || map.map_ptr.type === "dungeon") {
 			if (player.currentTile === 16 ||
 				player.currentTile === 20) {
@@ -95,7 +95,7 @@ export default {
 	// Draw functions
 	// -------------------------------------------------------------------
 
-	drawScreen: function() {
+	drawScreen() {
 		if (Data.maps[map.current_map].type === 'dungeon') {
 			Game.clear();
 			Game.context.fillStyle = "#FFFFFF";
@@ -172,6 +172,14 @@ export default {
 				this.player_turn = false;
 			}
 		}
+	},
+
+	displaySpellList() {
+
+	},
+
+	displayItemsMenu() {
+
 	},
 
 	use_item: function() {

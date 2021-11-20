@@ -18,33 +18,6 @@ export default {
 	current_zone: 0,
 	background_music: '',
 
-	// 0 roof bricks
-	// 1 stone block
-	// 2 shop counter
-	// 3 brick, 1 in 16 encounter rate
-	// 4 chest
-	// 5 door
-	// 6 stairs down
-	// 7 stairs up
-	// 8 barrier - damage floor 15 HP, 1 in 16 encounter rate
-	// 9 shop sign
-	// 10 inn sign
-	// 11 coastline
-	// 12 castle
-	// 13 town
-	// 14 grass - 1 in 24 encounter rate
-	// 15 forest - 1 in 16 encounter rate
-	// 16 hill - 1 in 8 encounter rate
-	// 17 mountain
-	// 18 cave
-	// 19 outside stairs down
-	// 20 desert - 1 in 8 encounter rate
-	// 21 swamp - damage floor 2 HP, 1 in 16 encounter rate
-	// 22 bridge
-	// 23 princess in swamp cave
-	// 24 water
-	// 25 - 35 coastline
-
 	loadMap(map_name) {
 		if (map_name === 'World') {
 			//reset door flags when leaving towns.
@@ -69,9 +42,9 @@ export default {
 		if (typeof this.map_ptr.doors !== 'undefined') {
 			this.map_ptr.doors.forEach((element, index, array) => {
 				if (GameState.doorsOpened.indexOf(element.id) > -1) {
-					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 4;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = Data.mapTiles.BRICK;
 				} else {
-					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 6;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = Data.mapTiles.DOOR;
 				}
 			});
 		}
@@ -79,9 +52,9 @@ export default {
 		if (typeof this.map_ptr.chests !== 'undefined') {
 			this.map_ptr.chests.forEach((element, index, array) => {
 				if (GameState.chestsOpened.indexOf(element.id) > -1) {
-					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 4;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = Data.mapTiles.BRICK;
 				} else {
-					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = 5;
+					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = Data.mapTiles.CHEST;
 				}
 			});
 		}
@@ -160,7 +133,7 @@ export default {
 		}
 	},
 
-	check_location: function () {
+	checkLocation() {
 		let map = Data.maps[this.current_map];
 
 		if (typeof map.map_links !== 'undefined' && map.map_links instanceof Array) {
