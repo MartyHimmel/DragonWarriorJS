@@ -141,14 +141,14 @@ export default {
             line += word + ' ';
         });
         this.outputText.push(line);
-        this.outputText = this.outputText.slice(Math.max(this.outputText.length - 5, 0));
+        this.outputText = this.outputText.slice(Math.max(this.outputText.length - 8, 0));
     },
 
     drawOutputText() {
         this.outputText.forEach((line, lineIndex) => {
             for (let i = 0; i < line.length; i++) {
                 const baseX = (Data.menus.output.x + (i / 2) + 0.5) % this.charactersPerLine;
-                const baseY = Data.menus.output.y + 0.5 + lineIndex;
+                const baseY = Data.menus.output.y + 0.5 + (lineIndex / 2);
 
                 this.displayTextCharacter(line[i], baseX * config.tileWidth, baseY * config.tileHeight);
             }

@@ -1,6 +1,6 @@
 import Data from './data.js';
 import Exploration from './exploration.js';
-import GameState from './state.js';
+import SaveState from './save-state.js';
 import Menu from './menu.js';
 import TitleScreen from './title-screen.js';
 import config from './config.js';
@@ -119,13 +119,13 @@ const Game = {
 
 	drawMap() {
         Game.clear();
-        map.drawViewport(map.current_map, player.x, player.y);
+        map.render();
         Game.drawNPCs();
     },
 
 	startGame() {
-		GameState.player.name = prompt(text.name_prompt);
-		if (GameState.player.name === '') { GameState.player.name = text.default_player_name; }
+		SaveState.player.name = prompt(text.name_prompt);
+		if (SaveState.player.name === '') { SaveState.player.name = text.default_player_name; }
 		map.loadMap('World');
 		player.load_player();
 		player.setCurrentTile();
@@ -296,8 +296,8 @@ const Game = {
 		if (typeof map.map_ptr.npcs !== 'undefined') {
 			let number_of_npcs = map.map_ptr.npcs.length;
 
-			//TODO: replace with a visible flag, which checks GameState.rescuedPrincess.
-			if (map.current_map === "Tantegel2F" && !GameState.rescuedPrincess) {
+			//TODO: replace with a visible flag, which checks SaveState.rescuedPrincess.
+			if (map.current_map === "Tantegel2F" && !SaveState.rescuedPrincess) {
 				number_of_npcs--;
 			}
 
@@ -325,7 +325,7 @@ const Game = {
 	},
 
 	// draw single tile frame from sprite sheet
-	draw_tile(x, y, frame_number) {
+	drawTile(x, y, frame_number) {
 		// find horizontal and vertical position of tile to be drawn
 		const posX = (frame_number % 12) * config.tileWidth;
 		const posY = Math.floor(frame_number / 12) * config.tileHeight;

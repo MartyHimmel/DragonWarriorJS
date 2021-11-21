@@ -1,6 +1,6 @@
 import Data from './data.js';
 import Game from './game.js';
-import GameState from './state.js';
+import SaveState from './save-state.js';
 import Menu from './menu.js';
 import combat from './combat.js';
 import config from './config.js';
@@ -48,39 +48,39 @@ export default {
 	drawPlayer: function () {
 		switch (this.facingDirection) {
 			case "left":
-				if (GameState.carryingPrincess) {
+				if (SaveState.carryingPrincess) {
 					this.animatePlayer(66, 67);
-				} else if (GameState.player.weapon === "none" && GameState.player.shield === "none") {
+				} else if (SaveState.player.weapon === "none" && SaveState.player.shield === "none") {
 					this.animatePlayer(2, 3);
-				} else if (GameState.player.weapon !== "none" && GameState.player.shield === "none") {
+				} else if (SaveState.player.weapon !== "none" && SaveState.player.shield === "none") {
 					this.animatePlayer(18, 19);
-				} else if (GameState.player.weapon === "none" && GameState.player.shield !== "none") {
+				} else if (SaveState.player.weapon === "none" && SaveState.player.shield !== "none") {
 					this.animatePlayer(34, 35);
 				} else {
 					this.animatePlayer(50, 51);
 				}
 				break;
 			case "right":
-				if (GameState.carryingPrincess) {
+				if (SaveState.carryingPrincess) {
 					this.animatePlayer(70, 71);
-				} else if (GameState.player.weapon === "none" && GameState.player.shield === "none") {
+				} else if (SaveState.player.weapon === "none" && SaveState.player.shield === "none") {
 					this.animatePlayer(6, 7);
-				} else if (GameState.player.weapon !== "none" && GameState.player.shield === "none") {
+				} else if (SaveState.player.weapon !== "none" && SaveState.player.shield === "none") {
 					this.animatePlayer(22, 23);
-				} else if (GameState.player.weapon === "none" && GameState.player.shield !== "none") {
+				} else if (SaveState.player.weapon === "none" && SaveState.player.shield !== "none") {
 					this.animatePlayer(38, 39);
 				} else {
 					this.animatePlayer(54, 55);
 				}
 				break;
 			case "up":
-				if (GameState.carryingPrincess) {
+				if (SaveState.carryingPrincess) {
 					this.animatePlayer(68, 69);
-				} else if (GameState.player.weapon === "none" && GameState.player.shield === "none") {
+				} else if (SaveState.player.weapon === "none" && SaveState.player.shield === "none") {
 					this.animatePlayer(4, 5);
-				} else if (GameState.player.weapon !== "none" && GameState.player.shield === "none") {
+				} else if (SaveState.player.weapon !== "none" && SaveState.player.shield === "none") {
 					this.animatePlayer(20, 21);
-				} else if (GameState.player.weapon === "none" && GameState.player.shield !== "none") {
+				} else if (SaveState.player.weapon === "none" && SaveState.player.shield !== "none") {
 					this.animatePlayer(36, 37);
 				} else {
 					this.animatePlayer(52, 53);
@@ -88,13 +88,13 @@ export default {
 				break;
 			case "down":
 			default:
-				if (GameState.carryingPrincess) {
+				if (SaveState.carryingPrincess) {
 					this.animatePlayer(64, 65);
-				} else if (GameState.player.weapon === "none" && GameState.player.shield === "none") {
+				} else if (SaveState.player.weapon === "none" && SaveState.player.shield === "none") {
 					this.animatePlayer(0, 1);
-				} else if (GameState.player.weapon !== "none" && GameState.player.shield === "none") {
+				} else if (SaveState.player.weapon !== "none" && SaveState.player.shield === "none") {
 					this.animatePlayer(16, 17);
-				} else if (GameState.player.weapon === "none" && GameState.player.shield !== "none") {
+				} else if (SaveState.player.weapon === "none" && SaveState.player.shield !== "none") {
 					this.animatePlayer(32, 33);
 				} else {
 					this.animatePlayer(48, 49);
@@ -176,7 +176,7 @@ export default {
 
 	willCollide(x, y) {
 		var next_tile = this.tileIndex(x, y);
-		if (this.collide_tiles.indexOf(next_tile) > -1 || map.get_npc(x, y) !== null) {
+		if (this.collide_tiles.indexOf(next_tile) > -1 || map.getNpcAt(x, y) !== null) {
 			return true;
 		}
 		return false;
@@ -206,51 +206,51 @@ export default {
 		for (i = 0; i < Data.levels.length; i++) {
 			let level = Data.levels[i];
 
-			if (GameState.player.experience < level.required_exp) {
+			if (SaveState.player.experience < level.required_exp) {
 				break;
 			}
 
 			if (level.spells_learned) {
 				level.spells_learned.forEach(spellId => {
-					GameState.player.spells[spellId] = Data.spells[spellId];
+					SaveState.player.spells[spellId] = Data.spells[spellId];
 				});
 			}
 		}
 
-		GameState.player.level = i;
+		SaveState.player.level = i;
 	},
 
 	set_max_hp: function() {
-		GameState.player.maxHp = Data.levels[GameState.player.level - 1].max_hp;
+		SaveState.player.maxHp = Data.levels[SaveState.player.level - 1].max_hp;
 	},
 
 	set_max_mp: function() {
-		GameState.player.maxMp = Data.levels[GameState.player.level - 1].max_mp;
+		SaveState.player.maxMp = Data.levels[SaveState.player.level - 1].max_mp;
 	},
 
 	set_strength: function() {
-		GameState.player.strength = Data.levels[GameState.player.level - 1].strength;
+		SaveState.player.strength = Data.levels[SaveState.player.level - 1].strength;
 	},
 
 	set_agility: function() {
-		GameState.player.agility = Data.levels[GameState.player.level - 1].agility;
+		SaveState.player.agility = Data.levels[SaveState.player.level - 1].agility;
 	},
 
 	set_attack_power: function() {
-		GameState.player.attackPower = GameState.player.strength + Data.weapons[GameState.player.weapon].attack;
+		SaveState.player.attackPower = SaveState.player.strength + Data.weapons[SaveState.player.weapon].attack;
 	},
 
 	set_defense_power: function() {
-		GameState.player.defensePower = Math.floor(GameState.player.agility / 2) +
-			Data.armors[GameState.player.armor].defense +
-			Data.shields[GameState.player.shield].defense;
+		SaveState.player.defensePower = Math.floor(SaveState.player.agility / 2) +
+			Data.armors[SaveState.player.armor].defense +
+			Data.shields[SaveState.player.shield].defense;
 	},
 
 	set_spells: function() {
 		var self = this;
 
-		Object.keys(GameState.player.spells).forEach(function (spellId) {
-			let spell = GameState.player.spells[spellId];
+		Object.keys(SaveState.player.spells).forEach(function (spellId) {
+			let spell = SaveState.player.spells[spellId];
 
 		});
 	},
@@ -262,15 +262,15 @@ export default {
 		let door = null;
 
 		switch (this.facingDirection) {
-			case 'left':  door = map.get_door(this.x - 1, this.y); break;
-			case 'right': door = map.get_door(this.x + 1, this.y); break;
-			case 'up':    door = map.get_door(this.x, this.y - 1); break;
-			case 'down':  door = map.get_door(this.x, this.y + 1); break;
+			case 'left':  door = map.getDoorAt(this.x - 1, this.y); break;
+			case 'right': door = map.getDoorAt(this.x + 1, this.y); break;
+			case 'up':    door = map.getDoorAt(this.x, this.y - 1); break;
+			case 'down':  door = map.getDoorAt(this.x, this.y + 1); break;
 		}
 
 		if (door !== null) {
 			//TODO: check for (and use) keys!
-			GameState.doorsOpened.push(door.id);
+			SaveState.doorsOpened.push(door.id);
 			map.refreshMap();
 		}
 	},
@@ -295,7 +295,7 @@ export default {
 			case 'down':  offsetY = 1;  if (this.tileIndex(x, y + 1) == 2) { offsetY = 2; }  break;
 		}
 
-		character = map.get_npc(x + offsetX, y + offsetY);
+		character = map.getNpcAt(x + offsetX, y + offsetY);
 
 		Menu.openOutputWindow();
 
@@ -329,7 +329,7 @@ export default {
 	},
 
 	add_item: function(item) {
-		GameState.player.inventory.push(item);
+		SaveState.player.inventory.push(item);
 	},
 
 	remove_item: function(item) {
@@ -340,51 +340,51 @@ export default {
 	// -------------------------------------------------------------------
 
 	gain_hp: function(amount) {
-		GameState.player.currentHp += amount;
-		if (GameState.player.currentHp > GameState.player.maxHp) {
-			GameState.player.currentHp = GameState.player.maxHp;
+		SaveState.player.currentHp += amount;
+		if (SaveState.player.currentHp > SaveState.player.maxHp) {
+			SaveState.player.currentHp = SaveState.player.maxHp;
 		}
 	},
 
 	lose_hp: function(amount) {
-		GameState.player.currentHp -= amount;
-		if (GameState.player.currentHp < 0) {
-			GameState.player.currentHp = 0;
+		SaveState.player.currentHp -= amount;
+		if (SaveState.player.currentHp < 0) {
+			SaveState.player.currentHp = 0;
 		}
 	},
 
 	gain_mp: function(amount) {
-		GameState.player.currentMp += amount;
-		if (GameState.player.currentMp > GameState.player.maxMp) {
-			GameState.player.currentMp = GameState.player.maxMp;
+		SaveState.player.currentMp += amount;
+		if (SaveState.player.currentMp > SaveState.player.maxMp) {
+			SaveState.player.currentMp = SaveState.player.maxMp;
 		}
 	},
 
 	lose_mp: function(amount) {
-		GameState.player.currentMp -= amount;
-		if ( GameState.player.currentMp < 0) {
-			GameState.player.currentMp = 0;
+		SaveState.player.currentMp -= amount;
+		if ( SaveState.player.currentMp < 0) {
+			SaveState.player.currentMp = 0;
 		}
 	},
 
 	add_experience: function(amount) {
-		GameState.player.experience += amount;
-		if (GameState.player.experience >= 65535) {
-			GameState.player.experience = 65535;
+		SaveState.player.experience += amount;
+		if (SaveState.player.experience >= 65535) {
+			SaveState.player.experience = 65535;
 		}
 	},
 
 	add_gold: function(amount) {
-		GameState.player.gold += amount;
-		if (GameState.player.gold > 99999) {
-			GameState.player.gold = 99999;
+		SaveState.player.gold += amount;
+		if (SaveState.player.gold > 99999) {
+			SaveState.player.gold = 99999;
 		}
 	},
 
 	remove_gold: function(amount) {
-		GameState.player.gold -= amount;
-		if (GameState.player.gold < 0) {
-			GameState.player.gold = 0;
+		SaveState.player.gold -= amount;
+		if (SaveState.player.gold < 0) {
+			SaveState.player.gold = 0;
 		}
 	}
 };

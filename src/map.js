@@ -1,6 +1,6 @@
 import Data from './data.js';
 import Game from './game.js';
-import GameState from './state.js';
+import SaveState from './save-state.js';
 import audio from './audio.js';
 import config from './config.js';
 import player from './player.js';
@@ -22,7 +22,7 @@ export default {
 		if (map_name === 'World') {
 			//reset door flags when leaving towns.
 			//TODO: don't reset all flags; some stay unlocked (e.g. throne room).
-			GameState.doorsOpened = [];
+			SaveState.doorsOpened = [];
 		}
 
 		player.steps = 0;
@@ -41,7 +41,7 @@ export default {
 	refreshMap() {
 		if (typeof this.map_ptr.doors !== 'undefined') {
 			this.map_ptr.doors.forEach((element, index, array) => {
-				if (GameState.doorsOpened.indexOf(element.id) > -1) {
+				if (SaveState.doorsOpened.indexOf(element.id) > -1) {
 					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = Data.mapTiles.BRICK;
 				} else {
 					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = Data.mapTiles.DOOR;
@@ -51,7 +51,7 @@ export default {
 
 		if (typeof this.map_ptr.chests !== 'undefined') {
 			this.map_ptr.chests.forEach((element, index, array) => {
-				if (GameState.chestsOpened.indexOf(element.id) > -1) {
+				if (SaveState.chestsOpened.indexOf(element.id) > -1) {
 					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = Data.mapTiles.BRICK;
 				} else {
 					this.map_ptr.layout[element.x + (element.y * this.map_ptr.width)] = Data.mapTiles.CHEST;
@@ -60,7 +60,7 @@ export default {
 		}
 	},
 
-	get_npc: function (x, y) {
+	getNpcAt: function (x, y) {
 		if (typeof this.map_ptr.npcs !== 'undefined') {
 			let number_of_npcs = this.map_ptr.npcs.length;
 			for (let i = 0; i < number_of_npcs; i++) {
@@ -74,9 +74,9 @@ export default {
 		return null;
 	},
 
-	get_door(x, y) {
-		if (typeof this.map_ptr.doors !== 'undefined') {
-			let numberOfDoors = this.map_ptr.doors.length;
+	getDoorAt(x, y) {
+		if (this.map_ptr.doors) {
+			const numberOfDoors = this.map_ptr.doors.length;
 
 			for (let i = 0; i < numberOfDoors; i++) {
 				//TODO: only consider if not already opened.
@@ -89,15 +89,21 @@ export default {
 		return null;
 	},
 
-	drawViewport(map_name, posX, posY) {
+	render() {
 		// Center on screen
-		posX = posX - config.offsetX;
-		posY = posY - config.offsetY;
+		let posX = player.x - config.offsetX;
+		let posY = player.y - config.offsetY;
 
 		const screenTileCount = config.screenTilesWide * config.screenTileHigh;
 
 		for (let i = 0; i < screenTileCount; i++) {
-			Game.draw_tile(this.x, this.y, this.map_ptr.layout[posX + (posY * this.map_ptr.width)] - 1);
+			Game.drawTile(
+				(i % config.screenTilesWide) * config.tileWidth,
+				Math.floor(i / config.screenTilesWide) * config.tileHeight,
+				this.map_ptr.background - 1
+			);
+
+			Game.drawTile(this.x, this.y, this.map_ptr.layout[posX + (posY * this.map_ptr.width)] - 1);
 			this.x += config.tileWidth;
 			posX++;
 			if (this.x === config.screenTilesWide * config.tileWidth) {

@@ -1,6 +1,6 @@
 import Data from './data.js';
 import Game from './game.js';
-import GameState from './state.js';
+import SaveState from './save-state.js';
 import config from './config.js';
 import map from './map.js';
 import Menu from './menu.js';
@@ -120,15 +120,15 @@ export default {
 		    rand2 = randomNumber(0, 255),
 		    rand3 = randomNumber(1, 100);
 
-		if (GameState.player.strength > (2 * enemy_strength)) {
+		if (SaveState.player.strength > (2 * enemy_strength)) {
 			if (rand3 <= 25) {
 				Game.display_text(text.combat.enemy.run, { enemy: this.enemy_id });
 				Game.changeState('exploration', 500);
 			}
 		}
 
-		if ((GameState.player.agility * rand1) < (enemy_agility * rand2 * 0.25)) {
-			Game.display_text(text.combat.enemy.strike_first, { enemy: this.enemy_id, player_name: GameState.player.name });
+		if ((SaveState.player.agility * rand1) < (enemy_agility * rand2 * 0.25)) {
+			Game.display_text(text.combat.enemy.strike_first, { enemy: this.enemy_id, player_name: SaveState.player.name });
 			this.player_turn = false;
 		} else {
 			Game.display_text(text.combat.prompt);
@@ -142,7 +142,7 @@ export default {
 		let damage = 0;
 
 		if (this.player_turn === true) {
-			Game.display_text(text.combat.player.attack, { player_name: GameState.player.name });
+			Game.display_text(text.combat.player.attack, { player_name: SaveState.player.name });
 			if (randomNumber(1, 64) > this.enemy_ptr.dodge) {
 				hit = true;
 			}
@@ -155,10 +155,10 @@ export default {
 
 			if (randomNumber(1, 32) === 1 && this.enemy_ptr !== (38 || 39)) {
 				Game.display_text(text.combat.player.hit_critical);
-				damage = Math.floor(randomNumber(GameState.player.attackPower / 2, GameState.player.attackPower));
+				damage = Math.floor(randomNumber(SaveState.player.attackPower / 2, SaveState.player.attackPower));
 			} else {
-				damage = Math.floor(randomNumber((GameState.player.attackPower - this.enemy_ptr.agility) / 4,
-					(GameState.player.attackPower - this.enemy_ptr.agility) / 2));
+				damage = Math.floor(randomNumber((SaveState.player.attackPower - this.enemy_ptr.agility) / 4,
+					(SaveState.player.attackPower - this.enemy_ptr.agility) / 2));
 			}
 
 			if (damage < 0) { damage = 0; }
@@ -209,7 +209,7 @@ export default {
 				modifier = 1;
 			}
 
-			Game.display_text(text.combat.player.run, { player_name: GameState.player.name });
+			Game.display_text(text.combat.player.run, { player_name: SaveState.player.name });
 			this.player_turn = false;
 
 			if (this.enemy_status === "sleep") {
@@ -217,7 +217,7 @@ export default {
 				Game.changeState('exploration', 500);
 			}
 
-			if ((GameState.player.agility * rand1) < (enemy_agility * rand2 * modifier)) {
+			if ((SaveState.player.agility * rand1) < (enemy_agility * rand2 * modifier)) {
 				Game.display_text(text.combat.player.run_blocked);
 				Menu.change('combat');
 			} else {
@@ -233,7 +233,7 @@ export default {
 	},
 
 	victory: function() {
-		var current_level = GameState.player.level;
+		var current_level = SaveState.player.level;
 
 		Game.display_text(text.combat.victory.defeated, { enemy: this.enemy_id });
 		Game.display_text(text.combat.victory.gain_exp, { number: this.enemy_ptr.experience });
@@ -243,7 +243,7 @@ export default {
 		player.add_gold(this.gold_reward);
 		player.load_player();
 
-		if (GameState.player.level === (current_level + 1)) {
+		if (SaveState.player.level === (current_level + 1)) {
 			this.player_level_up();
 		}
 
@@ -252,7 +252,7 @@ export default {
 
 	player_level_up: function() {
 		Game.display_text(text.combat.victory.next_level);
-		if (typeof Data.levels[GameState.player.level - 1].spells_learned !== 'undefined') {
+		if (typeof Data.levels[SaveState.player.level - 1].spells_learned !== 'undefined') {
 			Game.display_text(text.combat.victory.gain_spell);
 		}
 	},
@@ -289,11 +289,11 @@ export default {
 							//Erdricks armor reduces damage by 1/3
 							if (special === "breathe_fire2") {
 								//used by Dragon Lord in final form only
-								breath_min_dmg = GameState.hasErdricksArmor ? 42 : 65;
-								breath_max_dmg = GameState.hasErdricksArmor ? 48 : 72;
+								breath_min_dmg = SaveState.hasErdricksArmor ? 42 : 65;
+								breath_max_dmg = SaveState.hasErdricksArmor ? 48 : 72;
 							} else {
-								breath_min_dmg = GameState.hasErdricksArmor ? 10 : 16;
-								breath_max_dmg = GameState.hasErdricksArmor ? 14 : 23;
+								breath_min_dmg = SaveState.hasErdricksArmor ? 10 : 16;
+								breath_max_dmg = SaveState.hasErdricksArmor ? 14 : 23;
 							}
 
 							damage = randomNumber(breath_min_dmg, breath_max_dmg);
@@ -325,11 +325,11 @@ export default {
 			if (!used_special) {
 				Game.display_text(text.combat.enemy.attack, { enemy: this.enemy_id });
 
-				if (GameState.player.defensePower >= enemy_strength) {
+				if (SaveState.player.defensePower >= enemy_strength) {
 					damage = Math.floor(randomNumber(0, ((enemy_strength + 4) / 6)));
 				} else {
-					damage = Math.floor(randomNumber(((enemy_strength - (GameState.player.defensePower / 2)) / 4),
-						((enemy_strength - (GameState.player.defensePower / 2)) / 2)));
+					damage = Math.floor(randomNumber(((enemy_strength - (SaveState.player.defensePower / 2)) / 4),
+						((enemy_strength - (SaveState.player.defensePower / 2)) / 2)));
 				}
 
 				Game.display_text(text.combat.enemy.hit, { number: damage });

@@ -1,5 +1,5 @@
 import Game from './game.js';
-import GameState from './state.js';
+import SaveState from './save-state.js';
 import combat from './combat.js';
 import config from './config.js';
 import map from './map.js';
@@ -26,7 +26,7 @@ function displayOutput() {
         "Game State = " + Game.state + "<br>" +
         "Number of NPCS = " + npcCount + "<br>" +
         "<hr>" +
-        "Rescued Princess? = " + GameState.rescuedPrincess + "<br>";
+        "Rescued Princess? = " + SaveState.rescuedPrincess + "<br>";
 }
 
 function randomNumber(min, max) {
