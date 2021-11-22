@@ -274,8 +274,8 @@ export default {
             .map(level => level.spells_learned[0]) // Get spell references as string
             .filter(spellName => Data.spells[spellName][condition]); // Limit menu to matching combat/exploration condition
 
-        Data.menus.spells.options = spellsLearned.map((spell, index) => {
-            return { arrowX: 0.5, arrowY: index + 1, name: spell, action(player) { player.castSpell(spell); } };
+        Data.menus.spells.options = spellsLearned.map((spellName, index) => {
+            return { arrowX: 0.5, arrowY: index + 1, name: spellName, action(player) { player.castSpell(Data.spells[spellName]); } };
         });
 
         Data.menus.spells.text = [Data.menus.spells.text[0]];
