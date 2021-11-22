@@ -2,6 +2,8 @@ import config from './config.js';
 import Data from './data.js';
 import Game from './game.js';
 import Player from './player.js';
+import SaveState from './save-state.js';
+import text from './text.js';
 
 export default {
     charactersPerLine: (Data.menus.output.width - 2) * 2,
@@ -16,6 +18,7 @@ export default {
             case 'exploration':
                 this.drawQuickStatBox();
                 this.drawExplorationMenu();
+                this.drawArrow();
                 break;
             case 'status':
                 this.drawQuickStatBox();
@@ -26,11 +29,19 @@ export default {
                 this.drawQuickStatBox();
                 this.drawCombatMenu();
                 this.drawOutputWindow();
+                this.drawArrow();
                 break;
             case 'action':
                 this.drawQuickStatBox();
                 this.drawOutputWindow();
                 break;
+            case 'spells':
+                this.drawQuickStatBox();
+                this.drawExplorationMenu();
+                this.drawSpellMenu('showInExploration');
+                this.drawArrow();
+                break;
+            case 'output':
             default:
                 this.drawOutputWindow();
                 break;
@@ -39,25 +50,25 @@ export default {
         const currentOptionIndexIsEven = (this.selectedOptionIndex % 2 == 0);
 
         if ('Escape' in Game.keysDown || ('Enter' in Game.keysDown && this.isLastWindow())) {
-            this.resetMenu();
+            this.close();
             this.closeOutputWindow();
             Game.changeState('exploration');
         }
 
         if (!this.isLastWindow()) {
+            const halfOptionsCount = Math.floor(Data.menus[this.currentMenu].options.length / 2);
+
             if ('Enter' in Game.keysDown) {
                 Data.menus[this.currentMenu].options[this.selectedOptionIndex].action(this.actionTarget);
-            } else if ('ArrowUp' in Game.keysDown && this.nextSelectionInRange(-2)) {
-                this.selectedOptionIndex -= 2;
-            } else if ('ArrowDown' in Game.keysDown && this.nextSelectionInRange(2)) {
-                this.selectedOptionIndex += 2;
-            } else if ('ArrowLeft' in Game.keysDown && this.nextSelectionInRange(-1) && !currentOptionIndexIsEven) {
+            } else if ('ArrowUp' in Game.keysDown && this.nextSelectionInRange(-1)) {
                 this.selectedOptionIndex -= 1;
-            } else if ('ArrowRight' in Game.keysDown && this.nextSelectionInRange(1) && currentOptionIndexIsEven) {
+            } else if ('ArrowDown' in Game.keysDown && this.nextSelectionInRange(1)) {
                 this.selectedOptionIndex += 1;
+            } else if ('ArrowLeft' in Game.keysDown && this.nextSelectionInRange(-halfOptionsCount)) {
+                this.selectedOptionIndex -= halfOptionsCount;
+            } else if ('ArrowRight' in Game.keysDown && this.nextSelectionInRange(halfOptionsCount)) {
+                this.selectedOptionIndex += halfOptionsCount;
             }
-
-            this.drawArrow();
         }
 
         Game.keysDown = {};
@@ -77,7 +88,7 @@ export default {
     },
 
     drawMenu(menu) {
-        this.drawBorder(menu);
+        this.drawBackground(menu);
         if (menu.text) {
             this.drawMenuText(menu);
         } else {
@@ -85,8 +96,27 @@ export default {
         }
     },
 
-    drawBorder(menu) {
-        menu.layout.forEach((frame, index) => {
+    drawBackground(menu) {
+        const height = menu.height ?? Math.floor(menu.text[menu.text.length - 1].y) + 1;
+        let backgroundTiles = Array(menu.width * height).fill(4);
+
+        // Top border
+        backgroundTiles[0] = 0;
+        backgroundTiles.fill(1, 1, menu.width - 1);
+        backgroundTiles[menu.width - 1] = 2;
+
+        // Left and right borders
+        for (let i = 1; i < height - 1; i++) {
+            backgroundTiles[i * menu.width] = 3;
+            backgroundTiles[i * menu.width + menu.width - 1] = 5;
+        }
+
+        // Bottom border
+        backgroundTiles[menu.width * (height - 1)] = 6;
+        backgroundTiles.fill(7, menu.width * (height - 1) + 1, menu.width * height - 1);
+        backgroundTiles[menu.width * height - 1] = 8;
+
+        backgroundTiles.forEach((frame, index) => {
             const posX = (menu.x + index % menu.width) * config.tileWidth;
             const posY = Math.floor(menu.y + index / menu.width) * config.tileHeight;
 
@@ -192,11 +222,6 @@ export default {
             posX, posY, config.fontWidth, config.fontHeight);
     },
 
-    resetMenu() {
-        this.currentMenu = '';
-        this.selectedOptionIndex = 0;
-    },
-
     clearOutputText() {
         this.outputText = [];
     },
@@ -223,9 +248,10 @@ export default {
         this.drawMenu(Data.menus.combat);
     },
 
-    open(type, target = null) {
+    open(type = 'output', target = null) {
         this.currentMenu = type;
         this.actionTarget = target;
+        this.selectedOptionIndex = 0;
         Game.keysDown = {};
     },
 
@@ -237,6 +263,32 @@ export default {
     close() {
         this.currentMenu = '';
         this.actionTarget = null;
+        this.selectedOptionIndex = 0;
         Game.keysDown = {};
+    },
+
+    drawSpellMenu(condition) {
+        let spellsLearned = Data.levels
+            .slice(0, SaveState.player.level)
+            .filter(level => level.spells_learned) // Get spells up to player level
+            .map(level => level.spells_learned[0]) // Get spell references as string
+            .filter(spellName => Data.spells[spellName][condition]); // Limit menu to matching combat/exploration condition
+
+        Data.menus.spells.options = spellsLearned.map((spell, index) => {
+            return { arrowX: 0.5, arrowY: index + 1, name: spell, action(player) { player.castSpell(spell); } };
+        });
+
+        Data.menus.spells.text = [Data.menus.spells.text[0]];
+        Data.menus.spells.options.forEach((option, index) => {
+            Data.menus.spells.text.push({ x: 1, y: index + 1, align: 'left', display() { return option.name.toUpperCase(); } });
+        });
+
+        if (!Data.menus.spells.options.length) {
+            Game.display_text(text.menu.spell.none_learned, {player_name: SaveState.player.name});
+            this.change('');
+            return;
+        }
+
+        this.drawMenu(Data.menus.spells);
     },
 };

@@ -196,7 +196,8 @@ export default {
         spell: {
             cast: "<player_name> chanted the spell of <spell name>.",
             repel_gone: "REPEL has lost its effect.",
-            low_mp: "Thy MP is too low."
+            low_mp: "Thy MP is too low.",
+            none_learned: "<player_name> cannot yet use the spell.",
         }
     },
     script: {
@@ -393,7 +394,6 @@ UNSORTED
 "The <enemy>\u2019s spell hath been blocked."
 "<player_name>\u2019s spell is blocked."
 "<enemy> looks happy."
-<player_name> cannot yet use the spell.
 Thy body is being squeezed.
 The <item> is squeezing thy body.
 Thou cannot enter here.

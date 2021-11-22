@@ -22,7 +22,7 @@ export default {
         shield: 'none',
         inventory: [],
 
-        spells: {},
+        spells: [],
 
         experience: 0,
         gold: 0,

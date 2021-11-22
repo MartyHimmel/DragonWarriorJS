@@ -297,7 +297,7 @@ export default {
 
 		character = map.getNpcAt(x + offsetX, y + offsetY);
 
-		Menu.openOutputWindow();
+		Menu.open();
 
 		if (character && typeof character.talk === 'function') {
 			character.talk(script);
@@ -305,15 +305,15 @@ export default {
 			Menu.addText(text.menu.talk_none);
 		}
 
-		Menu.resetMenu();
+		Menu.close();
 	},
 
 	displayStatusMenu() {
 		Menu.open('status');
 	},
 
-	fieldSpells() {
-
+	displayFieldSpells() {
+		Menu.open('spells', this);
 	},
 
 	displayItemsMenu() {
@@ -386,5 +386,12 @@ export default {
 		if (SaveState.player.gold < 0) {
 			SaveState.player.gold = 0;
 		}
-	}
+	},
+
+	castSpell(spell) {
+		// TODO - handle not enough MP
+		if (SaveState.player.currentMp >= spell.cost) {
+			spell.effect();
+		}
+	},
 };
