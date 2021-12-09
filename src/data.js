@@ -8,6 +8,7 @@ import mapTiles from './data/map-tiles.js';
 import menus from './data/menus.js';
 import shields from './data/shields.js';
 import spells from './data/spells.js';
+import text from './data/text.js';
 import titleScreen from './data/title.js';
 import weapons from './data/weapons.js';
 
@@ -22,6 +23,7 @@ export default {
     menus,
     shields,
     spells,
+    text,
     titleScreen,
     weapons,
 };

@@ -9,18 +9,6 @@ canvas {
     border: 1px solid black;
 }
 
-input {
-    max-width: 100%;
-}
-
-#stats {
-    position: absolute;
-    left: 0;
-    top: 0;
-    border: 1px solid black;
-    width: 180px;
-}
-
 #test {
     position: absolute;
     right: 0;
@@ -28,30 +16,4 @@ input {
     border: 1px solid black;
     padding: 8px;
     width: 180px;
-}
-
-#commands input[type="button"] {
-    width: 80px;
-    margin-right: 5px;
-}
-
-#spell {
-    width: 80px;
-    margin-right: 5px;
-    outline: none;
-}
-
-#item {
-    width: 80px;
-    outline: none;
-}
-
-#dialog {
-    width: 796px;
-    height: 104px;
-    border: 1px solid black;
-    outline: none;
-    resize: none;
-    overflow: hidden;
-    font-size: 18px;
 }

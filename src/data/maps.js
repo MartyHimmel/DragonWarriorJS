@@ -2,23 +2,6 @@ import SaveState from '../save-state.js';
 import tiles from './map-tiles.js';
 
 export default {
-    /* Map template
-        "Map Name": {
-            type: "world", "town" (no combat), or "dungeon"
-            zone: zone number for enemy set, dungeon type only
-            player_start: player.x/y starting point
-            width: width of map in tiles
-            height: height of map in tiles
-            music: background music to be played on this map
-            layout: [
-                array of tile numbers - actual map data
-            ]
-            npcs: [
-                array of npcs - ["character type", "direction facing", x, y]
-            ]
-        }
-    */
-
     "World": {
         type: "world",
         player_start: [46, 47],

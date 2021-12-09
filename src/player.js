@@ -2,11 +2,13 @@ import Data from './data.js';
 import Game from './game.js';
 import SaveState from './save-state.js';
 import Menu from './menu.js';
+import CombatMenu from './menus/Combat.js';
+import StatusMenu from './menus/Status.js';
+import TextDisplayMenu from './menus/TextDisplay.js';
 import combat from './combat.js';
 import config from './config.js';
 import map from './map.js';
 import script from './script.js';
-import text from './text.js';
 
 const stairTiles = [
 	Data.mapTiles.STAIRS_UP,
@@ -15,8 +17,9 @@ const stairTiles = [
 ];
 
 export default {
+	isMoving: false,
 	// Map collision tiles
-	collide_tiles: [1, 2, 5, 9, 10, 11, 17, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
+	collisionTiles: [1, 2, 5, 9, 10, 11, 17, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35],
 
 	// Last direction the character was facing
 	facingDirection: '',
@@ -37,24 +40,16 @@ export default {
 	status: '',
 	spell_blocked: false,
 
-	// Draw player and animations
-	// -------------------------------------------------------------------
-
-	animatePlayer(frame1, frame2) {
-		const drawFrame = (Game.frameNumber < 30) ? frame1 : frame2;
-		Game.drawCharacter(drawFrame, config.offsetX * config.tileWidth, config.offsetY * config.tileHeight);
-	},
-
-	drawPlayer: function () {
+	render() {
 		switch (this.facingDirection) {
 			case "left":
 				if (SaveState.carryingPrincess) {
 					this.animatePlayer(66, 67);
-				} else if (SaveState.player.weapon === "none" && SaveState.player.shield === "none") {
+				} else if (!this.hasWeapon() && !this.hasShield()) {
 					this.animatePlayer(2, 3);
-				} else if (SaveState.player.weapon !== "none" && SaveState.player.shield === "none") {
+				} else if (this.hasWeapon() && !this.hasShield()) {
 					this.animatePlayer(18, 19);
-				} else if (SaveState.player.weapon === "none" && SaveState.player.shield !== "none") {
+				} else if (!this.hasWeapon() && this.hasShield()) {
 					this.animatePlayer(34, 35);
 				} else {
 					this.animatePlayer(50, 51);
@@ -63,11 +58,11 @@ export default {
 			case "right":
 				if (SaveState.carryingPrincess) {
 					this.animatePlayer(70, 71);
-				} else if (SaveState.player.weapon === "none" && SaveState.player.shield === "none") {
+				} else if (!this.hasWeapon() && !this.hasShield()) {
 					this.animatePlayer(6, 7);
-				} else if (SaveState.player.weapon !== "none" && SaveState.player.shield === "none") {
+				} else if (SaveState.player.weapon !== "none" && !this.hasShield()) {
 					this.animatePlayer(22, 23);
-				} else if (SaveState.player.weapon === "none" && SaveState.player.shield !== "none") {
+				} else if (!this.hasWeapon() && this.hasShield()) {
 					this.animatePlayer(38, 39);
 				} else {
 					this.animatePlayer(54, 55);
@@ -76,11 +71,11 @@ export default {
 			case "up":
 				if (SaveState.carryingPrincess) {
 					this.animatePlayer(68, 69);
-				} else if (SaveState.player.weapon === "none" && SaveState.player.shield === "none") {
+				} else if (!this.hasWeapon() && !this.hasShield()) {
 					this.animatePlayer(4, 5);
-				} else if (SaveState.player.weapon !== "none" && SaveState.player.shield === "none") {
+				} else if (SaveState.player.weapon !== "none" && !this.hasShield()) {
 					this.animatePlayer(20, 21);
-				} else if (SaveState.player.weapon === "none" && SaveState.player.shield !== "none") {
+				} else if (!this.hasWeapon() && this.hasShield()) {
 					this.animatePlayer(36, 37);
 				} else {
 					this.animatePlayer(52, 53);
@@ -90,17 +85,30 @@ export default {
 			default:
 				if (SaveState.carryingPrincess) {
 					this.animatePlayer(64, 65);
-				} else if (SaveState.player.weapon === "none" && SaveState.player.shield === "none") {
+				} else if (!this.hasWeapon() && !this.hasShield()) {
 					this.animatePlayer(0, 1);
-				} else if (SaveState.player.weapon !== "none" && SaveState.player.shield === "none") {
+				} else if (SaveState.player.weapon !== "none" && !this.hasShield()) {
 					this.animatePlayer(16, 17);
-				} else if (SaveState.player.weapon === "none" && SaveState.player.shield !== "none") {
+				} else if (!this.hasWeapon() && this.hasShield()) {
 					this.animatePlayer(32, 33);
 				} else {
 					this.animatePlayer(48, 49);
 				}
 				break;
 		}
+	},
+
+	hasWeapon() {
+		return SaveState.player.weapon !== 'none';
+	},
+
+	hasShield() {
+		return SaveState.player.shield !== 'none';
+	},
+
+	animatePlayer(frame1, frame2) {
+		const drawFrame = (Game.frameInRange(0, 14) || Game.frameInRange(30, 44)) ? frame1 : frame2;
+		Game.drawCharacter(drawFrame, config.offsetX * config.tileWidth, config.offsetY * config.tileHeight);
 	},
 
 	// Map positioning
@@ -112,7 +120,7 @@ export default {
 		this.setXY(map.player_start[0], map.player_start[1]);
 	},
 
-	setXY: function(x, y) {
+	setXY(x, y) {
 		this.x = x;
 		this.y = y;
 	},
@@ -129,40 +137,40 @@ export default {
 		map.setZone();
 
 		this.facingDirection = direction;
-		this.drawPlayer();
+		this.render();
 
-		switch (direction) {
-			case 'left':
-				if (!this.willCollide(x - 1, y) && this.canMove()) {
-					this.x--;
-					this.steps++;
-				}
-				break;
-			case 'right':
-				if (!this.willCollide(x + 1, y) && this.canMove()) {
-					this.x++;
-					this.steps++;
-				}
-				break;
-			case 'up':
-				if (!this.willCollide(x, y - 1) && this.canMove()) {
-					this.y--;
-					this.steps++;
-				}
-				break;
-			case 'down':
-				if (!this.willCollide(x, y + 1) && this.canMove()) {
-					this.y++;
-					this.steps++;
-				}
-				break;
+		if (this.canMove()) {
+			switch (direction) {
+				case 'left':
+					if (!this.willCollide(x - 1, y)) {
+						this.x--;
+						this.steps++;
+					}
+					break;
+				case 'right':
+					if (!this.willCollide(x + 1, y)) {
+						this.x++;
+						this.steps++;
+					}
+					break;
+				case 'up':
+					if (!this.willCollide(x, y - 1)) {
+						this.y--;
+						this.steps++;
+					}
+					break;
+				case 'down':
+					if (!this.willCollide(x, y + 1)) {
+						this.y++;
+						this.steps++;
+					}
+					break;
+			}
 		}
 
-		if (this.steps > prev_steps) {
-			if (combat.random_encounter() === true) {
-				Game.changeState('combat');
-				Menu.open('combat', combat);
-			}
+		if (this.steps > prev_steps && combat.triggerRandomEncounter()) {
+			Game.states.push(new CombatMenu());
+			Game.resetKeys();
 		}
 	},
 
@@ -176,7 +184,7 @@ export default {
 
 	willCollide(x, y) {
 		var next_tile = this.tileIndex(x, y);
-		if (this.collide_tiles.indexOf(next_tile) > -1 || map.getNpcAt(x, y) !== null) {
+		if (this.collisionTiles.indexOf(next_tile) > -1 || map.getNpcAt(x, y) !== null) {
 			return true;
 		}
 		return false;
@@ -297,19 +305,18 @@ export default {
 
 		character = map.getNpcAt(x + offsetX, y + offsetY);
 
-		Menu.open();
+		Game.states.pop();
+		Game.states.push(new TextDisplayMenu());
 
 		if (character && typeof character.talk === 'function') {
 			character.talk(script);
 		} else {
-			Menu.addText(text.menu.talk_none);
+			Game.displayText(Data.text.menu.talk_none);
 		}
-
-		Menu.close();
 	},
 
 	displayStatusMenu() {
-		Menu.open('status');
+		Game.states.push(new StatusMenu());
 	},
 
 	displayFieldSpells() {

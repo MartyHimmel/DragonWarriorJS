@@ -1,41 +1,53 @@
 import Data from './data.js';
+import Exploration from './Exploration.js';
 import Game from './game.js';
+import State from './State.js';
 
-export default {
-    frameCount: 0,
-    starFrameCount: 0,
+export default class TitleScreen extends State {
+    #frameCount = 0;
+    #starFrameCount = 0;
 
-    handleState() {
-        if (this.frameCount < 240) {
-            this.frameCount++;
-            this.drawTitle1();
+    constructor() {
+        super();
+    }
+
+    update() {
+        if (this.#frameCount < 240) {
+            this.#frameCount++;
 
             if ('Enter' in Game.keysDown) {
-                this.frameCount = 240;
-                delete Game.keysDown['Enter'];
+                this.#frameCount = 240;
             }
         } else {
-            this.drawTitle2();
-
             if ('Enter' in Game.keysDown) {
-                Game.changeState('exploration');
-                delete Game.keysDown['Enter'];
+                Game.states.pop();
+                Game.states.push(new Exploration());
                 Game.startGame();
             }
         }
-    },
+
+        Game.resetKeys();
+    }
+
+    render() {
+        if (this.#frameCount < 240) {
+            this.drawTitle1();
+        } else {
+            this.drawTitle2();
+        }
+    }
 
     drawTitle1() {
         const posX = (Game.canvas.width - Data.titleScreen.screen1.width) / 2;
         this.clearScreen();
         this.drawTitleFrame(Data.titleScreen.screen1, posX, 0);
-    },
+    }
 
     clearScreen() {
         Game.clear();
         Game.context.fillStyle = 'rgb(0, 0, 0)';
         Game.context.fillRect(0, 0, Game.canvas.width, Game.canvas.height);
-    },
+    }
 
     drawTitleFrame(frameData, x, y) {
         Game.context.drawImage(
@@ -49,16 +61,16 @@ export default {
             frameData.width,
             frameData.height
         );
-    },
+    }
 
     drawTitle2() {
         const posX = (Game.canvas.width - Data.titleScreen.screen2.width) / 2;
         this.clearScreen();
         this.drawTitleFrame(Data.titleScreen.screen2, posX, 0);
 
-        this.starFrameCount++;
-        if (this.starFrameCount >= 240) {
-            this.starFrameCount = 0;
+        this.#starFrameCount++;
+        if (this.#starFrameCount >= 240) {
+            this.#starFrameCount = 0;
         }
 
         const ranges = [
@@ -81,11 +93,11 @@ export default {
                 }
             });
         });
-    },
+    }
 
     starFrameCountBetween(min, max) {
-        return this.starFrameCount >= min && this.starFrameCount <= max;
-    },
+        return this.#starFrameCount >= min && this.#starFrameCount <= max;
+    }
 
     drawTitleStar(frameIndex) {
         const starCenterX = 378;
@@ -95,5 +107,5 @@ export default {
         const posX = leftEdge + starCenterX - Math.round(targetFrame.width / 2);
         const posY = starCenterY - Math.round(targetFrame.height / 2);
         this.drawTitleFrame(targetFrame, posX, posY);
-    },
+    }
 }

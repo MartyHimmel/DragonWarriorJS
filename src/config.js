@@ -9,7 +9,7 @@ export default {
     tileHeight: 32,
     fontWidth: 16,
     fontHeight: 16,
-    movementSpeed: 12,
+    movementSpeed: 15,
     sprites: {
         battle: 'assets/sprites/battle.png',
         characters: 'assets/sprites/characters.png',

@@ -4,6 +4,7 @@ import SaveState from './save-state.js';
 import audio from './audio.js';
 import config from './config.js';
 import player from './player.js';
+import MapTile from './MapTile.js';
 
 /*
 References
@@ -60,7 +61,7 @@ export default {
 		}
 	},
 
-	getNpcAt: function (x, y) {
+	getNpcAt(x, y) {
 		if (typeof this.map_ptr.npcs !== 'undefined') {
 			let number_of_npcs = this.map_ptr.npcs.length;
 			for (let i = 0; i < number_of_npcs; i++) {
@@ -97,13 +98,16 @@ export default {
 		const screenTileCount = config.screenTilesWide * config.screenTileHigh;
 
 		for (let i = 0; i < screenTileCount; i++) {
-			Game.drawTile(
+			const backgroundTile = new MapTile(
 				(i % config.screenTilesWide) * config.tileWidth,
 				Math.floor(i / config.screenTilesWide) * config.tileHeight,
 				this.map_ptr.background - 1
 			);
+			const mapTile = new MapTile(this.x, this.y, this.map_ptr.layout[posX + (posY * this.map_ptr.width)] - 1);
 
-			Game.drawTile(this.x, this.y, this.map_ptr.layout[posX + (posY * this.map_ptr.width)] - 1);
+			backgroundTile.render();
+			mapTile.render();
+
 			this.x += config.tileWidth;
 			posX++;
 			if (this.x === config.screenTilesWide * config.tileWidth) {
@@ -117,7 +121,7 @@ export default {
 		this.y = 0;
 	},
 
-	setZone: function () {
+	setZone() {
 		if (this.current_map === 'World') {
 			// 16 tile square, break world into 8 x 8 grid
 			const x_coord = Math.floor(player.x / 16);
@@ -142,22 +146,20 @@ export default {
 	checkLocation() {
 		let map = Data.maps[this.current_map];
 
-		if (typeof map.map_links !== 'undefined' && map.map_links instanceof Array) {
-			for (let i = 0; i < map.map_links.length; i++) {
-				let link = map.map_links[i];
+		for (let i = 0; i < map.map_links.length; i++) {
+			let link = map.map_links[i];
 
-				if (player.steps === 0 ||
-					(typeof link.x !== 'undefined' && player.x !== link.x) ||
-					(typeof link.y !== 'undefined' && player.y !== link.y))
-				{
-					continue;
-				}
+			if (player.steps === 0 ||
+				(typeof link.x !== 'undefined' && player.x !== link.x) ||
+				(typeof link.y !== 'undefined' && player.y !== link.y))
+			{
+				continue;
+			}
 
-				this.loadMap(link.map);
+			this.loadMap(link.map);
 
-				if (typeof link.moveTo !== 'undefined' && link.moveTo instanceof Array && link.moveTo.length === 2) {
-					player.setXY(link.moveTo[0], link.moveTo[1]);
-				}
+			if (typeof link.moveTo !== 'undefined') {
+				player.setXY(link.moveTo[0], link.moveTo[1]);
 			}
 		}
 	}

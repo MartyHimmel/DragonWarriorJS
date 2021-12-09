@@ -1,14 +1,13 @@
 import Data from './data.js';
-import Exploration from './exploration.js';
+import Exploration from './Exploration.js';
 import SaveState from './save-state.js';
-import Menu from './menu.js';
-import TitleScreen from './title-screen.js';
+import TitleScreen from './TitleScreen.js';
 import config from './config.js';
 import combat from './combat.js';
 import map from './map.js';
 import player from './player.js';
-import text from './text.js';
-import { displayOutput } from './utils.js';
+import StateStack from './StateStack.js';
+import TextDisplayMenu from './menus/TextDisplay.js';
 
 /*
 References
@@ -19,6 +18,7 @@ https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D.drawIm
 */
 
 const Game = {
+	states: new StateStack(),
 	state: '',
 	possibleStates: ['title', 'menu', 'exploration', 'combat'],
 	canvas: null,
@@ -31,11 +31,10 @@ const Game = {
 	imgFont: null,
 	keysDown: {},
 	frameNumber: 0,
-	idleFrames: 0,
 
-	begin: function () {
+	begin() {
 		// Setup
-		document.title = text.game_title;
+		document.title = Data.text.game_title;
 		this.canvas = document.getElementById('game');
 		this.canvas.width = config.canvasWidth;
 		this.canvas.height = config.canvasHeight;
@@ -51,25 +50,25 @@ const Game = {
 		});
 
 		// Start the game!
-		this.changeState('title');
+		this.states.push(new TitleScreen());
 		this.main();
 	},
 
 	loadImages() {
-		this.imgCharacters = new Image();
-		this.imgCharacters.src = config.sprites.characters;
-		this.imgEnemies = new Image();
-		this.imgEnemies.src = config.sprites.enemies;
-		this.imgTiles = new Image();
-		this.imgTiles.src = config.sprites.tiles;
-		this.imgBattle = new Image();
-		this.imgBattle.src = config.sprites.battle;
-		this.imgTitle = new Image();
-		this.imgTitle.src = config.sprites.title;
-		this.imgMenu = new Image();
-		this.imgMenu.src = config.sprites.menu;
-		this.imgFont = new Image();
-		this.imgFont.src = config.sprites.font;
+		const images = {
+			Characters: 'characters',
+			Enemies: 'enemies',
+			Tiles: 'tiles',
+			Battle: 'battle',
+			Title: 'title',
+			Menu: 'menu',
+			Font: 'font',
+		};
+
+		for (let name in images) {
+			this['img' + name] = new Image();
+			this['img' + name].src = config.sprites[images[name]];
+		}
 	},
 
 	changeState(newState, delay = 0) {
@@ -87,27 +86,14 @@ const Game = {
 	main() {
 		requestAnimationFrame(this.main.bind(this));
 		this.tick();
+		this.states.update();
+		this.states.render();
+		return;
 
-		if (this.state === 'title') {
-			TitleScreen.handleState();
-			return;
-		}
-
-		map.checkLocation();
-		player.load_player();
-		this.drawMap();
-
-		if (this.state === 'exploration') {
-			Exploration.handleState();
-		} else if (this.state === 'menu') {
-			player.drawPlayer();
-			Menu.handleState();
-		} else if (this.state === 'combat') {
-			combat.handleState();
-			Menu.handleState();
-		}
-
-		displayOutput();
+		// if (this.state === 'combat') {
+		// 	combat.handleState();
+		// 	Menu.render();
+		// }
 	},
 
 	tick() {
@@ -117,15 +103,9 @@ const Game = {
 		}
 	},
 
-	drawMap() {
-        Game.clear();
-        map.render();
-        Game.drawNPCs();
-    },
-
 	startGame() {
-		SaveState.player.name = prompt(text.name_prompt);
-		if (SaveState.player.name === '') { SaveState.player.name = text.default_player_name; }
+		SaveState.player.name = prompt(Data.text.name_prompt);
+		if (SaveState.player.name === '') { SaveState.player.name = Data.text.default_player_name; }
 		map.loadMap('World');
 		player.load_player();
 		player.setCurrentTile();
@@ -135,7 +115,7 @@ const Game = {
 		return this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	},
 
-	display_text: function (format_string, params) {
+	displayText(format_string, params) {
 		function format (format_string, params) {
 	        function escapeRegExp(string) {
 	            return string.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
@@ -163,18 +143,14 @@ const Game = {
 	        return format_string;
 	    }
 
-		Menu.addText(format(format_string, params));
-	},
+	    let menu = this.states.top();
 
-	// Animation and rendering
-	// -------------------------------------------------------------------
+	    if (menu.constructor.name !== 'TextDisplay') {
+			menu = new TextDisplayMenu();
+			this.states.push(menu);
+		}
 
-	animateNPC(frame1, frame2, x, y) {
-		x = (x - player.x + config.offsetX) * config.tileWidth;
-		y = (y - player.y + config.offsetY) * config.tileHeight;
-
-		const drawFrame = (this.frameNumber < 30) ? frame1 : frame2;
-		this.drawCharacter(drawFrame, x, y);
+		menu.addText(format(format_string, params));
 	},
 
 	// call frame from characters.png - starts with frame 0
@@ -182,137 +158,12 @@ const Game = {
 		const imageX = (frame_number % 16) * config.tileWidth;
 		const imageY = Math.floor(frame_number / 16) * config.tileHeight;
 
-		this.context.drawImage(this.imgCharacters, imageX, imageY, config.tileWidth, config.tileHeight,
+		this.context.drawImage(this.imgCharacters,
+			imageX, imageY, config.tileWidth, config.tileHeight,
 			posX, posY, config.tileWidth, config.tileHeight);
 	},
 
-	drawNPCs() {
-		let self = this;
-
-		//TODO: refactor this
-		function drawNPC(characterType, direction, x, y) {
-			switch (characterType) {
-				case "princess":
-					if (direction === "down") {
-						self.animateNPC(80, 81, x, y);
-					} else if (direction === "left") {
-						self.animateNPC(82, 83, x, y);
-					} else if (direction === "up") {
-						self.animateNPC(84, 85, x, y);
-					} else if (direction === "right") {
-						self.animateNPC(86, 87, x, y);
-					}
-					break;
-				case "soldier":
-					if (direction === "down") {
-						self.animateNPC(96, 97, x, y);
-					} else if (direction === "left") {
-						self.animateNPC(98, 99, x, y);
-					} else if (direction === "up") {
-						self.animateNPC(100, 101, x, y);
-					} else if (direction === "right") {
-						self.animateNPC(102, 103, x, y);
-					}
-					break;
-				case "townsman":
-					if (direction === "down") {
-						self.animateNPC(8, 9, x, y);
-					} else if (direction === "left") {
-						self.animateNPC(10, 11, x, y);
-					} else if (direction === "up") {
-						self.animateNPC(12, 13, x, y);
-					} else if (direction === "right") {
-						self.animateNPC(14, 15, x, y);
-					}
-					break;
-				case "townswoman":
-					if (direction === "down") {
-						self.animateNPC(24, 25, x, y);
-					} else if (direction === "left") {
-						self.animateNPC(26, 27, x, y);
-					} else if (direction === "up") {
-						self.animateNPC(28, 29, x, y);
-					} else if (direction === "right") {
-						self.animateNPC(30, 31, x, y);
-					}
-					break;
-				case "old_man":
-					if (direction === "down") {
-						self.animateNPC(40, 41, x, y);
-					} else if (direction === "left") {
-						self.animateNPC(42, 43, x, y);
-					} else if (direction === "up") {
-						self.animateNPC(44, 45, x, y);
-					} else if (direction === "right") {
-						self.animateNPC(46, 47, x, y);
-					}
-					break;
-				case "merchant":
-					if (direction === "down") {
-						self.animateNPC(56, 57, x, y);
-					} else if (direction === "left") {
-						self.animateNPC(58, 59, x, y);
-					} else if (direction === "up") {
-						self.animateNPC(60, 61, x, y);
-					} else if (direction === "right") {
-						self.animateNPC(62, 63, x, y);
-					}
-					break;
-				case "solider_2":
-					if (direction === "down") {
-						self.animateNPC(72, 73, x, y);
-					} else if (direction === "left") {
-						self.animateNPC(74, 75, x, y);
-					} else if (direction === "up") {
-						self.animateNPC(76, 77, x, y);
-					} else if (direction === "right") {
-						self.animateNPC(78, 79, x, y);
-					}
-					break;
-				case "dragonlord":
-					if (direction === "down") {
-						self.animateNPC(88, 89, x, y);
-					} else if (direction === "left") {
-						self.animateNPC(90, 91, x, y);
-					} else if (direction === "up") {
-						self.animateNPC(92, 93, x, y);
-					} else if (direction === "right") {
-						self.animateNPC(94, 95, x, y);
-					}
-					break;
-				case "trumpeteer":
-					if (direction === "left") {
-						self.animateNPC(105, 105, x, y);
-					} else if (direction === "right") {
-						self.animateNPC(104, 104, x, y);
-					}
-					break;
-				case "king":
-					self.animateNPC(106, 107, x, y);
-					break;
-			}
-		}
-
-		if (typeof map.map_ptr.npcs !== 'undefined') {
-			let number_of_npcs = map.map_ptr.npcs.length;
-
-			//TODO: replace with a visible flag, which checks SaveState.rescuedPrincess.
-			if (map.current_map === "Tantegel2F" && !SaveState.rescuedPrincess) {
-				number_of_npcs--;
-			}
-
-			for (let i = 0; i < number_of_npcs; i++) {
-				drawNPC(
-					map.map_ptr.npcs[i].type,
-					map.map_ptr.npcs[i].facing,
-					map.map_ptr.npcs[i].x,
-					map.map_ptr.npcs[i].y
-				);
-			}
-		}
-	},
-
-	draw_enemy(enemy) {
+	drawEnemy(enemy) {
 		var tile_x = enemy.x,
 		    tile_y = enemy.y,
 		    tile_width = enemy.width,
@@ -324,18 +175,12 @@ const Game = {
 			pos_x, pos_y, tile_width * 2, tile_height *2);
 	},
 
-	// draw single tile frame from sprite sheet
-	drawTile(x, y, frame_number) {
-		// find horizontal and vertical position of tile to be drawn
-		const posX = (frame_number % 12) * config.tileWidth;
-		const posY = Math.floor(frame_number / 12) * config.tileHeight;
-
-		this.context.drawImage(this.imgTiles, posX, posY, config.tileWidth, config.tileHeight,
-			x, y, config.tileWidth, config.tileHeight);
-	},
-
 	frameInRange(min, max) {
 		return this.frameNumber >= min && this.frameNumber <= max;
+	},
+
+	resetKeys() {
+		this.keysDown = {};
 	},
 };
 

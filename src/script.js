@@ -1,18 +1,18 @@
+import Data from './data.js';
 import Game from './game.js';
-import text from './text.js';
 
 export default {
     text: function (string) {
-        if (!string || !text.script[string]) {
+        if (!string || !Data.text.script[string]) {
             return;
         }
 
-        if (text.script[string] instanceof Array) {
-            text.script[string].forEach((element, index, array) => {
-                Game.display_text(element);
+        if (Data.text.script[string] instanceof Array) {
+            Data.text.script[string].forEach((element, index, array) => {
+                Game.displayText(element);
             });
         } else {
-            Game.display_text(text.script[string]);
+            Game.displayText(Data.text.script[string]);
         }
     },
 
